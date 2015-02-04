@@ -21,11 +21,11 @@ public slots:
     void refresh();
 
 private:
-    QMap<QString, StorageUnit*> storageUnits;
+    QList<StorageUnit*> storageUnits;
 
 private slots:
     void storageUnitAdded(StorageUnit* drive);
-    void storageUnitRemoved(QString path);
+    void storageUnitRemoved(StorageUnit* path);
 };
 
 #endif // STORAGEDATAMODEL_H

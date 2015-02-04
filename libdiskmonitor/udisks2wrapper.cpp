@@ -266,7 +266,7 @@ void UDisks2Wrapper::interfacesRemoved(const QDBusObjectPath& objectPath, const 
   if(objectPath.path().startsWith(UDISKS2_DRIVES_PATH) ||
      objectPath.path().startsWith(UDISKS2_MDRAIDS_PATH)) {
 
-    emit storageUnitRemoved(objectPath.path());
+    emit storageUnitRemoved(units[objectPath]);
     StorageUnit* u = units.take(objectPath);
     delete u;
   }

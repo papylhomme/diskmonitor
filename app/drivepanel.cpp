@@ -41,10 +41,11 @@ DrivePanel::~DrivePanel()
  */
 void DrivePanel::setDrive(Drive* drive)
 {
-  model -> updateDrive(drive);
+  model -> updateStorageUnit(drive);
 
-  ui -> tableView -> setEnabled(drive -> isSmartSupported() && drive -> isSmartEnabled());
-  ui -> startSelfTestButton -> setEnabled(drive -> isSmartSupported() && drive -> isSmartEnabled());
+  bool enableWidgets = drive != NULL && drive -> isSmartSupported() && drive -> isSmartEnabled();
+  ui -> tableView -> setEnabled(enableWidgets);
+  ui -> startSelfTestButton -> setEnabled(enableWidgets);
 }
 
 

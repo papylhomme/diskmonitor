@@ -26,36 +26,9 @@ MDRaidPropertiesModel::~MDRaidPropertiesModel()
 /*
  *
  */
-void MDRaidPropertiesModel::updateMDRaid(MDRaid* raid)
+MDRaid* MDRaidPropertiesModel::getMDRaid() const
 {
-  beginResetModel();
-  this -> mdraid = raid;
-  endResetModel();
-}
-
-
-
-
-/*
- *
- */
-MDRaid* MDRaidPropertiesModel::getMDRaid()
-{
-  return this -> mdraid;
-}
-
-
-
-/*
- *
- */
-void MDRaidPropertiesModel::refreshAll()
-{
-  if(mdraid != NULL) {
-    beginResetModel();
-    mdraid -> update();
-    endResetModel();
-  }
+  return (MDRaid*) this -> unit;
 }
 
 
@@ -88,6 +61,8 @@ QVariant MDRaidPropertiesModel::data(const QModelIndex& index, int role) const
     return QVariant();
 
   if(role == Qt::DisplayRole) {
+    MDRaid* mdraid = getMDRaid();
+
     if(index.column() == 0)
       return names[index.row()];
 
@@ -106,4 +81,5 @@ QVariant MDRaidPropertiesModel::data(const QModelIndex& index, int role) const
 
   return QVariant();
 }
+
 

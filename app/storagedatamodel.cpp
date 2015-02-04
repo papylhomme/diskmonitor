@@ -15,7 +15,7 @@ StorageDataModel::StorageDataModel()
 
   UDisks2Wrapper* udisks2 = UDisks2Wrapper::getInstance();
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
-  connect(udisks2, SIGNAL(storageUnitRemoved(QString)), this, SLOT(storageUnitRemoved(QString)));
+  connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 }
 
 
@@ -41,8 +41,9 @@ void StorageDataModel::refresh() {
   storageUnits.clear();
   QList<StorageUnit*> units = udisks2 -> listStorageUnits();
 
-  foreach(StorageUnit* u, units)
-    storageUnits.insert(u->getPath(), u);
+  foreach(StorageUnit* u, units) {
+    storageUnits.append(u);
+  }
 
   endResetModel();
 }
@@ -67,8 +68,7 @@ QVariant StorageDataModel::data(const QModelIndex &index, int role) const
   if(!index.isValid())
     return QVariant();
 
-  QString path = storageUnits.keys().at(index.row());
-  StorageUnit* u = storageUnits[path];
+  StorageUnit* u = storageUnits[index.row()];
 
   if(role == Qt::DisplayRole) {
     return QVariant(u -> getName());
@@ -115,9 +115,11 @@ QVariant StorageDataModel::data(const QModelIndex &index, int role) const
  */
 void StorageDataModel::storageUnitAdded(StorageUnit* unit)
 {
-  beginResetModel();
-  storageUnits[unit -> getPath()] = unit;
-  endResetModel();
+  int idx = storageUnits.size();
+
+  beginInsertRows(QModelIndex(), idx, idx);
+  storageUnits.append(unit);
+  endInsertRows();
 }
 
 
@@ -125,9 +127,11 @@ void StorageDataModel::storageUnitAdded(StorageUnit* unit)
 /*
  *
  */
-void StorageDataModel::storageUnitRemoved(QString path)
+void StorageDataModel::storageUnitRemoved(StorageUnit* unit)
 {
-  beginResetModel();
-  storageUnits.remove(path);
-  endResetModel();
+  int idx = storageUnits.indexOf(unit);
+
+  beginRemoveRows(QModelIndex(), idx, idx);
+  storageUnits.removeAt(idx);
+  endRemoveRows();
 }

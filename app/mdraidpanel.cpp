@@ -46,7 +46,7 @@ MDRaidPanel::~MDRaidPanel()
  */
 void MDRaidPanel::setMDRaid(MDRaid* raid)
 {
-  model -> updateMDRaid(raid);
+  model -> updateStorageUnit(raid);
   updateAutoRefresh();
 }
 
@@ -57,12 +57,19 @@ void MDRaidPanel::setMDRaid(MDRaid* raid)
  */
 void MDRaidPanel::updateAutoRefresh()
 {
-  QString currentSyncAction = model -> getMDRaid() -> getSyncAction();
-  if(autorefreshTimer -> isActive() && currentSyncAction == "idle")
+  MDRaid* currentMDRaid = model -> getMDRaid();
+
+  if(currentMDRaid == NULL)
     autorefreshTimer -> stop();
 
-  else if(!autorefreshTimer -> isActive() && (currentSyncAction == "check" || currentSyncAction == "repair"))
-    autorefreshTimer -> start(1000);
+  else {
+    QString currentSyncAction = model -> getMDRaid() -> getSyncAction();
+    if(autorefreshTimer -> isActive() && currentSyncAction == "idle")
+      autorefreshTimer -> stop();
+
+    else if(!autorefreshTimer -> isActive() && (currentSyncAction == "check" || currentSyncAction == "repair"))
+      autorefreshTimer -> start(1000);
+  }
 }
 
 

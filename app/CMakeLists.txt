@@ -1,10 +1,11 @@
 set(APP_SRCS
   main.cpp
-  mdraidpropertiesmodel.cpp
   mainwindow.cpp
   drivepanel.cpp
   mdraidpanel.cpp
   storagedatamodel.cpp
+  storageunitpropertiesmodel.cpp
+  mdraidpropertiesmodel.cpp
   drivepropertiesmodel.cpp
 )
 

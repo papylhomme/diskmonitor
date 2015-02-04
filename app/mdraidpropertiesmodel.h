@@ -1,11 +1,11 @@
 #ifndef MDRAIDPROPERTIESMODEL_H
 #define MDRAIDPROPERTIESMODEL_H
 
-#include <QAbstractTableModel>
+#include "storageunitpropertiesmodel.h"
 
 #include "mdraid.h"
 
-class MDRaidPropertiesModel : public QAbstractTableModel
+class MDRaidPropertiesModel : public StorageUnitPropertiesModel
 {
   Q_OBJECT
 
@@ -13,11 +13,8 @@ public:
     MDRaidPropertiesModel();
     ~MDRaidPropertiesModel();
 
+    MDRaid* getMDRaid() const;
 
-    void updateMDRaid(MDRaid* raid);
-    MDRaid* getMDRaid();
-
-    void refreshAll();
 
     virtual int rowCount(const QModelIndex& index) const;
     virtual int columnCount(const QModelIndex& index) const;
@@ -25,7 +22,6 @@ public:
 
 private:
     QStringList names;
-    MDRaid* mdraid;
 };
 
 #endif // MDRAIDPROPERTIESMODEL_H

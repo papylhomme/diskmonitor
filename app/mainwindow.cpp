@@ -66,17 +66,16 @@ void MainWindow::unitSelected(const QModelIndex& index)
   int widgetIndex = 0;
   QString boxTitle = tr("Details");
 
-  StorageUnit* u = index.data(Qt::UserRole).value<StorageUnit*>();
-  if(u == NULL) {
+  if(!index.isValid() || index.data(Qt::UserRole).value<StorageUnit*>() == NULL) {
     ui -> groupBox -> setTitle(boxTitle);
     ui -> stackedWidget -> setCurrentIndex(widgetIndex);
 
     return;
   }
 
+  StorageUnit* u = index.data(Qt::UserRole).value<StorageUnit*>();
   u -> update();
   updateHealthStatus(u);
-
 
   if(u -> isDrive()) {
     DrivePanel* panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
@@ -105,16 +104,16 @@ void MainWindow::unitSelected(const QModelIndex& index)
  */
 void MainWindow::refreshDetails()
 {
-  //TODO: segfault when removing currently displayed drive and then trying
-  //to refresh the still displayed panel (test dereference for safety and
-  //handle model change to select another drive
   switch(ui -> stackedWidget -> currentIndex()) {
     case 1: ((DrivePanel*) ui -> stackedWidget -> currentWidget()) -> refresh(); break;
     case 2: ((MDRaidPanel*) ui -> stackedWidget -> currentWidget()) -> refresh(); break;
     default: break;
   }
 
-  updateHealthStatus(ui -> listView -> currentIndex().data(Qt::UserRole).value<StorageUnit*>());
+  QModelIndex currentIndex = ui -> listView -> currentIndex();
+
+  if(currentIndex.isValid() && currentIndex.data(Qt::UserRole).value<StorageUnit*>() != NULL)
+    updateHealthStatus(ui -> listView -> currentIndex().data(Qt::UserRole).value<StorageUnit*>());
 }
 
 

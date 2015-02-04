@@ -64,7 +64,7 @@ private slots:
 
 signals:
   void storageUnitAdded(StorageUnit*);
-  void storageUnitRemoved(QString);
+  void storageUnitRemoved(StorageUnit*);
 
 
 public slots:

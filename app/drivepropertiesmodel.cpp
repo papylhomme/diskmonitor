@@ -28,38 +28,24 @@ DrivePropertiesModel::~DrivePropertiesModel()
 /*
  *
  */
-void DrivePropertiesModel::updateDrive(Drive* drive)
+Drive* DrivePropertiesModel::getDrive() const
 {
-  beginResetModel();
-  this -> drive = drive;
-  attributes = drive -> getAttributes();
-  endResetModel();
-}
-
-
-
-
-/*
- *
- */
-Drive* DrivePropertiesModel::getDrive()
-{
-  return this -> drive;
+  return (Drive*) this -> unit;
 }
 
 
 
 /*
- *
+ * Handler when StorageUnitPropertiesModel refresh the underlying unit
  */
-void DrivePropertiesModel::refreshAll()
+void DrivePropertiesModel::updateInternalState()
 {
-  if(drive != NULL) {
-    beginResetModel();
-    drive -> update();
+  Drive* drive = getDrive();
+
+  if(drive != NULL)
     attributes = drive -> getAttributes();
-    endResetModel();
-  }
+  else
+    attributes.clear();
 }
 
 
@@ -88,7 +74,7 @@ int DrivePropertiesModel::columnCount(const QModelIndex& /*index*/) const
  */
 QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 {
-  if(!index.isValid() || drive == NULL)
+  if(!index.isValid() || unit == NULL)
     return QVariant();
 
   SmartAttribute attr = attributes.at(index.row());
@@ -146,5 +132,4 @@ QVariant DrivePropertiesModel::headerData(int section, Qt::Orientation orientati
 
   return QVariant();
 }
-
 

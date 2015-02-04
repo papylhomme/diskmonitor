@@ -5,10 +5,16 @@
 #include <QDebug>
 
 
-//API doc at http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html
 
 /*
+ * Initialize a new Drive
  *
+ * @param objectPath The DBus object path to the UDisks2 node represented by this drive
+ * @param device A string identifying the underlying Linux device (/dev/sdX)
+ * @param hasATAIface boolean to set if the drive has the UDisks2 ATA interface present
+ *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.html
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html
  */
 Drive::Drive(QDBusObjectPath objectPath, QString device, bool hasATAIface) : StorageUnit(objectPath, device)
 {
@@ -19,7 +25,7 @@ Drive::Drive(QDBusObjectPath objectPath, QString device, bool hasATAIface) : Sto
 
 
 /*
- *
+ * Destructor
  */
 Drive::~Drive()
 {
@@ -29,9 +35,11 @@ Drive::~Drive()
 
 
 /*
+ * Test if SMART is supported on the drive
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSupported
  */
-bool Drive::isSmartSupported()
+bool Drive::isSmartSupported() const
 {
   return this -> smartSupported;
 }
@@ -39,9 +47,11 @@ bool Drive::isSmartSupported()
 
 
 /*
+ * Test if SMART is enabled on the drive
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartEnabled
  */
-bool Drive::isSmartEnabled()
+bool Drive::isSmartEnabled() const
 {
   return this -> smartEnabled;
 }
@@ -49,9 +59,11 @@ bool Drive::isSmartEnabled()
 
 
 /*
+ * Test if this is a removable drive
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable
  */
-bool Drive::isRemovable()
+bool Drive::isRemovable() const
 {
   return this -> removable;
 }
@@ -59,9 +71,11 @@ bool Drive::isRemovable()
 
 
 /*
+ * Get the cached list of SMART attributes for the drive
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartGetAttributes
  */
-SmartAttributesList Drive::getAttributes()
+const SmartAttributesList& Drive::getSMARTAttributes() const
 {
   return this -> attributes;
 }
@@ -69,12 +83,14 @@ SmartAttributesList Drive::getAttributes()
 
 
 /*
- *
+ * Update the cached property and SMART attributes of this Drive
  */
 void Drive::update()
 {
   attributes.clear();
 
+
+  //retrieve general properties from the DRIVE_IFACE
   QDBusInterface* driveIface = UDisks2Wrapper::getInstance() -> driveIface(objectPath);
   this -> removable = getBoolProperty(driveIface, "Removable");
   delete driveIface;
@@ -85,6 +101,8 @@ void Drive::update()
     return;
   }
 
+
+  //retrieve SMART properties from the ATA_IFACE
   QDBusInterface* ataIface = UDisks2Wrapper::getInstance() -> ataIface(objectPath);
   this -> smartSupported = getBoolProperty(ataIface, "SmartSupported");
   this -> smartEnabled = getBoolProperty(ataIface, "SmartEnabled");
@@ -106,35 +124,3 @@ void Drive::update()
 
   delete ataIface;
 }
-
-
-
-/*
-  QDBusInterface drive_iface(UDISKS2_SERVICE, objectPath.path(), UDISKS2_DRIVE_IFACE, QDBusConnection::systemBus());
-
-  qDebug() << "Drive Properties for drive at " << objectPath.path();
-  qDebug() << drive_iface.property("Vendor");
-  qDebug() << drive_iface.property("Model");
-  qDebug() << drive_iface.property("Serial");
-  qDebug() << drive_iface.property("Id");
-  qDebug() << drive_iface.property("MediaCompatibility");
-  qDebug() << drive_iface.property("MediaCompatibility").toList().size();
-  qDebug() << drive_iface.property("Removable");
-  qDebug() << drive_iface.property("Ejectable");
-
-
-  QDBusInterface ata_iface(UDISKS2_SERVICE, objectPath.path(), UDISKS2_ATA_IFACE, QDBusConnection::systemBus());
-
-  qDebug() << "ATA Properties for drive at " << objectPath.path();
-  qDebug() << ata_iface.property("SmartSupported");
-  qDebug() << ata_iface.property("SmartEnabled");
-  qDebug() << ata_iface.property("SmartUpdated");
-  qDebug() << ata_iface.property("SmartFailing");
-  qDebug() << ata_iface.property("SmartPowerOnSeconds");
-  qDebug() << ata_iface.property("SmartTemperature");
-  qDebug() << ata_iface.property("SmartNumAttributesFailing");
-  qDebug() << ata_iface.property("SmartNumAttributesFailedInThePast");
-  qDebug() << ata_iface.property("SmartNumBadSectors");
-  qDebug() << ata_iface.property("SmartSelfTestStatus");
-  qDebug() << ata_iface.property("SmartSelfPercentRemaining");
-*/

@@ -31,6 +31,9 @@
 
 
 
+/*
+ * Singleton wrapper to access UDisks2 over DBus
+ */
 class UDisks2Wrapper : public QObject
 {
   Q_OBJECT
@@ -41,19 +44,21 @@ public:
   static UDisks2Wrapper* getInstance();
 
   QList<StorageUnit*> listStorageUnits();
-  QDBusInterface* driveIface(QDBusObjectPath);
-  QDBusInterface* ataIface(QDBusObjectPath);
-  QDBusInterface* mdraidIface(QDBusObjectPath);
+  QDBusInterface* driveIface(QDBusObjectPath) const;
+  QDBusInterface* ataIface(QDBusObjectPath) const;
+  QDBusInterface* mdraidIface(QDBusObjectPath) const;
 
 
-  void startMDRaidScrubbing(MDRaid* mdraid);
-  void startDriveSelfTest(Drive* drive);
+  void startMDRaidScrubbing(MDRaid* mdraid) const;
+  void startDriveSelfTest(Drive* drive) const;
 
 private:
   static UDisks2Wrapper* instance;
   UDisks2Wrapper();
 
   void initialize();
+  bool hasATAIface(QDBusObjectPath objectPath) const;
+  StorageUnit* createNewUnitFromBlockDevice(const InterfaceList& interfaces) const;
 
   bool initialized;
   QMap<QDBusObjectPath, StorageUnit*> units;

@@ -13,7 +13,7 @@ UDisks2Wrapper* UDisks2Wrapper::instance = NULL;
 
 
 /*
- *
+ * Initialize the DBus metatypes
  */
 void initQDbusMetaTypes()
 {
@@ -78,7 +78,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, SmartAttribute& s
 
 
 /*
- *
+ * Retrieve an instance of UDisks2Wrapper. ATM not thread-safe
  */
 UDisks2Wrapper* UDisks2Wrapper::getInstance() {
   if(UDisks2Wrapper::instance == NULL)
@@ -90,7 +90,7 @@ UDisks2Wrapper* UDisks2Wrapper::getInstance() {
 
 
 /*
- *
+ * UDisks2Wrapper constructor. Set the connection to UDisks2 to handle device hotplugging
  */
 UDisks2Wrapper::UDisks2Wrapper() : QObject()
 {
@@ -114,11 +114,11 @@ UDisks2Wrapper::UDisks2Wrapper() : QObject()
 
 
 /*
- *
+ * Initialize the internal list of StorageUnit from UDisks2
  */
 void UDisks2Wrapper::initialize()
 {
-  //init internal storage units list
+  //call the manager to retrieve a list of nodes
   QDBusInterface objManagerIface(UDISKS2_SERVICE, UDISKS2_PATH, UDISKS2_OBJECT_IFACE, QDBusConnection::systemBus());
   QDBusReply<ManagedObjectList> res = objManagerIface.call("GetManagedObjects");
 
@@ -129,20 +129,13 @@ void UDisks2Wrapper::initialize()
 
   ManagedObjectList objects = res.value();
 
-  foreach(QDBusObjectPath objectPath, objects.keys()) {
-    if(!objects[objectPath][UDISKS2_BLOCK_IFACE].empty()) {
-      QDBusObjectPath drivePath = objects[objectPath][UDISKS2_BLOCK_IFACE]["Drive"].value<QDBusObjectPath>();
-      if(drivePath.path().size() > 1 && !units.contains(drivePath)) {
-        units[drivePath] = new Drive(drivePath,
-                                     objects[objectPath][UDISKS2_BLOCK_IFACE]["Device"].toString(),
-                                     !objects[drivePath][UDISKS2_ATA_IFACE].empty());
-      }
 
-      QDBusObjectPath mdraidPath = objects[objectPath][UDISKS2_BLOCK_IFACE]["MDRaid"].value<QDBusObjectPath>();
-      if(mdraidPath.path().size() > 1 && !units.contains(mdraidPath)) {
-        units[mdraidPath] = new MDRaid(mdraidPath, objects[objectPath][UDISKS2_BLOCK_IFACE]["Device"].toString());
-      }
-    }
+  //loop over the result to extract existing raid arrays and drives.
+  foreach(QDBusObjectPath objectPath, objects.keys()) {
+    StorageUnit* newUnit = createNewUnitFromBlockDevice(objects[objectPath]);
+
+    if(newUnit != NULL)
+      units[newUnit -> getObjectPath()] = newUnit;
   }
 
   initialized = true;
@@ -151,7 +144,7 @@ void UDisks2Wrapper::initialize()
 
 
 /*
- *
+ * Destructor
  */
 UDisks2Wrapper::~UDisks2Wrapper()
 {
@@ -161,7 +154,10 @@ UDisks2Wrapper::~UDisks2Wrapper()
 
 
 /*
+ * Get the internal cached list of StorageUnit.
  *
+ * The wrapper use lazy initialization, as a result this method can result
+ * in call to DBus the first time it is called
  */
 QList<StorageUnit*> UDisks2Wrapper::listStorageUnits()
 {
@@ -174,9 +170,11 @@ QList<StorageUnit*> UDisks2Wrapper::listStorageUnits()
 
 
 /*
+ * Get a UDISKS2 Drive interface for the given node
  *
+ * @param objectPath The DBus path identifying the node
  */
-QDBusInterface* UDisks2Wrapper::driveIface(QDBusObjectPath objectPath)
+QDBusInterface* UDisks2Wrapper::driveIface(QDBusObjectPath objectPath) const
 {
   return new QDBusInterface(UDISKS2_SERVICE, objectPath.path(), UDISKS2_DRIVE_IFACE, QDBusConnection::systemBus());
 
@@ -185,9 +183,11 @@ QDBusInterface* UDisks2Wrapper::driveIface(QDBusObjectPath objectPath)
 
 
 /*
+ * Get a UDISKS2 Drive_ATA interface for the given node
  *
+ * @param objectPath The DBus path identifying the node
  */
-QDBusInterface* UDisks2Wrapper::ataIface(QDBusObjectPath objectPath)
+QDBusInterface* UDisks2Wrapper::ataIface(QDBusObjectPath objectPath) const
 {
   return new QDBusInterface(UDISKS2_SERVICE, objectPath.path(), UDISKS2_ATA_IFACE, QDBusConnection::systemBus());
 }
@@ -195,9 +195,11 @@ QDBusInterface* UDisks2Wrapper::ataIface(QDBusObjectPath objectPath)
 
 
 /*
+ * Get a UDISKS2 MDRaid interface for the given node
  *
+ * @param objectPath The DBus path identifying the node
  */
-QDBusInterface*UDisks2Wrapper::mdraidIface(QDBusObjectPath objectPath)
+QDBusInterface*UDisks2Wrapper::mdraidIface(QDBusObjectPath objectPath) const
 {
   return new QDBusInterface(UDISKS2_SERVICE, objectPath.path(), UDISKS2_MDRAID_IFACE, QDBusConnection::systemBus());
 }
@@ -205,9 +207,11 @@ QDBusInterface*UDisks2Wrapper::mdraidIface(QDBusObjectPath objectPath)
 
 
 /*
+ * Start a scrubbing operation on the given raid array (sync action = 'check')
  *
+ * @param mdraid The raid array to test
  */
-void UDisks2Wrapper::startMDRaidScrubbing(MDRaid* mdraid)
+void UDisks2Wrapper::startMDRaidScrubbing(MDRaid* mdraid) const
 {
   QDBusInterface mdraid_iface(UDISKS2_SERVICE, mdraid -> getPath(), UDISKS2_MDRAID_IFACE, QDBusConnection::systemBus());
 
@@ -221,9 +225,11 @@ void UDisks2Wrapper::startMDRaidScrubbing(MDRaid* mdraid)
 
 
 /*
+ * Start a SMART SelfTest on the given drive
  *
+ * @param drive The drive to test
  */
-void UDisks2Wrapper::startDriveSelfTest(Drive* drive)
+void UDisks2Wrapper::startDriveSelfTest(Drive* drive) const
 {
   qDebug() << "TODO: implement UDisks2Wrapper::startDriveSelfTest";
 }
@@ -231,33 +237,29 @@ void UDisks2Wrapper::startDriveSelfTest(Drive* drive)
 
 
 /*
+ * Handle UDisks2 "InterfacesAdded" signal to update the internal list of StorageUnit
  *
+ * @param objectPath The node being updated
+ * @param interfaces A map of interfaces being added
  */
 void UDisks2Wrapper::interfacesAdded(const QDBusObjectPath& objectPath, const InterfaceList& interfaces)
 {
   qDebug() << "UDisks2Wrapper => New interfaces added to path '" << objectPath.path() << "'";
 
-  if(!interfaces[UDISKS2_BLOCK_IFACE].empty()) {
-    QDBusObjectPath drivePath = interfaces[UDISKS2_BLOCK_IFACE]["Drive"].value<QDBusObjectPath>();
-    if(drivePath.path().size() > 1 && !units.contains(drivePath)) {
-      units[drivePath] = new Drive(drivePath,
-                                   interfaces[UDISKS2_BLOCK_IFACE]["Device"].toString(),
-                                   !interfaces[UDISKS2_ATA_IFACE].empty());
-      emit storageUnitAdded(units[drivePath]);
-    }
-
-    QDBusObjectPath mdraidPath = interfaces[UDISKS2_BLOCK_IFACE]["MDRaid"].value<QDBusObjectPath>();
-    if(mdraidPath.path().size() > 1 && !units.contains(mdraidPath)) {
-      units[mdraidPath] = new MDRaid(mdraidPath, interfaces[UDISKS2_BLOCK_IFACE]["Device"].toString());
-      emit storageUnitAdded(units[mdraidPath]);
-    }
+  StorageUnit* newUnit = createNewUnitFromBlockDevice(interfaces);
+  if(newUnit != NULL) {
+    units[newUnit -> getObjectPath()] = newUnit;
+    emit storageUnitAdded(newUnit);
   }
 }
 
 
 
 /*
+ * Handle UDisks2 "InterfacesRemoved" signal to update the internal list of StorageUnit
  *
+ * @param objectPath The node being updated
+ * @param interfaces A map of interfaces being added
  */
 void UDisks2Wrapper::interfacesRemoved(const QDBusObjectPath& objectPath, const QStringList& /*interfaces*/)
 {
@@ -271,3 +273,48 @@ void UDisks2Wrapper::interfacesRemoved(const QDBusObjectPath& objectPath, const 
     delete u;
   }
 }
+
+
+
+
+/*
+ * Create a new unit from a block device node
+ *
+ * @param interfaces A list of node interfaces
+ *
+ * here we select block devices (and not directly raid or drive nodes) in order to
+ * retrieve the associated Linux device name (/dev/sdX, /dev/mdX)
+ * TODO: for raid we wan retrieve the associated drives too
+ */
+StorageUnit* UDisks2Wrapper::createNewUnitFromBlockDevice(const InterfaceList& interfaces) const
+{
+  if(!interfaces[UDISKS2_BLOCK_IFACE].empty()) {
+    QDBusObjectPath drivePath = interfaces[UDISKS2_BLOCK_IFACE]["Drive"].value<QDBusObjectPath>();
+    if(drivePath.path().size() > 1 && !units.contains(drivePath)) {
+      return new Drive(drivePath,
+                       interfaces[UDISKS2_BLOCK_IFACE]["Device"].toString(),
+                       hasATAIface(drivePath));
+    }
+
+    QDBusObjectPath mdraidPath = interfaces[UDISKS2_BLOCK_IFACE]["MDRaid"].value<QDBusObjectPath>();
+    if(mdraidPath.path().size() > 1 && !units.contains(mdraidPath)) {
+      return new MDRaid(mdraidPath, interfaces[UDISKS2_BLOCK_IFACE]["Device"].toString());
+    }
+  }
+
+  return NULL;
+}
+
+
+
+/*
+ * Test the presence of the ATA interface on the given path
+ */
+bool UDisks2Wrapper::hasATAIface(QDBusObjectPath objectPath) const
+{
+  QDBusInterface ataIface (UDISKS2_SERVICE, objectPath.path(), UDISKS2_ATA_IFACE, QDBusConnection::systemBus());
+  ataIface.property("SmartSupported");
+
+  return !ataIface.lastError().isValid();
+}
+

@@ -6,7 +6,7 @@
 
 
 /*
- *
+ * Base class for representing an unit of storage in UDisks2
  */
 class StorageUnit : public QObject
 {
@@ -18,13 +18,13 @@ public:
   StorageUnit(const StorageUnit&);
   ~StorageUnit();
 
-  QDBusObjectPath getObjectPath();
-  QString getPath();
-  QString getDevice();
-  QString getName();
+  QDBusObjectPath getObjectPath() const;
+  QString getPath() const;
+  QString getDevice() const;
+  QString getName() const;
 
-  bool isFailing();
-  bool isFailingStatusKnown();
+  bool isFailing() const;
+  bool isFailingStatusKnown() const;
 
 
   virtual void update()
@@ -34,8 +34,8 @@ public:
   }
   //virtual void update() = 0;
 
-  virtual bool isDrive() { return false; }
-  virtual bool isMDRaid() { return false; }
+  virtual bool isDrive() const { return false; }
+  virtual bool isMDRaid() const { return false; }
 
 protected:
   QDBusObjectPath objectPath;
@@ -45,18 +45,11 @@ protected:
   bool failing = false;
   bool failingStatusKnown = false;
 
-  QVariant getProperty(QDBusInterface*, const char*);
-  bool getBoolProperty(QDBusInterface*, const char*);
-  int getIntProperty(QDBusInterface*, const char*);
-  double getDoubleProperty(QDBusInterface*, const char*);
-  QString getStringProperty(QDBusInterface*, const char*);
-
-private:
-
-
-signals:
-
-public slots:
+  QVariant getProperty(QDBusInterface*, const char*) const;
+  bool getBoolProperty(QDBusInterface*, const char*) const;
+  int getIntProperty(QDBusInterface*, const char*) const;
+  double getDoubleProperty(QDBusInterface*, const char*) const;
+  QString getStringProperty(QDBusInterface*, const char*) const;
 };
 
 Q_DECLARE_METATYPE(StorageUnit)

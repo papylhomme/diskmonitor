@@ -5,7 +5,10 @@
 
 
 /*
+ * Initialize a new StorageUnit
  *
+ * @param objectPath The DBus object path to the UDisks2 node represented by this unit
+ * @param device A string identifying the underlying Linux device (/dev/sdX, /dev/mdX)
  */
 StorageUnit::StorageUnit(QDBusObjectPath objectPath, QString device) : QObject()
 {
@@ -17,7 +20,7 @@ StorageUnit::StorageUnit(QDBusObjectPath objectPath, QString device) : QObject()
 
 
 /*
- *
+ * Empty constructor, required by QMETA_TYPE, DO NOT USE !
  */
 StorageUnit::StorageUnit() : QObject()
 {
@@ -27,7 +30,9 @@ StorageUnit::StorageUnit() : QObject()
 
 
 /*
+ * Copy constructor, required by QMETA_TYPE
  *
+ * @param other The unit to copy
  */
 StorageUnit::StorageUnit(const StorageUnit& other) : QObject()
 {
@@ -40,7 +45,7 @@ StorageUnit::StorageUnit(const StorageUnit& other) : QObject()
 
 
 /*
- *
+ * Destructor
  */
 StorageUnit::~StorageUnit()
 {
@@ -50,9 +55,9 @@ StorageUnit::~StorageUnit()
 
 
 /*
- *
+ * Get the DBus path to the UDisks2 node represented by this StorageUnit
  */
-QDBusObjectPath StorageUnit::getObjectPath()
+QDBusObjectPath StorageUnit::getObjectPath() const
 {
   return this -> objectPath;
 }
@@ -60,9 +65,11 @@ QDBusObjectPath StorageUnit::getObjectPath()
 
 
 /*
+ * Get a string representation of the DBus path
  *
+ * @see StorageUnit::getObjectPath()
  */
-QString StorageUnit::getPath()
+QString StorageUnit::getPath() const
 {
   return this -> objectPath.path();
 }
@@ -70,9 +77,9 @@ QString StorageUnit::getPath()
 
 
 /*
- *
+ * Get a string identifying the underlying Linux device (/dev/sdX, /dev/mdX)
  */
-QString StorageUnit::getDevice()
+QString StorageUnit::getDevice() const
 {
   return this -> device;
 }
@@ -80,9 +87,9 @@ QString StorageUnit::getDevice()
 
 
 /*
- *
+ * Get the StorageUnit's name. Depend on the type of unit
  */
-QString StorageUnit::getName()
+QString StorageUnit::getName() const
 {
   return this -> name;
 }
@@ -90,9 +97,9 @@ QString StorageUnit::getName()
 
 
 /*
- *
+ * Test if this unit is considered failing
  */
-bool StorageUnit::isFailing()
+bool StorageUnit::isFailing() const
 {
   return this -> failing;
 }
@@ -100,9 +107,9 @@ bool StorageUnit::isFailing()
 
 
 /*
- *
+ * Test if the failing status of the unit is known
  */
-bool StorageUnit::isFailingStatusKnown()
+bool StorageUnit::isFailingStatusKnown() const
 {
   return this -> failingStatusKnown;
 }
@@ -110,9 +117,12 @@ bool StorageUnit::isFailingStatusKnown()
 
 
 /*
+ * Retrieve a property on the UDisks2 node identified by name
  *
+ * @param iface The DBus interface containing the property
+ * @param name The name of the property to retrieve
  */
-QVariant StorageUnit::getProperty(QDBusInterface* iface, const char* name)
+QVariant StorageUnit::getProperty(QDBusInterface* iface, const char* name) const
 {
   QVariant prop = iface -> property(name);
   if(!prop.isValid())
@@ -126,9 +136,9 @@ QVariant StorageUnit::getProperty(QDBusInterface* iface, const char* name)
 
 
 /*
- *
+ * Convenience wrapper around StorageUnit::getProperty() for bool type
  */
-bool StorageUnit::getBoolProperty(QDBusInterface* iface, const char* name)
+bool StorageUnit::getBoolProperty(QDBusInterface* iface, const char* name) const
 {
   return getProperty(iface, name).toBool();
 }
@@ -136,9 +146,9 @@ bool StorageUnit::getBoolProperty(QDBusInterface* iface, const char* name)
 
 
 /*
- *
+ * Convenience wrapper around StorageUnit::getProperty() for int type
  */
-int StorageUnit::getIntProperty(QDBusInterface* iface, const char* name)
+int StorageUnit::getIntProperty(QDBusInterface* iface, const char* name) const
 {
   return getProperty(iface, name).toInt();
 }
@@ -146,9 +156,9 @@ int StorageUnit::getIntProperty(QDBusInterface* iface, const char* name)
 
 
 /*
- *
+ * Convenience wrapper around StorageUnit::getProperty() for double type
  */
-double StorageUnit::getDoubleProperty(QDBusInterface* iface, const char* name)
+double StorageUnit::getDoubleProperty(QDBusInterface* iface, const char* name) const
 {
   return getProperty(iface, name).toDouble();
 }
@@ -156,9 +166,9 @@ double StorageUnit::getDoubleProperty(QDBusInterface* iface, const char* name)
 
 
 /*
- *
+ * Convenience wrapper around StorageUnit::getProperty() for string type
  */
-QString StorageUnit::getStringProperty(QDBusInterface* iface, const char* name)
+QString StorageUnit::getStringProperty(QDBusInterface* iface, const char* name) const
 {
   return getProperty(iface, name).toString();
 }

@@ -4,6 +4,10 @@
 #include "storageunit.h"
 #include "dbus_metatypes.h"
 
+
+/*
+ * Represent a Drive node in UDisks2
+ */
 class Drive : public StorageUnit
 {
   Q_OBJECT
@@ -13,14 +17,14 @@ public:
   explicit Drive(QDBusObjectPath objectPath, QString device, bool hasATAIface);
   ~Drive();
 
-  bool isSmartSupported();
-  bool isSmartEnabled();
-  bool isRemovable();
+  bool isSmartSupported() const;
+  bool isSmartEnabled() const;
+  bool isRemovable() const;
 
-  SmartAttributesList getAttributes();
+  const SmartAttributesList& getSMARTAttributes() const;
 
   virtual void update();
-  virtual bool isDrive() { return true; }
+  virtual bool isDrive() const { return true; }
 
 protected:
   bool smartSupported;

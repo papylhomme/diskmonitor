@@ -5,16 +5,24 @@
 #include <QtDBus>
 
 
+/*
+ * A map of interface (key) with there properties (value)
+ */
 typedef QMap<QString,QVariantMap> InterfaceList;
 Q_DECLARE_METATYPE(InterfaceList)
 
+
+
+/*
+ * A map of node (key) with there interfaces
+ */
 typedef QMap<QDBusObjectPath, InterfaceList> ManagedObjectList;
 Q_DECLARE_METATYPE(ManagedObjectList)
 
 
 
 /*
- *
+ * Structure mapping a SMART attribute on UDisks2
  */
 struct SmartAttribute {
   quint8 id;
@@ -29,6 +37,11 @@ struct SmartAttribute {
 };
 Q_DECLARE_METATYPE(SmartAttribute)
 
+
+
+/*
+ * List of SMART attribute
+ */
 typedef QList<SmartAttribute> SmartAttributesList;
 Q_DECLARE_METATYPE(SmartAttributesList)
 

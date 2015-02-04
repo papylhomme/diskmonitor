@@ -5,10 +5,13 @@
 #include <QDebug>
 
 
-//UDisks2 API doc at http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html
-
 /*
+ * Initialize a new MDRaid
  *
+ * @param objectPath The DBus object path to the UDisks2 node represented by this mdraid
+ * @param device A string identifying the underlying Linux device (/dev/mdX)
+ *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html
  */
 MDRaid::MDRaid(QDBusObjectPath objectPath, QString device) : StorageUnit(objectPath, device)
 {
@@ -17,7 +20,7 @@ MDRaid::MDRaid(QDBusObjectPath objectPath, QString device) : StorageUnit(objectP
 
 
 /*
- *
+ * Destructor
  */
 MDRaid::~MDRaid()
 {
@@ -27,13 +30,16 @@ MDRaid::~MDRaid()
 
 
 /*
- *
+ * Update the cached property of this MDRaid
  */
 void MDRaid::update()
 {
   QDBusInterface* raidIface = UDisks2Wrapper::getInstance() -> mdraidIface(objectPath);
 
   this -> failing = getBoolProperty(raidIface, "Degraded");
+  //only set failingStatusKnown if DBus access hasn't failed
+  this -> failingStatusKnown = !raidIface -> lastError().isValid();
+
   this -> name = getStringProperty(raidIface,"Name");
   this -> uuid = getStringProperty(raidIface,"UUID");
   this -> level = getStringProperty(raidIface,"Level");
@@ -44,9 +50,6 @@ void MDRaid::update()
   this -> syncRemainingTime = getIntProperty(raidIface,"SyncRemainingTime");
 
   //TODO: handle property ActiveDevices => a(oiasta{sv})
-
-  //TODO: only set failingStatusKnown if DBus access hasn't failed
-  this -> failingStatusKnown = true;
 
   delete raidIface;
 }
@@ -62,9 +65,11 @@ void MDRaid::update()
 
 
 /*
+ * Get the number of devices participating on the raid array
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.NumDevices
  */
-int MDRaid::getNumDevices()
+int MDRaid::getNumDevices() const
 {
   return this -> numDevices;
 }
@@ -72,9 +77,11 @@ int MDRaid::getNumDevices()
 
 
 /*
+ * Get the size of the raid array, 0 if unknown
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.Size
  */
-int MDRaid::getSize()
+int MDRaid::getSize() const
 {
   return this -> size;
 }
@@ -82,9 +89,12 @@ int MDRaid::getSize()
 
 
 /*
+ * Get the remaining time (in milliseconds) to finish the current sync operation.
+ * Return 0 if the amount of time is unknown or if there is no sync operation in progress
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.SyncRemainingTime
  */
-int MDRaid::getSyncRemainingTime()
+int MDRaid::getSyncRemainingTime() const
 {
   return this -> syncRemainingTime;
 }
@@ -92,9 +102,12 @@ int MDRaid::getSyncRemainingTime()
 
 
 /*
+ * Get the proportion of sync completed, between 0 and 1.
+ * Return 0 if no sync operation is in progress
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.SyncCompleted
  */
-double MDRaid::getSyncCompleted()
+double MDRaid::getSyncCompleted() const
 {
   return this -> syncCompleted;
 }
@@ -102,9 +115,11 @@ double MDRaid::getSyncCompleted()
 
 
 /*
+ * Get the UUID of the raid array
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.UUID
  */
-QString MDRaid::getUUID()
+const QString& MDRaid::getUUID() const
 {
   return this -> uuid;
 }
@@ -112,9 +127,11 @@ QString MDRaid::getUUID()
 
 
 /*
+ * Get the raid level of the array (raid0, raid1, ...)
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.Level
  */
-QString MDRaid::getLevel()
+const QString& MDRaid::getLevel() const
 {
   return this -> level;
 }
@@ -122,9 +139,13 @@ QString MDRaid::getLevel()
 
 
 /*
+ * Get the current sync action on the raid array. Can be 'check', 'repair' or 'idle' if there
+ * is no current sync action. Can be empty if the raid array if not running or if there is no
+ * redundancy
  *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.SyncAction
  */
-QString MDRaid::getSyncAction()
+const QString& MDRaid::getSyncAction() const
 {
   return this -> syncAction;
 }

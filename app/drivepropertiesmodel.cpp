@@ -43,7 +43,7 @@ void DrivePropertiesModel::updateInternalState()
   Drive* drive = getDrive();
 
   if(drive != NULL)
-    attributes = drive -> getAttributes();
+    attributes = drive -> getSMARTAttributes();
   else
     attributes.clear();
 }

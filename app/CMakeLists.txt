@@ -1,6 +1,7 @@
 set(APP_SRCS
   main.cpp
   mainwindow.cpp
+  storageunitpanel.cpp
   drivepanel.cpp
   mdraidpanel.cpp
   storagedatamodel.cpp

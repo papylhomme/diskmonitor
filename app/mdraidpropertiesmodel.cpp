@@ -1,12 +1,15 @@
 #include "mdraidpropertiesmodel.h"
 
+#include <QFont>
+
+
 
 /*
  *
  */
 MDRaidPropertiesModel::MDRaidPropertiesModel()
 {
-  names << "UUID" << "Level" << "Devices number" <<
+  headerLabels << "UUID" << "Level" << "Devices number" <<
            "Size" << "Sync action" << "Sync completed" <<
            "Sync remaining time";
 }
@@ -38,7 +41,7 @@ MDRaid* MDRaidPropertiesModel::getMDRaid() const
  */
 int MDRaidPropertiesModel::rowCount(const QModelIndex& /*index*/) const
 {
-  return names.size();
+  return headerLabels.size();
 }
 
 
@@ -47,7 +50,7 @@ int MDRaidPropertiesModel::rowCount(const QModelIndex& /*index*/) const
  */
 int MDRaidPropertiesModel::columnCount(const QModelIndex& /*index*/) const
 {
-  return 2;
+  return 1;
 }
 
 
@@ -63,10 +66,7 @@ QVariant MDRaidPropertiesModel::data(const QModelIndex& index, int role) const
   if(role == Qt::DisplayRole) {
     MDRaid* mdraid = getMDRaid();
 
-    if(index.column() == 0)
-      return names[index.row()];
-
-    else if(index.column() == 1 && mdraid != NULL) {
+    if(index.column() == 0 && mdraid != NULL) {
       switch(index.row()) {
         case 0: return QVariant(mdraid -> getUUID()); break;
         case 1: return QVariant(mdraid -> getLevel()); break;
@@ -77,6 +77,28 @@ QVariant MDRaidPropertiesModel::data(const QModelIndex& index, int role) const
         case 6: return QVariant(mdraid -> getSyncRemainingTime()); break;
       }
     }
+  }
+
+  return QVariant();
+}
+
+
+
+/*
+ *
+ */
+QVariant MDRaidPropertiesModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+  if(orientation != Qt::Vertical)
+    return QVariant();
+
+  if(role == Qt::DisplayRole) {
+      return QVariant(headerLabels.at(section));
+
+  } else if(role == Qt::FontRole) {
+    QFont font;
+    font.setBold(true);
+    return QVariant(font);
   }
 
   return QVariant();

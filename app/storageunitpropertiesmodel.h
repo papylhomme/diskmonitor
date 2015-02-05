@@ -13,7 +13,7 @@ public:
     StorageUnitPropertiesModel();
     ~StorageUnitPropertiesModel();
 
-    void updateStorageUnit(StorageUnit* unit);
+    void setStorageUnit(StorageUnit* unit);
     StorageUnit* getStorageUnit();
 
     void refreshAll();

@@ -1,10 +1,9 @@
 #ifndef MDRAIDPANEL_H
 #define MDRAIDPANEL_H
 
-#include <QWidget>
-#include <QTimer>
 
 #include "mdraidpropertiesmodel.h"
+#include "storageunitpanel.h"
 
 
 
@@ -12,7 +11,7 @@ namespace Ui {
 class MDRaidPanel;
 }
 
-class MDRaidPanel : public QWidget
+class MDRaidPanel : public StorageUnitPanel
 {
   Q_OBJECT
 
@@ -21,16 +20,16 @@ public:
   ~MDRaidPanel();
 
   void setMDRaid(MDRaid* raid);
+  MDRaid* getMDRaid();
+
+protected:
+  virtual void updateUI();
+  virtual bool isOperationRunning();
 
 private:
   Ui::MDRaidPanel* ui;
-  MDRaidPropertiesModel* model;
-  QTimer* autorefreshTimer;
-
-  void updateAutoRefresh();
 
 public slots:
-  void refresh();
   void startScrubbing();
 };
 

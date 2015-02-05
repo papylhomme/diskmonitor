@@ -228,10 +228,24 @@ void UDisks2Wrapper::startMDRaidScrubbing(MDRaid* mdraid) const
  * Start a SMART SelfTest on the given drive
  *
  * @param drive The drive to test
+ * @param type The type of SelfTest to run
  */
-void UDisks2Wrapper::startDriveSelfTest(Drive* drive) const
+void UDisks2Wrapper::startDriveSelfTest(Drive* drive, SMARTSelfTestType type) const
 {
-  qDebug() << "TODO: implement UDisks2Wrapper::startDriveSelfTest";
+  QString strType;
+  switch(type) {
+    case ShortSelfTest: strType = "short"; break;
+    case LongSelfTest: strType = "long"; break;
+    default: strType = "short"; break;
+  }
+
+  QDBusInterface drive_iface(UDISKS2_SERVICE, drive -> getPath(), UDISKS2_ATA_IFACE, QDBusConnection::systemBus());
+
+  qDebug() << "Request " << strType << " selftest on Drive '" << drive -> getPath() << "'";
+  QDBusReply<void> res = drive_iface.call("SmartSelftestStart", strType, QVariantMap());
+
+  if(!res.isValid())
+    qWarning() << "Error sending request to start SMART SelfTest on drive '" << drive -> getPath() << "' : " << res.error();
 }
 
 

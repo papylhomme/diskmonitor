@@ -59,7 +59,7 @@
           <item>
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Status is:</string>
+             <string>General status is:</string>
             </property>
            </widget>
           </item>

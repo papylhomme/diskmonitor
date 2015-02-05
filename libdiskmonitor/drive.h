@@ -17,9 +17,14 @@ public:
   explicit Drive(QDBusObjectPath objectPath, QString device, bool hasATAIface);
   ~Drive();
 
+  bool isRemovable() const;
+
   bool isSmartSupported() const;
   bool isSmartEnabled() const;
-  bool isRemovable() const;
+
+  int getSelfTestPercentRemaining() const;
+
+  const QString& getSelfTestStatus() const;
 
   const SmartAttributesList& getSMARTAttributes() const;
 
@@ -27,11 +32,15 @@ public:
   virtual bool isDrive() const { return true; }
 
 protected:
+  bool removable;
+  bool hasATAIface;
+
   bool smartSupported;
   bool smartEnabled;
-  bool removable;
 
-  bool hasATAIface;
+  int selfTestPercentRemaining;
+
+  QString selfTestStatus;
 
   SmartAttributesList attributes;
 

@@ -10,21 +10,16 @@
  *
  */
 MDRaidPanel::MDRaidPanel(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::MDRaidPanel)
+  StorageUnitPanel(new MDRaidPropertiesModel(), parent),
+  ui(new Ui::MDRaidPanel)
 {
   ui -> setupUi(this);
 
-  this -> autorefreshTimer = new QTimer();
-  this -> model = new MDRaidPropertiesModel();
-
-  ui -> tableView -> verticalHeader() -> hide();
   ui -> tableView -> horizontalHeader() -> hide();
   ui -> tableView -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
   ui -> tableView -> horizontalHeader() -> setStretchLastSection(true);
   ui -> tableView -> setModel(this -> model);
 
-  connect(autorefreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
   connect(ui -> startScrubButton, SIGNAL(clicked()), this, SLOT(startScrubbing()));
 }
 
@@ -35,7 +30,6 @@ MDRaidPanel::MDRaidPanel(QWidget *parent) :
  */
 MDRaidPanel::~MDRaidPanel()
 {
-  delete model;
   delete ui;
 }
 
@@ -46,8 +40,7 @@ MDRaidPanel::~MDRaidPanel()
  */
 void MDRaidPanel::setMDRaid(MDRaid* raid)
 {
-  model -> updateStorageUnit(raid);
-  updateAutoRefresh();
+  this -> setStorageUnit(raid);
 }
 
 
@@ -55,21 +48,9 @@ void MDRaidPanel::setMDRaid(MDRaid* raid)
 /*
  *
  */
-void MDRaidPanel::updateAutoRefresh()
+MDRaid* MDRaidPanel::getMDRaid()
 {
-  MDRaid* currentMDRaid = model -> getMDRaid();
-
-  if(currentMDRaid == NULL)
-    autorefreshTimer -> stop();
-
-  else {
-    QString currentSyncAction = model -> getMDRaid() -> getSyncAction();
-    if(autorefreshTimer -> isActive() && currentSyncAction == "idle")
-      autorefreshTimer -> stop();
-
-    else if(!autorefreshTimer -> isActive() && (currentSyncAction == "check" || currentSyncAction == "repair"))
-      autorefreshTimer -> start(1000);
-  }
+  return (MDRaid*) this -> model -> getStorageUnit();
 }
 
 
@@ -77,10 +58,28 @@ void MDRaidPanel::updateAutoRefresh()
 /*
  *
  */
-void MDRaidPanel::refresh()
+void MDRaidPanel::updateUI()
 {
-  model -> refreshAll();
-  updateAutoRefresh();
+  bool running = isOperationRunning();
+  MDRaid* raid = getMDRaid();
+
+  ui -> progressBar -> setEnabled(running);
+  ui -> startScrubButton -> setEnabled(!running);
+
+  double completed = raid -> getSyncCompleted();
+  ui -> progressBar -> setValue(completed * 100);
+}
+
+
+
+/*
+ *
+ */
+bool MDRaidPanel::isOperationRunning()
+{
+  MDRaid* raid = getMDRaid();
+
+  return !(raid == NULL || raid -> getSyncAction() == "idle");
 }
 
 
@@ -90,10 +89,11 @@ void MDRaidPanel::refresh()
  */
 void MDRaidPanel::startScrubbing()
 {
-  MDRaid* currentMDRaid = model -> getMDRaid();
+  MDRaid* currentMDRaid = getMDRaid();
 
   if(currentMDRaid != NULL) {
     UDisks2Wrapper::getInstance() -> startMDRaidScrubbing(currentMDRaid);
-    refresh();
+    //delay the refresh as UDisks2 may take some time to update the status
+    QTimer::singleShot(2000, this, SLOT(refresh()));
   }
 }

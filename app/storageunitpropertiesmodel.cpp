@@ -27,7 +27,7 @@ StorageUnitPropertiesModel::~StorageUnitPropertiesModel()
 /*
  *
  */
-void StorageUnitPropertiesModel::updateStorageUnit(StorageUnit* unit)
+void StorageUnitPropertiesModel::setStorageUnit(StorageUnit* unit)
 {
   beginResetModel();
   this -> unit = unit;
@@ -53,7 +53,7 @@ StorageUnit*StorageUnitPropertiesModel::getStorageUnit()
 void StorageUnitPropertiesModel::storageUnitRemoved(StorageUnit* unit)
 {
   if(this -> unit != NULL && this -> unit -> getObjectPath() == unit -> getObjectPath())
-    updateStorageUnit(NULL);
+    setStorageUnit(NULL);
 }
 
 

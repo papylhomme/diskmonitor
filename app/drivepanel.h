@@ -1,16 +1,16 @@
 #ifndef DRIVEPANEL_H
 #define DRIVEPANEL_H
 
-#include <QWidget>
-
+#include "udisks2wrapper.h"
 #include "drivepropertiesmodel.h"
+#include "storageunitpanel.h"
 
 
 namespace Ui {
 class DrivePanel;
 }
 
-class DrivePanel : public QWidget
+class DrivePanel : public StorageUnitPanel
 {
     Q_OBJECT
 
@@ -19,14 +19,19 @@ public:
     ~DrivePanel();
 
   void setDrive(Drive* drive);
-  void refresh();
+  Drive* getDrive();
+
+protected:
+  virtual void updateUI();
+  virtual bool isOperationRunning();
 
 private:
     Ui::DrivePanel *ui;
-    DrivePropertiesModel* model;
 
 public slots:
-    void startSelfTest();
+    void startShortSelfTest();
+    void startLongSelfTest();
+    void startSelfTest(UDisks2Wrapper::SMARTSelfTestType type);
 };
 
 #endif // DRIVEPANEL_H

@@ -39,6 +39,16 @@ class UDisks2Wrapper : public QObject
   Q_OBJECT
 
 public:
+
+  /*
+   * Types of SMART SelfTest
+   */
+  enum SMARTSelfTestType {
+    ShortSelfTest,
+    LongSelfTest
+  };
+
+
   ~UDisks2Wrapper();
 
   static UDisks2Wrapper* getInstance();
@@ -50,7 +60,7 @@ public:
 
 
   void startMDRaidScrubbing(MDRaid* mdraid) const;
-  void startDriveSelfTest(Drive* drive) const;
+  void startDriveSelfTest(Drive* drive, SMARTSelfTestType type) const;
 
 private:
   static UDisks2Wrapper* instance;

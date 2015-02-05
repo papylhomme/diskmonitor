@@ -35,6 +35,18 @@ Drive::~Drive()
 
 
 /*
+ * Test if this is a removable drive
+ *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable
+ */
+bool Drive::isRemovable() const
+{
+  return this -> removable;
+}
+
+
+
+/*
  * Test if SMART is supported on the drive
  *
  * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSupported
@@ -59,13 +71,36 @@ bool Drive::isSmartEnabled() const
 
 
 /*
- * Test if this is a removable drive
+ * Get the remaining percentage of the running self test, or -1 if unknown
  *
- * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestPercentRemaining
  */
-bool Drive::isRemovable() const
+int Drive::getSelfTestPercentRemaining() const
 {
-  return this -> removable;
+  return this -> selfTestPercentRemaining;
+}
+
+
+
+/*
+ * Get the status of the last (or running) self test
+ *
+ * success:  Last self-test was a success (or never ran).
+ * aborted:  Last self-test was aborted.
+ * interrupted:  Last self-test was interrupted.
+ * fatal:  Last self-test did not complete.
+ * error_unknown:  Last self-test failed (Unknown).
+ * error_electrical:  Last self-test failed (Electrical).
+ * error_servo:  Last self-test failed (Servo).
+ * error_read:  Last self-test failed (Read).
+ * error_handling:  Last self-test failed (Damage).
+ * inprogress:  Self-test is currently in progress.
+ *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestStatus
+ */
+const QString& Drive::getSelfTestStatus() const
+{
+  return this -> selfTestStatus;
 }
 
 
@@ -117,6 +152,9 @@ void Drive::update()
       qCritical() << "Error calling SmartGetAttributes for drive '" << getPath() << "':" << res.error();
     else
       attributes = res.value();
+
+    this -> selfTestStatus = getStringProperty(ataIface, "SmartSelftestStatus");
+    this -> selfTestPercentRemaining = getIntProperty(ataIface, "SmartSelftestPercentRemaining");
 
   } else {
     this -> failingStatusKnown = false;

@@ -3,6 +3,8 @@
 
 #include "storageunit.h"
 
+#include "dbus_metatypes.h"
+
 
 /*
  * Represent a MDRaid device node in UDisks2
@@ -25,21 +27,25 @@ public:
   const QString& getLevel() const;
   const QString& getSyncAction() const;
 
+  const MDRaidMemberList& getMembers() const;
+
   virtual void update();
 
 
   virtual bool isMDRaid() const { return true; }
 
 protected:
-  int numDevices;
-  int size;
-  int syncRemainingTime;
+  int numDevices = 0;
+  int size = 0;
+  int syncRemainingTime = 0;
 
-  double syncCompleted;
+  double syncCompleted = 0;
 
   QString uuid;
   QString level;
   QString syncAction;
+
+  MDRaidMemberList members;
 };
 
 #endif // MDRAID_H

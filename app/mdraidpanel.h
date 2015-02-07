@@ -3,6 +3,7 @@
 
 
 #include "mdraidpropertiesmodel.h"
+#include "mdraidmembersmodel.h"
 #include "storageunitpanel.h"
 
 
@@ -28,6 +29,8 @@ protected:
 
 private:
   Ui::MDRaidPanel* ui;
+
+  MDRaidMembersModel* modelMembers;
 
 public slots:
   void startScrubbing();

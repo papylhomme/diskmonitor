@@ -5,6 +5,12 @@
 
 #include "storageunit.h"
 
+
+/*
+ * Base class to implement Qt models for a storage unit.
+ *
+ * Handle unit removal from backend and update of the internal state
+ */
 class StorageUnitPropertiesModel : public QAbstractTableModel
 {
   Q_OBJECT
@@ -19,7 +25,7 @@ public:
     void refreshAll();
 
 protected:
-    StorageUnit* unit;
+    StorageUnit* unit = NULL;
     virtual void updateInternalState() { }
 
 public slots:

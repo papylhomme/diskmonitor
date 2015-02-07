@@ -2,7 +2,7 @@
 
 
 /*
- *
+ * Constructor
  */
 StorageUnitPanel::StorageUnitPanel(StorageUnitPropertiesModel* model, QWidget* parent) : QWidget(parent)
 {
@@ -15,7 +15,7 @@ StorageUnitPanel::StorageUnitPanel(StorageUnitPropertiesModel* model, QWidget* p
 
 
 /*
- *
+ * Destructor
  */
 StorageUnitPanel::~StorageUnitPanel()
 {
@@ -25,7 +25,7 @@ StorageUnitPanel::~StorageUnitPanel()
 
 
 /*
- *
+ * Set the StorageUnit. Call updateUI and handle auto-refresh if needed
  */
 void StorageUnitPanel::setStorageUnit(StorageUnit* unit)
 {
@@ -37,7 +37,7 @@ void StorageUnitPanel::setStorageUnit(StorageUnit* unit)
 
 
 /*
- *
+ * Refresh the content of the panel (by refreshing the model's StorageUnit)
  */
 void StorageUnitPanel::refresh()
 {
@@ -49,7 +49,7 @@ void StorageUnitPanel::refresh()
 
 
 /*
- *
+ * Auto-refresh enabling/disabling routine
  */
 void StorageUnitPanel::updateAutoRefreshTimer()
 {

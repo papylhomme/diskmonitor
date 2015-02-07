@@ -46,5 +46,34 @@ typedef QList<SmartAttribute> SmartAttributesList;
 Q_DECLARE_METATYPE(SmartAttributesList)
 
 
+extern QDBusArgument &operator<<(QDBusArgument &argument, const SmartAttribute& smartAttribue);
+extern const QDBusArgument &operator>>(const QDBusArgument &argument, SmartAttribute& smartAttribue);
+
+
+
+/*
+ * Structure mapping a MDRaid member in UDisks2
+ */
+struct MDRaidMember {
+   QDBusObjectPath block;
+   qint32 slot;
+   QStringList state;
+   qint64 numReadErrors;
+   QVariantMap expansion;
+};
+Q_DECLARE_METATYPE(MDRaidMember)
+
+
+
+/*
+ * List of MDRaid member
+ */
+typedef QList<MDRaidMember> MDRaidMemberList;
+Q_DECLARE_METATYPE(MDRaidMemberList)
+
+
+extern QDBusArgument &operator<<(QDBusArgument &argument, const MDRaidMember& smartAttribue);
+extern const QDBusArgument &operator>>(const QDBusArgument &argument, MDRaidMember& smartAttribue);
+
 
 #endif // METATYPES_H

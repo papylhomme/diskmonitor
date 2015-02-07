@@ -15,10 +15,16 @@ MDRaidPanel::MDRaidPanel(QWidget *parent) :
 {
   ui -> setupUi(this);
 
-  ui -> tableView -> horizontalHeader() -> hide();
-  ui -> tableView -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
-  ui -> tableView -> horizontalHeader() -> setStretchLastSection(true);
-  ui -> tableView -> setModel(this -> model);
+  ui -> attributesView -> verticalHeader() -> hide();
+  ui -> attributesView -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+  ui -> attributesView -> horizontalHeader() -> setStretchLastSection(true);
+  ui -> attributesView -> setModel(this -> model);
+
+  modelMembers = new MDRaidMembersModel();
+  ui -> membersView -> verticalHeader() -> hide();
+  ui -> membersView -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+  ui -> membersView -> horizontalHeader() -> setStretchLastSection(true);
+  ui -> membersView -> setModel(modelMembers);
 
   connect(ui -> startScrubButton, SIGNAL(clicked()), this, SLOT(startScrubbing()));
 }
@@ -41,6 +47,7 @@ MDRaidPanel::~MDRaidPanel()
 void MDRaidPanel::setMDRaid(MDRaid* raid)
 {
   this -> setStorageUnit(raid);
+  this -> modelMembers -> setStorageUnit(raid);
 }
 
 
@@ -68,6 +75,8 @@ void MDRaidPanel::updateUI()
 
   double completed = raid -> getSyncCompleted();
   ui -> progressBar -> setValue(completed * 100);
+
+  this -> modelMembers -> setStorageUnit(raid);
 }
 
 

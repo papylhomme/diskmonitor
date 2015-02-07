@@ -1,5 +1,5 @@
-#ifndef MDRAIDPROPERTIESMODEL_H
-#define MDRAIDPROPERTIESMODEL_H
+#ifndef MDRAIDMEMBERSMODEL_H
+#define MDRAIDMEMBERSMODEL_H
 
 #include "storageunitpropertiesmodel.h"
 
@@ -7,15 +7,15 @@
 
 
 /*
- * A Qt model to display raid attributes in a table
+ * A Qt model to display raid members in a table
  */
-class MDRaidPropertiesModel : public StorageUnitPropertiesModel
+class MDRaidMembersModel : public StorageUnitPropertiesModel
 {
   Q_OBJECT
 
 public:
-  MDRaidPropertiesModel();
-  ~MDRaidPropertiesModel();
+  MDRaidMembersModel();
+  ~MDRaidMembersModel();
 
   MDRaid* getMDRaid() const;
 
@@ -25,8 +25,13 @@ public:
   virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
   virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
+protected:
+  virtual void updateInternalState();
+
 private:
   QStringList headerLabels;
+  MDRaidMemberList members;
+
 };
 
-#endif // MDRAIDPROPERTIESMODEL_H
+#endif // MDRAIDMEMBERSMODEL_H

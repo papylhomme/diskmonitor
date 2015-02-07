@@ -18,6 +18,7 @@
 
 #define UDISKS2_SERVICE "org.freedesktop.UDisks2"
 
+#define DBUS_PROPERTIES_IFACE "org.freedesktop.DBus.Properties"
 #define UDISKS2_OBJECT_IFACE "org.freedesktop.DBus.ObjectManager"
 #define UDISKS2_DRIVE_IFACE "org.freedesktop.UDisks2.Drive"
 #define UDISKS2_ATA_IFACE "org.freedesktop.UDisks2.Drive.Ata"
@@ -54,13 +55,14 @@ public:
   static UDisks2Wrapper* getInstance();
 
   QList<StorageUnit*> listStorageUnits();
+  void startMDRaidScrubbing(MDRaid* mdraid) const;
+  void startDriveSelfTest(Drive* drive, SMARTSelfTestType type) const;
+
+  QDBusInterface* propertiesIface(QDBusObjectPath) const;
   QDBusInterface* driveIface(QDBusObjectPath) const;
   QDBusInterface* ataIface(QDBusObjectPath) const;
   QDBusInterface* mdraidIface(QDBusObjectPath) const;
 
-
-  void startMDRaidScrubbing(MDRaid* mdraid) const;
-  void startDriveSelfTest(Drive* drive, SMARTSelfTestType type) const;
 
 private:
   static UDisks2Wrapper* instance;

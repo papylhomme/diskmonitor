@@ -40,16 +40,29 @@ void MDRaid::update()
   //only set failingStatusKnown if DBus access hasn't failed
   this -> failingStatusKnown = !raidIface -> lastError().isValid();
 
-  this -> name = getStringProperty(raidIface,"Name");
-  this -> uuid = getStringProperty(raidIface,"UUID");
-  this -> level = getStringProperty(raidIface,"Level");
-  this -> numDevices = getIntProperty(raidIface,"NumDevices");
-  this -> size = getIntProperty(raidIface,"Size");
-  this -> syncAction = getStringProperty(raidIface,"SyncAction");
-  this -> syncCompleted = getDoubleProperty(raidIface,"SyncCompleted");
-  this -> syncRemainingTime = getIntProperty(raidIface,"SyncRemainingTime");
+  this -> name = getStringProperty(raidIface, "Name");
+  this -> uuid = getStringProperty(raidIface, "UUID");
+  this -> level = getStringProperty(raidIface, "Level");
+  this -> numDevices = getIntProperty(raidIface, "NumDevices");
+  this -> size = getIntProperty(raidIface, "Size");
+  this -> syncAction = getStringProperty(raidIface, "SyncAction");
+  this -> syncCompleted = getDoubleProperty(raidIface, "SyncCompleted");
+  this -> syncRemainingTime = getIntProperty(raidIface, "SyncRemainingTime");
 
-  //TODO: handle property ActiveDevices => a(oiasta{sv})
+  QDBusInterface* propIface = UDisks2Wrapper::getInstance() -> propertiesIface(objectPath);
+
+  //handle ActiveDevices properties using DBus Properties interface as a direct read fails
+  members.clear();
+  QDBusMessage reply = propIface -> call("Get", UDISKS2_MDRAID_IFACE, "ActiveDevices");
+  QVariant v = reply.arguments().first();
+  QDBusArgument arg = v.value<QDBusVariant>().variant().value<QDBusArgument>();
+
+  arg.beginArray();
+  while(!arg.atEnd()) {
+    MDRaidMember m;
+    arg >> m;
+    members << m;
+  }
 
   delete raidIface;
 }
@@ -148,4 +161,14 @@ const QString& MDRaid::getLevel() const
 const QString& MDRaid::getSyncAction() const
 {
   return this -> syncAction;
+}
+
+
+
+/*
+ * Get a list of the raid array members;
+ */
+const MDRaidMemberList&MDRaid::getMembers() const
+{
+  return this -> members;
 }

@@ -9,7 +9,9 @@
 
 
 /*
+ * Base class to implement a panel displaying information for a StorageUnit
  *
+ * Handle refreshing the internal data, and auto refresh during a running operation
  */
 class StorageUnitPanel : public QWidget
 {
@@ -19,7 +21,7 @@ public:
   ~StorageUnitPanel();
 
 protected:
-  StorageUnitPropertiesModel* model;
+  StorageUnitPropertiesModel* model = NULL;
 
   void setStorageUnit(StorageUnit* unit);
   virtual bool isOperationRunning() { return false; }

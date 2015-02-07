@@ -32,13 +32,13 @@ public:
   virtual bool isDrive() const { return true; }
 
 protected:
-  bool removable;
-  bool hasATAIface;
+  bool removable = false;
+  bool hasATAIface = false;
 
-  bool smartSupported;
-  bool smartEnabled;
+  bool smartSupported = false;
+  bool smartEnabled = false;
 
-  int selfTestPercentRemaining;
+  int selfTestPercentRemaining = 0;
 
   QString selfTestStatus;
 

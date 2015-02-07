@@ -12,7 +12,7 @@
  */
 DrivePropertiesModel::DrivePropertiesModel()
 {
-  headerLabels << "Id" << "Name" << "Flags" << "Value" << "Worst" << "Threshold" << "Pretty";
+  headerLabels << "Id" << "Name" << "Flags" << "Worst" << "Threshold" << "Normalized value" << "Value";
   sensitiveAttributes << 1 << 5 << 7 << 196 << 197 << 198;
 }
 
@@ -105,11 +105,11 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
     case 0: return QVariant(attr.id); break;
     case 1: return QVariant(attr.name); break;
     case 2: return QVariant(attr.flags); break;
-    case 3: return QVariant(attr.value); break;
-    case 4: return QVariant(attr.worst); break;
-    case 5: return QVariant(attr.threshold); break;
+    case 3: return QVariant(attr.worst); break;
+    case 4: return QVariant(attr.threshold); break;
+    case 5: return QVariant(attr.value); break;
     case 6: return humanizeSmartAttribute(attr); break;
-    case 7: return QVariant(attr.pretty_unit); break;
+    //case 7: return QVariant(attr.pretty_unit); break;
     default: return QVariant(); break;
     }
   }

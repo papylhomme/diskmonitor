@@ -5,7 +5,8 @@
 
 
 /*
- *
+ * Constructor. Connect to the UDisks2Wrapper::storageUnitRemoved() signal
+ * to ensure consistency
  */
 StorageUnitPropertiesModel::StorageUnitPropertiesModel()
 {
@@ -15,7 +16,7 @@ StorageUnitPropertiesModel::StorageUnitPropertiesModel()
 
 
 /*
- *
+ * Destructor
  */
 StorageUnitPropertiesModel::~StorageUnitPropertiesModel()
 {
@@ -25,7 +26,7 @@ StorageUnitPropertiesModel::~StorageUnitPropertiesModel()
 
 
 /*
- *
+ * Update the model's storage unit, refreshing the model's internal data
  */
 void StorageUnitPropertiesModel::setStorageUnit(StorageUnit* unit)
 {
@@ -38,7 +39,7 @@ void StorageUnitPropertiesModel::setStorageUnit(StorageUnit* unit)
 
 
 /*
- *
+ * Retrieve the associated StorageUnit. Can be NULL
  */
 StorageUnit*StorageUnitPropertiesModel::getStorageUnit()
 {
@@ -59,7 +60,7 @@ void StorageUnitPropertiesModel::storageUnitRemoved(StorageUnit* unit)
 
 
 /*
- *
+ * Refresh the model's internal data
  */
 void StorageUnitPropertiesModel::refreshAll()
 {

@@ -8,6 +8,7 @@ set(APP_SRCS
   storagedatamodel.cpp
   storageunitpropertiesmodel.cpp
   mdraidpropertiesmodel.cpp
+  mdraidmembersmodel.cpp
   drivepropertiesmodel.cpp
 )
 

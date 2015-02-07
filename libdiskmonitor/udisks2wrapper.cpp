@@ -28,6 +28,12 @@ void initQDbusMetaTypes()
 
   qRegisterMetaType<SmartAttributesList>("SmartAttributesList");
   qDBusRegisterMetaType<SmartAttributesList>();
+
+  qRegisterMetaType<MDRaidMember>("MDRaidMember");
+  qDBusRegisterMetaType<MDRaidMember>();
+
+  qRegisterMetaType<MDRaidMemberList>("MDRaidMemberList");
+  qDBusRegisterMetaType<MDRaidMemberList>();
 }
 
 
@@ -69,6 +75,42 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, SmartAttribute& s
     argument >> smartAttribue.pretty;
     argument >> smartAttribue.pretty_unit;
     argument >> smartAttribue.expansion;
+    argument.endStructure();
+
+    return argument;
+}
+
+
+
+/*
+ * Marshall the MDRaidMember data into a D-Bus argument
+ */
+QDBusArgument &operator<<(QDBusArgument &argument, const MDRaidMember& raidMember)
+{
+    argument.beginStructure();
+    argument << raidMember.block;
+    argument << raidMember.slot;
+    argument << raidMember.state;
+    argument << raidMember.numReadErrors;
+    argument << raidMember.expansion;
+    argument.endStructure();
+
+    return argument;
+}
+
+
+
+/*
+ * Retrieve the MDRaidMember data from the D-Bus argument
+ */
+const QDBusArgument &operator>>(const QDBusArgument &argument, MDRaidMember& raidMember)
+{
+    argument.beginStructure();
+    argument >> raidMember.block;
+    argument >> raidMember.slot;
+    argument >> raidMember.state;
+    argument >> raidMember.numReadErrors;
+    argument >> raidMember.expansion;
     argument.endStructure();
 
     return argument;
@@ -165,6 +207,18 @@ QList<StorageUnit*> UDisks2Wrapper::listStorageUnits()
     initialize();
 
   return units.values();
+}
+
+
+
+/*
+ * Get a DBus Properties interface for the given node
+ *
+ * @param objectPath The DBus path identifying the node
+ */
+QDBusInterface*UDisks2Wrapper::propertiesIface(QDBusObjectPath objectPath) const
+{
+  return new QDBusInterface(UDISKS2_SERVICE, objectPath.path(), DBUS_PROPERTIES_IFACE, QDBusConnection::systemBus());
 }
 
 

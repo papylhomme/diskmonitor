@@ -2,6 +2,7 @@
 
 #include <QFont>
 
+#include "humanize.h"
 
 
 /*
@@ -60,22 +61,30 @@ int MDRaidPropertiesModel::columnCount(const QModelIndex& /*index*/) const
  */
 QVariant MDRaidPropertiesModel::data(const QModelIndex& index, int role) const
 {
-  if(!index.isValid())
+  MDRaid* mdraid = getMDRaid();
+
+  if(!index.isValid() || index.column() != 0 || mdraid == NULL)
     return QVariant();
 
-  if(role == Qt::DisplayRole) {
-    MDRaid* mdraid = getMDRaid();
 
-    if(index.column() == 0 && mdraid != NULL) {
-      switch(index.row()) {
-        case 0: return QVariant(mdraid -> getUUID()); break;
-        case 1: return QVariant(mdraid -> getLevel()); break;
-        case 2: return QVariant(mdraid -> getNumDevices()); break;
-        case 3: return QVariant(mdraid -> getSize()); break;
-        case 4: return QVariant(mdraid -> getSyncAction()); break;
-        case 5: return QVariant(mdraid -> getSyncCompleted()); break;
-        case 6: return QVariant(mdraid -> getSyncRemainingTime()); break;
-      }
+  if(role == Qt::DisplayRole) {
+    switch(index.row()) {
+      case 0: return QVariant(mdraid -> getUUID()); break;
+      case 1: return QVariant(mdraid -> getLevel()); break;
+      case 2: return QVariant(mdraid -> getNumDevices()); break;
+      case 3: return QVariant(Humanize::size(mdraid -> getSize())); break;
+      case 4: return QVariant(mdraid -> getSyncAction()); break;
+      case 5: return QVariant(Humanize::percentage(mdraid -> getSyncCompleted())); break;
+      case 6: return QVariant(Humanize::duration(mdraid -> getSyncRemainingTime(), "us")); break;
+      default: return QVariant(); break;
+    }
+
+  } else if(role == Qt::ToolTipRole) {
+    switch(index.row()) {
+      case 3: return QVariant(tr("Raw value: ") + QString::number(mdraid -> getSize())); break;
+      case 5: return QVariant(tr("Raw value: ") + QString::number(mdraid -> getSyncCompleted())); break;
+      case 6: return QVariant(tr("Raw value: ") + QString::number(mdraid -> getSyncRemainingTime())); break;
+      default: return QVariant(); break;
     }
   }
 

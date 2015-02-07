@@ -1,5 +1,6 @@
 set(APP_SRCS
   main.cpp
+  humanize.cpp
   mainwindow.cpp
   storageunitpanel.cpp
   drivepanel.cpp

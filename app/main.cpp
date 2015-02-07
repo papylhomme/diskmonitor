@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include <QDBusMetaType>
-
 
 #include "udisks2wrapper.h"
 

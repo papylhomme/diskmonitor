@@ -5,6 +5,10 @@
 
 #include "drive.h"
 
+
+/*
+ * A Qt model to display smart attributes in a table
+ */
 class DrivePropertiesModel : public StorageUnitPropertiesModel
 {
   Q_OBJECT
@@ -21,10 +25,13 @@ public:
   virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
 protected:
-    virtual void updateInternalState();
+  virtual void updateInternalState();
+
+  QVariant humanizeSmartAttribute(const SmartAttribute& attr) const;
 
 private:
   QStringList headerLabels;
+  QList<int> sensitiveAttributes;
   SmartAttributesList attributes;
 };
 

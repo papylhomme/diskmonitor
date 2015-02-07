@@ -24,6 +24,8 @@ Humanize::~Humanize()
 
 /*
  * Format a size given in octet
+ *
+ * TODO: more option (look at duration)
  */
 QString Humanize::size(qint64 size)
 {
@@ -67,8 +69,8 @@ QString Humanize::duration(qint64 duration, QString inputUnit, QString keepFrom)
   if(idx == -1)
     qFatal("Humanize::duration:  Unknown input unit");
 
-  int currentAmount = unitAmount.first();
-  QString unit = units.first();
+  int currentAmount = unitAmount.at(idx);
+  QString unit = units.at(idx);
 
   while(idx < units.size() && duration >= currentAmount) {
     int r = duration % currentAmount;
@@ -96,5 +98,17 @@ QString Humanize::duration(qint64 duration, QString inputUnit, QString keepFrom)
 QString Humanize::percentage(double percent)
 {
   return QString().setNum(percent * 100, 'f', 2) + " %";
+}
+
+
+
+/*
+ * Convert temperature given as millikelvin to celcius
+ *
+ * TODO: more option (fahrenheit)
+ */
+QString Humanize::temperature(qint64 temp)
+{
+  return QString().setNum(temp / 1000.0 - 273, 'f', 2) + "°C";
 }
 

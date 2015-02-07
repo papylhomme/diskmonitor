@@ -75,15 +75,15 @@ QVariant MDRaidPropertiesModel::data(const QModelIndex& index, int role) const
       case 3: return QVariant(Humanize::size(mdraid -> getSize())); break;
       case 4: return QVariant(mdraid -> getSyncAction()); break;
       case 5: return QVariant(Humanize::percentage(mdraid -> getSyncCompleted())); break;
-      case 6: return QVariant(Humanize::duration(mdraid -> getSyncRemainingTime(), "us")); break;
+      case 6: return QVariant(Humanize::duration(mdraid -> getSyncRemainingTime(), "us", "s")); break;
       default: return QVariant(); break;
     }
 
   } else if(role == Qt::ToolTipRole) {
     switch(index.row()) {
-      case 3: return QVariant(tr("Raw value: ") + QString::number(mdraid -> getSize())); break;
-      case 5: return QVariant(tr("Raw value: ") + QString::number(mdraid -> getSyncCompleted())); break;
-      case 6: return QVariant(tr("Raw value: ") + QString::number(mdraid -> getSyncRemainingTime())); break;
+      case 3: return QVariant(tr("Raw value:") + " " + QString::number(mdraid -> getSize())); break;
+      case 5: return QVariant(tr("Raw value:") + " " + QString::number(mdraid -> getSyncCompleted())); break;
+      case 6: return QVariant(tr("Raw value:") + " " + QString::number(mdraid -> getSyncRemainingTime())); break;
       default: return QVariant(); break;
     }
   }

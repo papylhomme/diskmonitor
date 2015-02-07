@@ -15,8 +15,9 @@ public:
     ~Humanize();
 
     static QString size(qint64 size);
-    static QString duration(qint64 duration, QString inputUnit = "ms", QString keepFrom = "s");
+    static QString duration(qint64 duration, QString inputUnit = "ms", QString keepFrom = "");
     static QString percentage(double percent);
+    static QString temperature(qint64 temp);
 };
 
 #endif // HUMANIZE_H

@@ -4,19 +4,22 @@
 #include <QBrush>
 #include <QColor>
 
+#include "humanize.h"
+
 
 /*
- *
+ * Constructor
  */
 DrivePropertiesModel::DrivePropertiesModel()
 {
-  headerLabels << "Id" << "Name" << "Flags" << "Value" << "Worst" << "Threshold" << "Pretty" << "Pretty Unit";
+  headerLabels << "Id" << "Name" << "Flags" << "Value" << "Worst" << "Threshold" << "Pretty";
+  sensitiveAttributes << 1 << 5 << 7 << 196 << 197 << 198;
 }
 
 
 
 /*
- *
+ * Destructor
  */
 DrivePropertiesModel::~DrivePropertiesModel()
 {
@@ -26,7 +29,7 @@ DrivePropertiesModel::~DrivePropertiesModel()
 
 
 /*
- *
+ * Retrieve the Drive associated to the model. Can be NULL
  */
 Drive* DrivePropertiesModel::getDrive() const
 {
@@ -51,7 +54,7 @@ void DrivePropertiesModel::updateInternalState()
 
 
 /*
- *
+ * Get the number of rows contained in the model's data
  */
 int DrivePropertiesModel::rowCount(const QModelIndex& /*index*/) const
 {
@@ -59,8 +62,9 @@ int DrivePropertiesModel::rowCount(const QModelIndex& /*index*/) const
 }
 
 
+
 /*
- *
+ * Get the number of column of the model
  */
 int DrivePropertiesModel::columnCount(const QModelIndex& /*index*/) const
 {
@@ -70,7 +74,7 @@ int DrivePropertiesModel::columnCount(const QModelIndex& /*index*/) const
 
 
 /*
- *
+ * Retrieve data for an item in the model
  */
 QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 {
@@ -85,8 +89,11 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
       QBrush brush(QColor("red"));
       return QVariant(brush);
 
-    //TODO: use orange to mark non 0 sensitive attribute (eg bad sectors)
-    //} else if(attr.pretty != 0 && sensitiveAttributes.contains(attr.id) {
+    //set the row background to orange if value is non 0 for sensitive attributes
+    } else if(attr.pretty != 0 && sensitiveAttributes.contains(attr.id)) {
+      QBrush brush(QColor("orange"));
+      return QVariant(brush);
+
     } else {
       return QVariant();
     }
@@ -94,7 +101,6 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 
 
   if(role == Qt::DisplayRole) {
-    //TODO format pretty/pretty_unit
     switch(index.column()) {
     case 0: return QVariant(attr.id); break;
     case 1: return QVariant(attr.name); break;
@@ -102,11 +108,14 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
     case 3: return QVariant(attr.value); break;
     case 4: return QVariant(attr.worst); break;
     case 5: return QVariant(attr.threshold); break;
-    case 6: return QVariant(attr.pretty); break;
+    case 6: return humanizeSmartAttribute(attr); break;
     case 7: return QVariant(attr.pretty_unit); break;
     default: return QVariant(); break;
     }
   }
+
+  if(index.column() == 6 && role == Qt::ToolTipRole)
+    return QVariant(tr("Raw value:") + " " + QString::number(attr.pretty));
 
   return QVariant();
 }
@@ -114,7 +123,25 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 
 
 /*
- *
+ * Format the 'pretty' value for human readability
+ */
+QVariant DrivePropertiesModel::humanizeSmartAttribute(const SmartAttribute& attr) const
+{
+  switch(attr.pretty_unit) {
+    case 0: return QVariant(tr("unknown")); break;
+    case 1: return QVariant(attr.pretty); break;
+    case 2: return QVariant(Humanize::duration(attr.pretty, "ms")); break;
+    case 3: return QVariant(QString::number(attr.pretty) + " " + tr("sectors")); break;
+    case 4: return QVariant(Humanize::temperature(attr.pretty)); break;
+    default: return QVariant();
+  }
+}
+
+
+
+
+/*
+ * Handle the headers of the model
  */
 QVariant DrivePropertiesModel::headerData(int section, Qt::Orientation orientation, int role) const
 {

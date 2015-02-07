@@ -12,12 +12,14 @@ DrivePanel::DrivePanel(QWidget *parent) :
     StorageUnitPanel(new DrivePropertiesModel(), parent),
     ui(new Ui::DrivePanel)
 {
-  ui->setupUi(this);
+  ui -> setupUi(this);
 
   ui -> tableView -> verticalHeader() -> hide();
   ui -> tableView -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
   ui -> tableView -> horizontalHeader() -> setStretchLastSection(true);
   ui -> tableView -> setModel(this -> model);
+
+  ui -> warningLabel -> setPixmap(QIcon::fromTheme("dialog-warning").pixmap(QSize(32, 32)));
 
   QAction* action;
   QMenu * menu = new QMenu();
@@ -68,10 +70,11 @@ void DrivePanel::updateUI()
   Drive* drive = getDrive();
   bool smartOK = drive != NULL && drive -> isSmartSupported() && drive -> isSmartEnabled();
 
-  ui -> tableView -> setEnabled(smartOK );
+  ui -> panelSmartNotEnabled -> setVisible(!smartOK);
+  ui -> panelSmartWidgets -> setEnabled(smartOK);
 
 
-  if(smartOK ) {
+  if(smartOK) {
     int percent = drive -> getSelfTestPercentRemaining();
     QString status = drive -> getSelfTestStatus();
 

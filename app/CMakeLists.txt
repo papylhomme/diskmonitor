@@ -5,7 +5,7 @@ set(APP_SRCS
   storageunitpanel.cpp
   drivepanel.cpp
   mdraidpanel.cpp
-  storagedatamodel.cpp
+  storageunitmodel.cpp
   storageunitpropertiesmodel.cpp
   mdraidpropertiesmodel.cpp
   mdraidmembersmodel.cpp

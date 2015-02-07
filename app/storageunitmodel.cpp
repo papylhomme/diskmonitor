@@ -1,4 +1,4 @@
-#include "storagedatamodel.h"
+#include "storageunitmodel.h"
 
 #include "udisks2wrapper.h"
 
@@ -9,7 +9,7 @@
 /*
  *
  */
-StorageDataModel::StorageDataModel()
+StorageUnitModel::StorageUnitModel()
 {
   refresh();
 
@@ -23,7 +23,7 @@ StorageDataModel::StorageDataModel()
 /*
  *
  */
-StorageDataModel::~StorageDataModel()
+StorageUnitModel::~StorageUnitModel()
 {
 
 }
@@ -33,7 +33,7 @@ StorageDataModel::~StorageDataModel()
 /*
  *
  */
-void StorageDataModel::refresh() {
+void StorageUnitModel::refresh() {
   UDisks2Wrapper* udisks2 = UDisks2Wrapper::getInstance();
 
   beginResetModel();
@@ -53,7 +53,7 @@ void StorageDataModel::refresh() {
 /*
  *
  */
-int StorageDataModel::rowCount(const QModelIndex&) const
+int StorageUnitModel::rowCount(const QModelIndex&) const
 {
   return storageUnits.size();
 }
@@ -63,7 +63,7 @@ int StorageDataModel::rowCount(const QModelIndex&) const
 /*
  *
  */
-QVariant StorageDataModel::data(const QModelIndex &index, int role) const
+QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
 {
   if(!index.isValid())
     return QVariant();
@@ -113,7 +113,7 @@ QVariant StorageDataModel::data(const QModelIndex &index, int role) const
 /*
  *
  */
-void StorageDataModel::storageUnitAdded(StorageUnit* unit)
+void StorageUnitModel::storageUnitAdded(StorageUnit* unit)
 {
   int idx = storageUnits.size();
 
@@ -127,7 +127,7 @@ void StorageDataModel::storageUnitAdded(StorageUnit* unit)
 /*
  *
  */
-void StorageDataModel::storageUnitRemoved(StorageUnit* unit)
+void StorageUnitModel::storageUnitRemoved(StorageUnit* unit)
 {
   int idx = storageUnits.indexOf(unit);
 

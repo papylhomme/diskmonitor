@@ -50,7 +50,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset theme="refresh">
+             <iconset theme="view-refresh">
               <normaloff/>
              </iconset>
             </property>

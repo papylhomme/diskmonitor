@@ -2,9 +2,9 @@
 #include "ui_mainwindow.h"
 
 
-#include <kiconloader.h>
+#include <QIcon>
 
-#include "storagedatamodel.h"
+#include "storageunitmodel.h"
 
 #include "drivepanel.h"
 #include "mdraidpanel.h"
@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget* parent) :
   ui -> listView -> setViewMode(QListView::IconMode);
   ui -> listView -> setGridSize( QSize(150, 100));
 
-  StorageDataModel* model = new StorageDataModel();
+  StorageUnitModel* model = new StorageUnitModel();
   ui -> listView -> setModel(model);
   connect(ui -> actionRefresh, SIGNAL(triggered()), model, SLOT(refresh()));
 
@@ -130,16 +130,16 @@ void MainWindow::updateHealthStatus(StorageUnit* unit)
   if(!unit -> isFailingStatusKnown()) {
     style = "QLabel { color: orange; }";
     text = tr("Unknown");
-    icon = KIconLoader::global() -> loadIcon("face-confused", KIconLoader::Desktop, 16);
+    icon = QIcon::fromTheme("face-confused").pixmap(QSize(16,16));
 
   } else if(unit -> isFailing()) {
     style = "QLabel { color: red; }";
     text = tr("Failing");
-    icon = KIconLoader::global() -> loadIcon("face-sick", KIconLoader::Desktop, 16);
+    icon = QIcon::fromTheme("face-sick").pixmap(QSize(16,16));
 
   } else {
     text = tr("Healthy");
-    icon = KIconLoader::global() -> loadIcon("face-cool", KIconLoader::Desktop, 16);
+    icon = QIcon::fromTheme("face-cool").pixmap(QSize(16,16));
   }
 
   ui -> iconLabel -> setPixmap(icon);

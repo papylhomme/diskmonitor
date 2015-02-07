@@ -1,18 +1,18 @@
-#ifndef STORAGEDATAMODEL_H
-#define STORAGEDATAMODEL_H
+#ifndef STORAGEUNITMODEL_H
+#define STORAGEUNITMODEL_H
 
 #include <QAbstractListModel>
 #include <QMap>
 
 #include "drive.h"
 
-class StorageDataModel : public QAbstractListModel
+class StorageUnitModel : public QAbstractListModel
 {
   Q_OBJECT
 
 public:
-    StorageDataModel();
-    ~StorageDataModel();
+    StorageUnitModel();
+    ~StorageUnitModel();
 
     virtual int rowCount(const QModelIndex& index) const;
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
@@ -28,4 +28,4 @@ private slots:
     void storageUnitRemoved(StorageUnit* path);
 };
 
-#endif // STORAGEDATAMODEL_H
+#endif // STORAGEUNITMODEL_H

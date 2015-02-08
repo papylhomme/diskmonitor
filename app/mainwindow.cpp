@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget* parent) :
   ui -> listView -> setResizeMode(QListView::Adjust);
   ui -> listView -> setViewMode(QListView::IconMode);
   ui -> listView -> setGridSize( QSize(150, 100));
+  ui -> listView -> setMinimumHeight(100);
 
   StorageUnitModel* model = new StorageUnitModel();
   ui -> listView -> setModel(model);

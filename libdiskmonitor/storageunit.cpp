@@ -136,7 +136,7 @@ QVariant StorageUnit::getProperty(QDBusInterface* iface, const char* name) const
 
 
 /*
- * Convenience wrapper around StorageUnit::getProperty() for bool type
+ * Convenience wrapper around StorageUnit::getProperty() for bool type (DBus type 'b')
  */
 bool StorageUnit::getBoolProperty(QDBusInterface* iface, const char* name) const
 {
@@ -146,7 +146,7 @@ bool StorageUnit::getBoolProperty(QDBusInterface* iface, const char* name) const
 
 
 /*
- * Convenience wrapper around StorageUnit::getProperty() for int type
+ * Convenience wrapper around StorageUnit::getProperty() for int type (DBus type 'i')
  */
 int StorageUnit::getIntProperty(QDBusInterface* iface, const char* name) const
 {
@@ -156,7 +156,17 @@ int StorageUnit::getIntProperty(QDBusInterface* iface, const char* name) const
 
 
 /*
- * Convenience wrapper around StorageUnit::getProperty() for double type
+ * Convenience wrapper around StorageUnit::getProperty() for int ulonglong (DBus type 't')
+ */
+qulonglong StorageUnit::getULongLongProperty(QDBusInterface* iface, const char* name) const
+{
+  return getProperty(iface, name).toULongLong();
+}
+
+
+
+/*
+ * Convenience wrapper around StorageUnit::getProperty() for double type (DBus type 'd')
  */
 double StorageUnit::getDoubleProperty(QDBusInterface* iface, const char* name) const
 {
@@ -166,7 +176,7 @@ double StorageUnit::getDoubleProperty(QDBusInterface* iface, const char* name) c
 
 
 /*
- * Convenience wrapper around StorageUnit::getProperty() for string type
+ * Convenience wrapper around StorageUnit::getProperty() for string type (DBus type 's')
  */
 QString StorageUnit::getStringProperty(QDBusInterface* iface, const char* name) const
 {

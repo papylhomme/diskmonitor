@@ -18,8 +18,8 @@ public:
   ~MDRaid();
 
   int getNumDevices() const;
-  int getSize() const;
-  int getSyncRemainingTime() const;
+  qulonglong getSize() const;
+  qulonglong getSyncRemainingTime() const;
 
   double getSyncCompleted() const;
 
@@ -36,8 +36,8 @@ public:
 
 protected:
   int numDevices = 0;
-  int size = 0;
-  int syncRemainingTime = 0;
+  qulonglong size = 0;
+  qulonglong syncRemainingTime = 0;
 
   double syncCompleted = 0;
 

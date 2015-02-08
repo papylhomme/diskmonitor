@@ -48,6 +48,7 @@ protected:
   QVariant getProperty(QDBusInterface*, const char*) const;
   bool getBoolProperty(QDBusInterface*, const char*) const;
   int getIntProperty(QDBusInterface*, const char*) const;
+  qulonglong getULongLongProperty(QDBusInterface*, const char*) const;
   double getDoubleProperty(QDBusInterface*, const char*) const;
   QString getStringProperty(QDBusInterface*, const char*) const;
 };

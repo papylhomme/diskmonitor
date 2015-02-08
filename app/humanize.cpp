@@ -29,7 +29,7 @@ Humanize::~Humanize()
  */
 QString Humanize::size(qint64 size)
 {
-  float num = size;
+  double num = size;
   QStringList list;
   list << "KB" << "MB" << "GB" << "TB";
 

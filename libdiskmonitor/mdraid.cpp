@@ -42,12 +42,17 @@ void MDRaid::update()
 
   this -> name = getStringProperty(raidIface, "Name");
   this -> uuid = getStringProperty(raidIface, "UUID");
+
+  //always set a name (used in the UI)
+  if(this -> name.isEmpty())
+    this -> name = this -> uuid;
+
   this -> level = getStringProperty(raidIface, "Level");
   this -> numDevices = getIntProperty(raidIface, "NumDevices");
-  this -> size = getIntProperty(raidIface, "Size");
+  this -> size = getULongLongProperty(raidIface, "Size");
   this -> syncAction = getStringProperty(raidIface, "SyncAction");
   this -> syncCompleted = getDoubleProperty(raidIface, "SyncCompleted");
-  this -> syncRemainingTime = getIntProperty(raidIface, "SyncRemainingTime");
+  this -> syncRemainingTime = getULongLongProperty(raidIface, "SyncRemainingTime");
 
   QDBusInterface* propIface = UDisks2Wrapper::getInstance() -> propertiesIface(objectPath);
 
@@ -94,7 +99,7 @@ int MDRaid::getNumDevices() const
  *
  * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.Size
  */
-int MDRaid::getSize() const
+qulonglong MDRaid::getSize() const
 {
   return this -> size;
 }
@@ -107,7 +112,7 @@ int MDRaid::getSize() const
  *
  * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.SyncRemainingTime
  */
-int MDRaid::getSyncRemainingTime() const
+qulonglong MDRaid::getSyncRemainingTime() const
 {
   return this -> syncRemainingTime;
 }

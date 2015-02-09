@@ -30,7 +30,7 @@ private:
 
 public slots:
     void startShortSelfTest();
-    void startLongSelfTest();
+    void startExtendedSelfTest();
     void startSelfTest(UDisks2Wrapper::SMARTSelfTestType type);
 };
 

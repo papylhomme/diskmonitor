@@ -46,7 +46,8 @@ public:
    */
   enum SMARTSelfTestType {
     ShortSelfTest,
-    LongSelfTest
+    ExtendedSelfTest,
+    ConveyanceSelfTest
   };
 
 

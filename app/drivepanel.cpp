@@ -25,8 +25,8 @@ DrivePanel::DrivePanel(QWidget *parent) :
   QMenu * menu = new QMenu();
   action = menu -> addAction(tr("Short test"));
   connect(action, SIGNAL(triggered()), this, SLOT(startShortSelfTest()));
-  action = menu -> addAction(tr("Long test"));
-  connect(action, SIGNAL(triggered()), this, SLOT(startLongSelfTest()));
+  action = menu -> addAction(tr("Extended test"));
+  connect(action, SIGNAL(triggered()), this, SLOT(startExtendedSelfTest()));
   ui -> startSelfTestButton -> setMenu(menu);
 }
 
@@ -124,9 +124,9 @@ void DrivePanel::startShortSelfTest()
 /*
  *
  */
-void DrivePanel::startLongSelfTest()
+void DrivePanel::startExtendedSelfTest()
 {
-  startSelfTest(UDisks2Wrapper::LongSelfTest);
+  startSelfTest(UDisks2Wrapper::ExtendedSelfTest);
 }
 
 

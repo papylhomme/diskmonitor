@@ -289,7 +289,8 @@ void UDisks2Wrapper::startDriveSelfTest(Drive* drive, SMARTSelfTestType type) co
   QString strType;
   switch(type) {
     case ShortSelfTest: strType = "short"; break;
-    case LongSelfTest: strType = "long"; break;
+    case ExtendedSelfTest: strType = "extended"; break;
+    case ConveyanceSelfTest: strType = "conveyance"; break;
     default: strType = "short"; break;
   }
 

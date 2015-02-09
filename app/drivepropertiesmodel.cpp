@@ -3,6 +3,7 @@
 #include <QFont>
 #include <QBrush>
 #include <QColor>
+#include <QPalette>
 
 #include "humanize.h"
 
@@ -83,7 +84,12 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 
   SmartAttribute attr = attributes.at(index.row());
 
+  // Handle background colors
   if(role == Qt::BackgroundRole) {
+    //value is unknown
+    if(attr.value == -1)
+      return QVariant(QBrush());
+
     //set the row background to red if value < threshold
     if(attr.value <= attr.threshold) {
       QBrush brush(QColor("red"));
@@ -97,10 +103,19 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
     } else {
       return QVariant();
     }
-  }
 
 
-  if(role == Qt::DisplayRole) {
+  // Handle text colors
+  } else if(role == Qt::ForegroundRole) {
+
+    if(attr.value == -1) {
+      QPalette palette;
+      return QVariant(palette.brush(QPalette::Disabled, QPalette::Text));
+    } else
+      return QVariant(QBrush());
+
+  // Handle display value
+  } else if(role == Qt::DisplayRole) {
     switch(index.column()) {
     case 0: return QVariant(attr.id); break;
     case 1: return QVariant(attr.name); break;
@@ -112,9 +127,10 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
     //case 7: return QVariant(attr.pretty_unit); break;
     default: return QVariant(); break;
     }
-  }
 
-  if(index.column() == 6 && role == Qt::ToolTipRole)
+
+  // Handle tooltips
+  } else if(index.column() == 6 && role == Qt::ToolTipRole)
     return QVariant(tr("Raw value:") + " " + QString::number(attr.pretty));
 
   return QVariant();

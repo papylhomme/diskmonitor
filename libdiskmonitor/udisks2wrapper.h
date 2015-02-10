@@ -73,7 +73,7 @@ private:
   bool hasATAIface(QDBusObjectPath objectPath) const;
   StorageUnit* createNewUnitFromBlockDevice(const InterfaceList& interfaces) const;
 
-  bool initialized;
+  bool initialized = false;
   QMap<QDBusObjectPath, StorageUnit*> units;
 
 private slots:

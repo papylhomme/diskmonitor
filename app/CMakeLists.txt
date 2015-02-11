@@ -37,4 +37,6 @@ target_link_libraries( diskmonitor
 )
 
 install(TARGETS diskmonitor ${INSTALL_TARGETS_DEFAULT_ARGS} )
+install(FILES icon.svg RENAME diskmonitor.svg DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/" )
+install(FILES diskmonitor.desktop DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications/" )
 

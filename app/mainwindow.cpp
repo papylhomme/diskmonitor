@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 #include <QIcon>
+#include <KHelpMenu>
 
 #include "storageunitmodel.h"
 
@@ -14,10 +14,13 @@
  *
  */
 MainWindow::MainWindow(QWidget* parent) :
-    QMainWindow(parent),
+    KMainWindow(parent),
     ui(new Ui::MainWindow)
 {
   ui -> setupUi(this);
+
+  KHelpMenu* helpMenu = new KHelpMenu(this, "some text", false);
+  menuBar() -> addMenu(helpMenu->menu());
 
   //http://stackoverflow.com/questions/3639468/what-qt-widgets-to-use-for-read-only-scrollable-collapsible-icon-list
   ui -> listView -> setMovement(QListView::Static);

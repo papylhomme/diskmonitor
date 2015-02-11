@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <KMainWindow>
 
 #include "dbus_metatypes.h"
 #include "storageunit.h"
@@ -10,7 +10,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public KMainWindow
 {
     Q_OBJECT
 

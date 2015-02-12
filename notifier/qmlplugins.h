@@ -4,6 +4,9 @@
 #include <QQmlExtensionPlugin>
 
 
+/*
+ * Helper class to register QML extensions
+ */
 class QmlPlugins : public QQmlExtensionPlugin
 {
   Q_OBJECT

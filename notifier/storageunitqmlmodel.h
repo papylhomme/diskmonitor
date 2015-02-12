@@ -6,6 +6,14 @@
 
 #include "storageunit.h"
 
+
+
+/*
+ * Main model class for the plasma applet
+ *
+ * Provide a Qt Model to display the Storage units, and
+ * global health status
+ */
 class StorageUnitQmlModel : public QAbstractListModel
 {
   Q_OBJECT

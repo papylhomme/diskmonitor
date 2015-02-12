@@ -210,7 +210,9 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
 
 
 /*
+ * Slot to open the main DisKMonitor application
  *
+ * @param unitPath The DBus path to the unit to display
  */
 void StorageUnitQmlModel::openApp(const QString& unitPath)
 {

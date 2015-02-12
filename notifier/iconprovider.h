@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+
+/*
+ * Component to provide icons to the plasma applet
+ */
 class IconProvider : public QObject
 {
   Q_OBJECT

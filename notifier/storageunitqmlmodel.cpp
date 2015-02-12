@@ -16,8 +16,8 @@ StorageUnitQmlModel::StorageUnitQmlModel()
 
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
-  storageUnits = udisks2 -> listStorageUnits();
 
+  storageUnits = udisks2 -> listStorageUnits();
   monitor();
 
   timer = new QTimer();
@@ -40,6 +40,17 @@ StorageUnitQmlModel::~StorageUnitQmlModel()
 
   qDebug() << "StorageUnitQmlModel destructed !";
 }
+
+
+
+/*
+ * Test if there is failing units
+ */
+bool StorageUnitQmlModel::failing() const
+{
+  return hasFailing;
+}
+
 
 
 /*
@@ -191,10 +202,9 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
 
   if(hasFailing != localFailing) {
     qDebug() << "StorageMonitor: Changing failing status to " << localFailing;
-    emit updateGlobalHealthStatus(localFailing);
+    hasFailing = localFailing;
+    emit failingChanged();
   }
-
-  hasFailing = localFailing;
 }
 
 

@@ -9,6 +9,7 @@
 class StorageUnitQmlModel : public QAbstractListModel
 {
   Q_OBJECT
+  Q_PROPERTY(bool failing READ failing NOTIFY failingChanged)
 
 public:
   enum AnimalRoles {
@@ -22,6 +23,8 @@ public:
 
   StorageUnitQmlModel();
   ~StorageUnitQmlModel();
+
+  bool failing() const;
 
   virtual QHash<int, QByteArray> roleNames() const;
   int rowCount(const QModelIndex & parent = QModelIndex()) const;
@@ -43,7 +46,7 @@ private slots:
   void monitor();
 
 signals:
-  void updateGlobalHealthStatus(bool failing);
+  void failingChanged();
 
 public slots:
   void openApp(const QString& unitPath);

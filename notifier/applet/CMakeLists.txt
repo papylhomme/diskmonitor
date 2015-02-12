@@ -1,2 +1,2 @@
-plasma_install_package(. org.kde.tutorial plasma/plasmoids applet)
+plasma_install_package(. org.papylhomme.diskmonitor plasmoids applet)
 

@@ -1,0 +1,4 @@
+module org.papylhomme.diskmonitor
+
+plugin diskmonitor_qmlplugins
+

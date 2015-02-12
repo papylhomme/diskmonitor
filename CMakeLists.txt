@@ -18,6 +18,7 @@ find_package (Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
   Core
   DBus
   Widgets
+  Quick
 )
 
 find_package(KF5 REQUIRED COMPONENTS
@@ -25,6 +26,8 @@ find_package(KF5 REQUIRED COMPONENTS
   I18n
   IconThemes
   XmlGui
+  Notifications
+  Plasma
 )
 
 
@@ -35,6 +38,7 @@ include_directories( ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/libdiskmoni
 
 add_subdirectory( libdiskmonitor )
 add_subdirectory( app )
+add_subdirectory( notifier )
 
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

@@ -1,0 +1,19 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=DisKMonitor Notifier
+Comment=Monitor SMART devices and MDRaid health status
+Icon=diskmonitor
+Type=Service
+X-KDE-ParentApp=
+X-KDE-PluginInfo-Author=Michaël Lhomme
+X-KDE-PluginInfo-Email=papylhomme@gmail.com
+X-KDE-PluginInfo-License=GPL2
+X-KDE-PluginInfo-Name=org.papylhomme.diskmonitor
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=https://github.com/papylhomme/diskmonitor
+X-KDE-ServiceTypes=Plasma/Applet
+X-Plasma-API=declarativeappletscript
+X-Plasma-MainScript=ui/main.qml
+X-Plasma-RemoteLocation=
+X-KDE-PluginInfo-Category=System Information
+X-Plasma-NotificationArea=true

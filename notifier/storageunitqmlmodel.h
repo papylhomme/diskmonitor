@@ -15,6 +15,7 @@ public:
     NameRole = Qt::UserRole + 1,
     DeviceRole,
     FailingRole,
+    FailingKnownRole,
     PathRole,
     IconRole
   };

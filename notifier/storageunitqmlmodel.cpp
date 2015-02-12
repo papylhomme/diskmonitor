@@ -52,6 +52,7 @@ QHash<int, QByteArray> StorageUnitQmlModel::roleNames() const
   roles[IconRole] = "icon";
   roles[DeviceRole] = "device";
   roles[FailingRole] = "failing";
+  roles[FailingKnownRole] = "failingKnown";
   roles[PathRole] = "path";
   return roles;
 }
@@ -83,7 +84,8 @@ QVariant StorageUnitQmlModel::data(const QModelIndex& index, int role) const
     case IconRole: return QVariant(getIconForUnit(unit)); break;
     case DeviceRole: return QVariant(unit -> getDevice()); break;
     case PathRole: return QVariant(unit -> getPath()); break;
-    case FailingRole: return QVariant(unit -> isFailingStatusKnown() && unit -> isFailing()); break;
+    case FailingRole: return QVariant(unit -> isFailing()); break;
+    case FailingKnownRole: return QVariant(unit -> isFailingStatusKnown()); break;
     default: return QVariant(); break;
   }
 
@@ -95,9 +97,17 @@ QVariant StorageUnitQmlModel::data(const QModelIndex& index, int role) const
 /*
  * Retrieve an icon name for the given StorageUnit
  */
-QString StorageUnitQmlModel::getIconForUnit(StorageUnit* /*unit*/) const
+QString StorageUnitQmlModel::getIconForUnit(StorageUnit* unit) const
 {
-  return "drive-harddisk";
+  QString icon;
+  if(unit -> isMDRaid())
+    icon = "drive-harddisk";
+  else if(unit -> isDrive() && ((Drive*) unit) -> isRemovable())
+    icon = "drive-removable-media";
+  else
+    icon = "drive-harddisk";
+
+  return icon;
 }
 
 

@@ -8,12 +8,16 @@ Item {
 
     Plasmoid.toolTipMainText: i18n("DisKMonitor");
     Plasmoid.toolTipSubText: i18n("Everything look healthy");
-    Plasmoid.icon: "face-cool";
+    Plasmoid.icon: iconProvider.healthy;
     //Plasmoid.status: PlasmaCore.Types.NeedsAttentionStatus;
     //Plasmoid.status: PlasmaCore.Types.RequireAttentionStatus;
     Plasmoid.status: PlasmaCore.Types.PassiveStatus;
     Plasmoid.associatedApplication: "diskmonitor";
 
+
+    DiskMonitor.IconProvider {
+      id: iconProvider;
+    }
 
     DiskMonitor.StorageUnitQmlModel {
       id: myStorageModel;
@@ -22,12 +26,12 @@ Item {
         if(failing) {
           //mainWindow.Plasmoid.status = PlasmaCore.Types.RequireAttentionStatus;
           mainWindow.Plasmoid.status = 3;
-          mainWindow.Plasmoid.icon = "face-sick";
+          mainWindow.Plasmoid.icon = iconProvider.failing;
           mainWindow.Plasmoid.toolTipSubText = i18n("At least one storage unit is failing !");
         } else {
           //mainWindow.Plasmoid.status = PlasmaCore.Types.PassiveStatus;
           mainWindow.Plasmoid.status = 1;
-          mainWindow.Plasmoid.icon = "face-cool";
+          mainWindow.Plasmoid.icon = iconProvider.healthy;
           mainWindow.Plasmoid.toolTipSubText = i18n("Everything looks healthy");
         }
       }

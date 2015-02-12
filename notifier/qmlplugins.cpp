@@ -4,6 +4,10 @@
 
 #include "storageunitqmlmodel.h"
 
+
+/*
+ * Register types to QML engine
+ */
 void QmlPlugins::registerTypes(const char* uri)
 {
     // @uri org.papylhomme.diskmonitor.StorageUnitQmlModel

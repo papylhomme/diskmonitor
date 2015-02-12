@@ -4,6 +4,9 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 
 
 PlasmaComponents.ListItem {
+  id: storageUnitItem;
+
+  enabled: true;
 
   PlasmaCore.IconItem {
     id: unitIcon;
@@ -38,6 +41,10 @@ PlasmaComponents.ListItem {
     anchors.left: unitLabel.right;
     anchors.right: parent.right;
     anchors.verticalCenter: parent.verticalCenter;
+  }
+
+  onClicked: {
+    myStorageModel.openApp(path);
   }
 
 }

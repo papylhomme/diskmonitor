@@ -7,9 +7,7 @@ import org.papylhomme.diskmonitor 0.1 as DiskMonitor
  
 FocusScope {
 
-  DiskMonitor.StorageUnitQmlModel {
-    id: storageModel;
-  }
+  property var storageModel;
 
   PlasmaExtras.ScrollArea {
     id: scrollView;

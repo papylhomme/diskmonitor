@@ -3,6 +3,7 @@
 #include "udisks2wrapper.h"
 
 #include <QDebug>
+#include <QProcess>
 
 
 /*
@@ -16,6 +17,12 @@ StorageUnitQmlModel::StorageUnitQmlModel()
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
   storageUnits = udisks2 -> listStorageUnits();
+
+  monitor();
+
+  timer = new QTimer();
+  connect(timer, SIGNAL(timeout()), this, SLOT(monitor()));
+  timer -> start(10000);
 }
 
 
@@ -25,7 +32,12 @@ StorageUnitQmlModel::StorageUnitQmlModel()
  */
 StorageUnitQmlModel::~StorageUnitQmlModel()
 {
+  timer -> stop();
+  delete timer;
+
+  //free the wrapper instance
   UDisks2Wrapper::freeInstance();
+
   qDebug() << "StorageUnitQmlModel destructed !";
 }
 
@@ -40,6 +52,7 @@ QHash<int, QByteArray> StorageUnitQmlModel::roleNames() const
   roles[IconRole] = "icon";
   roles[DeviceRole] = "device";
   roles[FailingRole] = "failing";
+  roles[PathRole] = "path";
   return roles;
 }
 
@@ -69,6 +82,7 @@ QVariant StorageUnitQmlModel::data(const QModelIndex& index, int role) const
     case NameRole: return QVariant(unit -> getShortName()); break;
     case IconRole: return QVariant(getIconForUnit(unit)); break;
     case DeviceRole: return QVariant(unit -> getDevice()); break;
+    case PathRole: return QVariant(unit -> getPath()); break;
     case FailingRole: return QVariant(unit -> isFailingStatusKnown() && unit -> isFailing()); break;
     default: return QVariant(); break;
   }
@@ -98,6 +112,9 @@ void StorageUnitQmlModel::storageUnitAdded(StorageUnit* unit)
   beginInsertRows(QModelIndex(), idx, idx);
   storageUnits.append(unit);
   endInsertRows();
+
+  //refresh the status with the new unit
+  processUnit(unit);
 }
 
 
@@ -112,4 +129,73 @@ void StorageUnitQmlModel::storageUnitRemoved(StorageUnit* unit)
   beginRemoveRows(QModelIndex(), idx, idx);
   storageUnits.removeAt(idx);
   endRemoveRows();
+
+  //refresh status for the remaining units
+  processUnits(storageUnits);
+}
+
+
+
+/*
+ * Monitor entry point ; list available StorageUnits and test them
+ * for problems
+ */
+void StorageUnitQmlModel::monitor() {
+  qDebug() << "StorageUnitQmlModel::monitor";
+
+  beginResetModel();
+  foreach(StorageUnit* unit, storageUnits) {
+    unit -> update();
+  }
+  endResetModel();
+
+  processUnits(storageUnits);
+}
+
+
+
+/*
+ * Convenience wrapper around StorageUnitQmlModel::processUnits()
+ */
+void StorageUnitQmlModel::processUnit(StorageUnit* unit)
+{
+  QList<StorageUnit*> units;
+  units << unit;
+  processUnits(units);
+}
+
+
+
+/*
+ * Update the current general health status with the given storage units
+ */
+void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
+{
+  bool localFailing = false;
+
+  foreach(StorageUnit* unit, units) {
+    if(unit -> isFailing()) {
+      localFailing = true;
+    }
+  }
+
+  if(hasFailing != localFailing) {
+    qDebug() << "StorageMonitor: Changing failing status to " << localFailing;
+    emit updateGlobalHealthStatus(localFailing);
+  }
+
+  hasFailing = localFailing;
+}
+
+
+
+/*
+ *
+ */
+void StorageUnitQmlModel::openApp(const QString& unitPath)
+{
+  qDebug() << "Request to open the app for unit " << unitPath;
+  QStringList params;
+  params << unitPath;
+  QProcess::startDetached("diskmonitor", params);
 }

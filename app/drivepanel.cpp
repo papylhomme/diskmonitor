@@ -6,7 +6,7 @@
 #include <QMenu>
 
 /*
- *
+ * Constructor
  */
 DrivePanel::DrivePanel(QWidget *parent) :
     StorageUnitPanel(new DrivePropertiesModel(), parent),
@@ -19,7 +19,10 @@ DrivePanel::DrivePanel(QWidget *parent) :
   ui -> tableView -> horizontalHeader() -> setStretchLastSection(true);
   ui -> tableView -> setModel(this -> model);
 
-  ui -> warningLabel -> setPixmap(QIcon::fromTheme("dialog-warning").pixmap(QSize(32, 32)));
+  ui -> warningNotSupportedLabel -> setPixmap(QIcon::fromTheme("dialog-warning").pixmap(QSize(32, 32)));
+  ui -> warningNotEnabledLabel -> setPixmap(QIcon::fromTheme("dialog-warning").pixmap(QSize(32, 32)));
+
+  connect(ui -> enableSmartButton, SIGNAL(clicked()), this, SLOT(enableSmart()));
 
   QAction* action;
   QMenu * menu = new QMenu();
@@ -33,7 +36,7 @@ DrivePanel::DrivePanel(QWidget *parent) :
 
 
 /*
- *
+ * Destructor
  */
 DrivePanel::~DrivePanel()
 {
@@ -43,7 +46,7 @@ DrivePanel::~DrivePanel()
 
 
 /*
- *
+ * Set the drive to display in the panel. Can be NULL
  */
 void DrivePanel::setDrive(Drive* drive)
 {
@@ -53,7 +56,7 @@ void DrivePanel::setDrive(Drive* drive)
 
 
 /*
- *
+ * Retrieve the drive associated with the panel. Can be NULL
  */
 Drive* DrivePanel::getDrive()
 {
@@ -63,14 +66,24 @@ Drive* DrivePanel::getDrive()
 
 
 /*
- *
+ * Update the UI according to the state of the currently selected drive
  */
 void DrivePanel::updateUI()
 {
   Drive* drive = getDrive();
-  bool smartOK = drive != NULL && drive -> isSmartSupported() && drive -> isSmartEnabled();
 
-  ui -> panelSmartNotEnabled -> setVisible(!smartOK);
+  //sanity check
+  if(drive == NULL) {
+    ui -> panelSmartNotSupported -> setVisible(!drive -> isSmartSupported());
+    ui -> panelSmartNotEnabled -> setVisible(drive -> isSmartSupported() && !drive -> isSmartEnabled());
+    ui -> panelSmartWidgets -> setEnabled(false);
+    return;
+  }
+
+  ui -> panelSmartNotSupported -> setVisible(!drive -> isSmartSupported());
+  ui -> panelSmartNotEnabled -> setVisible(drive -> isSmartSupported() && !drive -> isSmartEnabled());
+
+  bool smartOK = drive -> isSmartSupported() && drive -> isSmartEnabled();
   ui -> panelSmartWidgets -> setEnabled(smartOK);
 
 
@@ -100,7 +113,7 @@ void DrivePanel::updateUI()
 
 
 /*
- *
+ * Test if an operation is currently running on the drive
  */
 bool DrivePanel::isOperationRunning()
 {
@@ -112,7 +125,18 @@ bool DrivePanel::isOperationRunning()
 
 
 /*
- *
+ * Enable SMART for the given drive
+ */
+void DrivePanel::enableSmart() {
+  UDisks2Wrapper::getInstance() -> enableSMART(getDrive());
+  //delay the refresh as UDisks2 may take some time to update the status
+  QTimer::singleShot(2000, this, SLOT(refresh()));
+}
+
+
+
+/*
+ * Slot to start a short selftest on the drive
  */
 void DrivePanel::startShortSelfTest()
 {
@@ -122,7 +146,7 @@ void DrivePanel::startShortSelfTest()
 
 
 /*
- *
+ * Slot to start an extended selftest on the drive
  */
 void DrivePanel::startExtendedSelfTest()
 {
@@ -133,14 +157,14 @@ void DrivePanel::startExtendedSelfTest()
 
 
 /*
- *
+ * Start SMART selftest of the given type on the drive
  */
 void DrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
 {
   Drive* currentDrive = getDrive();
 
   if(currentDrive != NULL) {
-    UDisks2Wrapper::getInstance() -> startDriveSelfTest(currentDrive, type);
+    UDisks2Wrapper::getInstance() -> startSMARTSelfTest(currentDrive, type);
     //delay the refresh as UDisks2 may take some time to update the status
     QTimer::singleShot(2000, this, SLOT(refresh()));
   }

@@ -279,12 +279,30 @@ void UDisks2Wrapper::startMDRaidScrubbing(MDRaid* mdraid) const
 
 
 /*
+ * Enable SMART on the given drive
+ *
+ * @param drive The drive for which to enable SMART
+ */
+void UDisks2Wrapper::enableSMART(Drive* drive) const
+{
+  QDBusInterface ata_iface(UDISKS2_SERVICE, drive -> getPath(), UDISKS2_ATA_IFACE, QDBusConnection::systemBus());
+
+  qDebug() << "Request to enable SMART on Drive '" << drive -> getPath() << "'";
+  QDBusReply<void> res = ata_iface.call("SmartSetEnabled", true, QVariantMap());
+
+  if(!res.isValid())
+    qWarning() << "Error sending request to enable SMART on Drive '" << drive -> getPath() << "' : " << res.error();
+}
+
+
+
+/*
  * Start a SMART SelfTest on the given drive
  *
  * @param drive The drive to test
  * @param type The type of SelfTest to run
  */
-void UDisks2Wrapper::startDriveSelfTest(Drive* drive, SMARTSelfTestType type) const
+void UDisks2Wrapper::startSMARTSelfTest(Drive* drive, SMARTSelfTestType type) const
 {
   QString strType;
   switch(type) {
@@ -294,10 +312,10 @@ void UDisks2Wrapper::startDriveSelfTest(Drive* drive, SMARTSelfTestType type) co
     default: strType = "short"; break;
   }
 
-  QDBusInterface drive_iface(UDISKS2_SERVICE, drive -> getPath(), UDISKS2_ATA_IFACE, QDBusConnection::systemBus());
+  QDBusInterface ata_iface(UDISKS2_SERVICE, drive -> getPath(), UDISKS2_ATA_IFACE, QDBusConnection::systemBus());
 
   qDebug() << "Request " << strType << " selftest on Drive '" << drive -> getPath() << "'";
-  QDBusReply<void> res = drive_iface.call("SmartSelftestStart", strType, QVariantMap());
+  QDBusReply<void> res = ata_iface.call("SmartSelftestStart", strType, QVariantMap());
 
   if(!res.isValid())
     qWarning() << "Error sending request to start SMART SelfTest on drive '" << drive -> getPath() << "' : " << res.error();

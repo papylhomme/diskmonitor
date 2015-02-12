@@ -57,7 +57,8 @@ public:
 
   QList<StorageUnit*> listStorageUnits();
   void startMDRaidScrubbing(MDRaid* mdraid) const;
-  void startDriveSelfTest(Drive* drive, SMARTSelfTestType type) const;
+  void enableSMART(Drive* drive) const;
+  void startSMARTSelfTest(Drive* drive, SMARTSelfTestType type) const;
 
   QDBusInterface* propertiesIface(QDBusObjectPath) const;
   QDBusInterface* driveIface(QDBusObjectPath) const;

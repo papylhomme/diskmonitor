@@ -26,12 +26,13 @@ protected:
   virtual bool isOperationRunning();
 
 private:
-    Ui::DrivePanel *ui;
+  Ui::DrivePanel *ui;
 
 public slots:
-    void startShortSelfTest();
-    void startExtendedSelfTest();
-    void startSelfTest(UDisks2Wrapper::SMARTSelfTestType type);
+  void enableSmart();
+  void startShortSelfTest();
+  void startExtendedSelfTest();
+  void startSelfTest(UDisks2Wrapper::SMARTSelfTestType type);
 };
 
 #endif // DRIVEPANEL_H

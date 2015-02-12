@@ -54,6 +54,7 @@ public:
   ~UDisks2Wrapper();
 
   static UDisks2Wrapper* getInstance();
+  static void freeInstance();
 
   QList<StorageUnit*> listStorageUnits();
   void startMDRaidScrubbing(MDRaid* mdraid) const;

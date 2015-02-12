@@ -31,6 +31,9 @@ int main(int argc, char *argv[]) {
   MainWindow* w = new MainWindow();
   w -> show();
 
-  return app.exec();
+  int res = app.exec();
+  UDisks2Wrapper::freeInstance();
+
+  return res;
 }
 

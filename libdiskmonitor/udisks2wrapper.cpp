@@ -132,6 +132,19 @@ UDisks2Wrapper* UDisks2Wrapper::getInstance() {
 
 
 /*
+ * Release the instance of UDisksWrapper. ATM not thread safe
+ */
+void UDisks2Wrapper::freeInstance()
+{
+  if(UDisks2Wrapper::instance != NULL) {
+    delete UDisks2Wrapper::instance;
+    UDisks2Wrapper::instance = NULL;
+  }
+}
+
+
+
+/*
  * UDisks2Wrapper constructor. Set the connection to UDisks2 to handle device hotplugging
  */
 UDisks2Wrapper::UDisks2Wrapper() : QObject()
@@ -190,7 +203,10 @@ void UDisks2Wrapper::initialize()
  */
 UDisks2Wrapper::~UDisks2Wrapper()
 {
+  foreach(StorageUnit* unit, units.values())
+    delete unit;
 
+  units.clear();
 }
 
 

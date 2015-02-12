@@ -41,6 +41,7 @@ void MDRaid::update()
   this -> failingStatusKnown = !raidIface -> lastError().isValid();
 
   this -> name = getStringProperty(raidIface, "Name");
+  this -> shortName = this -> device.split("/").last().toUpper();
   this -> uuid = getStringProperty(raidIface, "UUID");
 
   //always set a name (used in the UI)

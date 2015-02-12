@@ -128,6 +128,7 @@ void Drive::update()
   //retrieve general properties from the DRIVE_IFACE
   QDBusInterface* driveIface = UDisks2Wrapper::getInstance() -> driveIface(objectPath);
   this -> removable = getBoolProperty(driveIface, "Removable");
+  this -> shortName = getStringProperty(driveIface, "Model");
   delete driveIface;
 
   //Skip smart properties if ATA_IFACE is not present

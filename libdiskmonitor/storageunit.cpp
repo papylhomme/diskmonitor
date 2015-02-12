@@ -15,6 +15,7 @@ StorageUnit::StorageUnit(QDBusObjectPath objectPath, QString device) : QObject()
   this -> objectPath = objectPath;
   this -> device = device;
   this -> name = objectPath.path().split("/").last();
+  this -> shortName = name;
 }
 
 
@@ -92,6 +93,16 @@ QString StorageUnit::getDevice() const
 QString StorageUnit::getName() const
 {
   return this -> name;
+}
+
+
+
+/*
+ * Get the StorageUnit's short name. Depend on the type of unit
+ */
+QString StorageUnit::getShortName() const
+{
+  return this -> shortName;
 }
 
 

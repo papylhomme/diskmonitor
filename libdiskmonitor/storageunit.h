@@ -22,6 +22,7 @@ public:
   QString getPath() const;
   QString getDevice() const;
   QString getName() const;
+  QString getShortName() const;
 
   bool isFailing() const;
   bool isFailingStatusKnown() const;
@@ -41,6 +42,7 @@ protected:
   QDBusObjectPath objectPath;
   QString device;
   QString name;
+  QString shortName;
 
   bool failing = false;
   bool failingStatusKnown = false;

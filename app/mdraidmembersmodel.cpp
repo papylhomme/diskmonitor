@@ -1,6 +1,8 @@
 #include "mdraidmembersmodel.h"
 
 #include <QFont>
+#include <QColor>
+#include <QBrush>
 
 
 /*
@@ -79,8 +81,24 @@ QVariant MDRaidMembersModel::data(const QModelIndex& index, int role) const
 
   MDRaidMember member = members.at(index.row());
 
+  // Handle background colors
+  if(role == Qt::BackgroundRole) {
 
-  if(role == Qt::DisplayRole) {
+    //set the row background to red if device is faulty
+    if(member.state.indexOf("faulty") >= 0) {
+      QBrush brush(QColor("red"));
+      return QVariant(brush);
+
+    //set the row background to orange if read errors is positive
+    } else if(member.numReadErrors > 0) {
+      QBrush brush(QColor("orange"));
+      return QVariant(brush);
+
+    } else {
+      return QVariant();
+    }
+
+  } else if(role == Qt::DisplayRole) {
     switch(index.column()) {
       case 0: return QVariant(member.block.path()); break;
       case 1: return QVariant(member.slot); break;

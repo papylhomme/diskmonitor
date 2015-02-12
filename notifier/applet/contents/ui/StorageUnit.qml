@@ -1,47 +1,54 @@
 import QtQuick 2.3
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import QtQuick.Layouts 1.1
 
 
 PlasmaComponents.ListItem {
   id: storageUnitItem;
-
   enabled: true;
 
-  PlasmaCore.IconItem {
-    id: unitIcon;
-
-    source: icon;
+  RowLayout {
+    id: layout;
     anchors.left: parent.left;
-    anchors.verticalCenter: parent.verticalCenter;
-  }
-
-  PlasmaComponents.Label {
-    id: unitLabel;
-
-    text: name;
-    font.weight: Font.Bold;
-    anchors.left: unitIcon.right;
-    anchors.bottomMargin: 0;
-  }
-
-  PlasmaComponents.Label {
-    id: deviceLabel;
-
-    text: device;
-    anchors.left: unitLabel.left;
-    anchors.top: unitLabel.baseline;
-    anchors.topMargin: 0;
-  }
-
-  HealthStatus {
-    id: healthStatus;
-    isFailing: failing;
-
-    anchors.left: unitLabel.right;
     anchors.right: parent.right;
-    anchors.verticalCenter: parent.verticalCenter;
+  
+    PlasmaCore.IconItem {
+      id: unitIcon;
+      source: icon;
+    }
+  
+    Column {
+      Layout.fillWidth: true;
+
+      PlasmaComponents.Label {
+        id: unitLabel;
+        text: name;
+        font.weight: Font.Bold;
+        height: paintedHeight;
+      }
+    
+      PlasmaComponents.Label {
+        id: deviceLabel;
+        text: device;
+        height: paintedHeight;
+      }
+    }
+
+
+    PlasmaCore.IconItem {
+      source: failing ? "face-sick" : "face-cool";
+    }
+
+    PlasmaComponents.Label {
+      id: healthLabel;
+
+      text: failing ? "Failing" : "Healthy";
+      color: failing ? "red": PlasmaCore.ColorScope.textColor;
+      font.weight : failing ? Font.Bold : theme.defaultFont.weight;
+    }
   }
+
 
   onClicked: {
     myStorageModel.openApp(path);

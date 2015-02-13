@@ -18,8 +18,13 @@ DrivePropertiesModel::DrivePropertiesModel()
   KSharedConfigPtr config = KSharedConfig::openConfig();
   appearanceConfig = new KConfigGroup(config, "Appearance");
 
+  //read sensitives attributes from config
+  KConfigGroup smartGroup(config, "SMART");
+  QList<int> defaultSensitiveAttributes;
+  defaultSensitiveAttributes << 1 << 5 << 7 << 196 << 197 << 198;
+  sensitiveAttributes = smartGroup.readEntry("attributes.sensitive", defaultSensitiveAttributes);
+
   headerLabels << "Id" << "Name" << "Flags" << "Worst" << "Threshold" << "Normalized value" << "Value";
-  sensitiveAttributes << 1 << 5 << 7 << 196 << 197 << 198;
 }
 
 

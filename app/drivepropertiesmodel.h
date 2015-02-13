@@ -1,8 +1,9 @@
 #ifndef DRIVEPROPERTIESMODEL_H
 #define DRIVEPROPERTIESMODEL_H
 
-#include "storageunitpropertiesmodel.h"
+#include <KConfigGroup>
 
+#include "storageunitpropertiesmodel.h"
 #include "drive.h"
 
 
@@ -30,6 +31,8 @@ protected:
   QVariant humanizeSmartAttribute(const SmartAttribute& attr) const;
 
 private:
+  KConfigGroup* appearanceConfig;
+
   QStringList headerLabels;
   QList<int> sensitiveAttributes;
   SmartAttributesList attributes;

@@ -1,5 +1,7 @@
 #include "drivepropertiesmodel.h"
 
+#include <KSharedConfig>
+
 #include <QFont>
 #include <QBrush>
 #include <QColor>
@@ -13,6 +15,9 @@
  */
 DrivePropertiesModel::DrivePropertiesModel()
 {
+  KSharedConfigPtr config = KSharedConfig::openConfig();
+  appearanceConfig = new KConfigGroup(config, "Appearance");
+
   headerLabels << "Id" << "Name" << "Flags" << "Worst" << "Threshold" << "Normalized value" << "Value";
   sensitiveAttributes << 1 << 5 << 7 << 196 << 197 << 198;
 }
@@ -24,7 +29,7 @@ DrivePropertiesModel::DrivePropertiesModel()
  */
 DrivePropertiesModel::~DrivePropertiesModel()
 {
-
+  delete appearanceConfig;
 }
 
 
@@ -90,14 +95,16 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
     if(attr.value == -1)
       return QVariant(QBrush());
 
-    //set the row background to red if value < threshold
+    //set the row background to 'error' if value < threshold
     if(attr.value <= attr.threshold) {
-      QBrush brush(QColor("red"));
+      QColor errorColor = appearanceConfig -> readEntry("color.error", QColor("red"));
+      QBrush brush(errorColor);
       return QVariant(brush);
 
-    //set the row background to orange if value is non 0 for sensitive attributes
+    //set the row background to 'warning' if value is non 0 for sensitive attributes
     } else if(attr.pretty != 0 && sensitiveAttributes.contains(attr.id)) {
-      QBrush brush(QColor("orange"));
+      QColor warningColor = appearanceConfig -> readEntry("color.warning", QColor("orange"));
+      QBrush brush(warningColor);
       return QVariant(brush);
 
     } else {

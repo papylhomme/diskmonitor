@@ -1,5 +1,7 @@
 #include "mdraidmembersmodel.h"
 
+#include <KSharedConfig>
+
 #include <QFont>
 #include <QColor>
 #include <QBrush>
@@ -10,6 +12,9 @@
  */
 MDRaidMembersModel::MDRaidMembersModel()
 {
+  KSharedConfigPtr config = KSharedConfig::openConfig();
+  appearanceConfig = new KConfigGroup(config, "Appearance");
+
   headerLabels << "Block device" << "Slot" << "State" << "Read errors";
 }
 
@@ -20,7 +25,7 @@ MDRaidMembersModel::MDRaidMembersModel()
  */
 MDRaidMembersModel::~MDRaidMembersModel()
 {
-
+  delete appearanceConfig;
 }
 
 
@@ -84,14 +89,16 @@ QVariant MDRaidMembersModel::data(const QModelIndex& index, int role) const
   // Handle background colors
   if(role == Qt::BackgroundRole) {
 
-    //set the row background to red if device is faulty
+    //set the row background to 'error' if device is faulty
     if(member.state.indexOf("faulty") >= 0) {
-      QBrush brush(QColor("red"));
+      QColor errorColor = appearanceConfig -> readEntry("color.error", QColor("red"));
+      QBrush brush(errorColor);
       return QVariant(brush);
 
-    //set the row background to orange if read errors is positive
+    //set the row background to 'warning' if read errors is positive
     } else if(member.numReadErrors > 0) {
-      QBrush brush(QColor("orange"));
+      QColor warningColor = appearanceConfig -> readEntry("color.warning", QColor("orange"));
+      QBrush brush(warningColor);
       return QVariant(brush);
 
     } else {

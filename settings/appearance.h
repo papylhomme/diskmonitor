@@ -3,6 +3,10 @@
 
 #include "ui_appearance.h"
 
+
+/*
+ * Config page for general appearance settings
+ */
 class Appearance : public QWidget, public Ui::Appearance
 {
 public:

@@ -14,4 +14,10 @@
       <default>orange</default>
     </entry>
   </group>
+  <group name="SMART">
+    <entry name="SensitiveAttributes" type="IntList">
+      <label>Defines the attributes considered sensitive</label>
+      <default>1,5,7,196,197,198,201</default>
+    </entry>
+  </group>
 </kcfg>

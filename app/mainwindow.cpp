@@ -12,6 +12,7 @@
 
 #include "settings/diskmonitor_settings.h"
 #include "appearance.h"
+#include "smart.h"
 
 
 /*
@@ -185,12 +186,9 @@ void MainWindow::showSettings()
 
   KConfigDialog *dialog = new KConfigDialog(this, "settings", DiskMonitorSettings::self());
   dialog -> setFaceType(KPageDialog::List);
-  //dialog->addPage(new General(0, "General"), i18n("General") );
-  dialog -> addPage(new Appearance(dialog), i18n("Appearance") );
-  /*
-  connect(dialog, SIGNAL(settingsChanged(const QString&)), mainWidget, SLOT(loadSettings()));
-  connect(dialog, SIGNAL(settingsChanged(const QString&)), this, SLOT(loadSettings()));
-  */
+  dialog -> addPage(new Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
+  dialog -> addPage(new SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
+
   dialog->show();
 }
 

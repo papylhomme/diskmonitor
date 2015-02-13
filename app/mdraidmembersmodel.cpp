@@ -1,6 +1,6 @@
 #include "mdraidmembersmodel.h"
 
-#include <KSharedConfig>
+#include "settings/diskmonitor_settings.h"
 
 #include <QFont>
 #include <QColor>
@@ -12,9 +12,6 @@
  */
 MDRaidMembersModel::MDRaidMembersModel()
 {
-  KSharedConfigPtr config = KSharedConfig::openConfig();
-  appearanceConfig = new KConfigGroup(config, "Appearance");
-
   headerLabels << "Block device" << "Slot" << "State" << "Read errors";
 }
 
@@ -25,7 +22,6 @@ MDRaidMembersModel::MDRaidMembersModel()
  */
 MDRaidMembersModel::~MDRaidMembersModel()
 {
-  delete appearanceConfig;
 }
 
 
@@ -91,14 +87,12 @@ QVariant MDRaidMembersModel::data(const QModelIndex& index, int role) const
 
     //set the row background to 'error' if device is faulty
     if(member.state.indexOf("faulty") >= 0) {
-      QColor errorColor = appearanceConfig -> readEntry("ErrorColor", QColor("red"));
-      QBrush brush(errorColor);
+      QBrush brush(DiskMonitorSettings::errorColor());
       return QVariant(brush);
 
     //set the row background to 'warning' if read errors is positive
     } else if(member.numReadErrors > 0) {
-      QColor warningColor = appearanceConfig -> readEntry("WarningColor", QColor("orange"));
-      QBrush brush(warningColor);
+      QBrush brush(DiskMonitorSettings::warningColor());
       return QVariant(brush);
 
     } else {

@@ -1,9 +1,12 @@
 set( SETTINGS_SRCS 
+  kconfiglistwidget.cpp
   appearance.cpp
+  smart.cpp
 )
 
 ki18n_wrap_ui( SETTINGS_SRCS 
   appearance.ui
+  smart.ui
 )
 
 kconfig_add_kcfg_files( SETTINGS_SRCS diskmonitor_settings.kcfgc )

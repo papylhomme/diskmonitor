@@ -1,8 +1,6 @@
 #ifndef MDRAIDMEMBERSMODEL_H
 #define MDRAIDMEMBERSMODEL_H
 
-#include <KConfigGroup>
-
 #include "storageunitpropertiesmodel.h"
 #include "mdraid.h"
 
@@ -30,8 +28,6 @@ protected:
   virtual void updateInternalState();
 
 private:
-  KConfigGroup* appearanceConfig;
-
   QStringList headerLabels;
   MDRaidMemberList members;
 

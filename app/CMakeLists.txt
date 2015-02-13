@@ -19,6 +19,8 @@ ki18n_wrap_ui(APP_SRCS
   mdraidpanel.ui
 )
 
+qt5_add_resources(APP_SRCS resources.qrc)
+
 add_executable( diskmonitor ${APP_SRCS} )
 
 target_link_libraries( diskmonitor

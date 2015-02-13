@@ -1,6 +1,6 @@
 #include "drivepropertiesmodel.h"
 
-#include <KSharedConfig>
+#include "settings/diskmonitor_settings.h"
 
 #include <QFont>
 #include <QBrush>
@@ -15,15 +15,7 @@
  */
 DrivePropertiesModel::DrivePropertiesModel()
 {
-  KSharedConfigPtr config = KSharedConfig::openConfig();
-  appearanceConfig = new KConfigGroup(config, "Appearance");
-
-  //read sensitives attributes from config
-  KConfigGroup smartGroup(config, "SMART");
-  QList<int> defaultSensitiveAttributes;
-  defaultSensitiveAttributes << 1 << 5 << 7 << 196 << 197 << 198;
-  sensitiveAttributes = smartGroup.readEntry("attributes.sensitive", defaultSensitiveAttributes);
-
+  sensitiveAttributes = DiskMonitorSettings::sensitiveAttributes();
   headerLabels << "Id" << "Name" << "Flags" << "Worst" << "Threshold" << "Normalized value" << "Value";
 }
 
@@ -34,7 +26,6 @@ DrivePropertiesModel::DrivePropertiesModel()
  */
 DrivePropertiesModel::~DrivePropertiesModel()
 {
-  delete appearanceConfig;
 }
 
 
@@ -102,14 +93,12 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 
     //set the row background to 'error' if value < threshold
     if(attr.value <= attr.threshold) {
-      QColor errorColor = appearanceConfig -> readEntry("ErrorColor", QColor("red"));
-      QBrush brush(errorColor);
+      QBrush brush(DiskMonitorSettings::errorColor());
       return QVariant(brush);
 
     //set the row background to 'warning' if value is non 0 for sensitive attributes
     } else if(attr.pretty != 0 && sensitiveAttributes.contains(attr.id)) {
-      QColor warningColor = appearanceConfig -> readEntry("WarningColor", QColor("orange"));
-      QBrush brush(warningColor);
+      QBrush brush(DiskMonitorSettings::warningColor());
       return QVariant(brush);
 
     } else {

@@ -3,6 +3,8 @@
 
 #include "ui_appearance.h"
 
+#include "invisiblebuttongroup.h"
+
 
 /*
  * Config page for general appearance settings
@@ -10,7 +12,10 @@
 class Appearance : public QWidget, public Ui::Appearance
 {
 public:
-    explicit Appearance(QWidget *parent); 
+  explicit Appearance(QWidget *parent);
+
+private:
+  InvisibleButtonGroup* iconModeButtonGroup;
 };
 
 

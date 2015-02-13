@@ -81,11 +81,11 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
     //define health status overlay
     QStringList overlays;
     if(!u -> isFailingStatusKnown())
-      overlays.append("face-confused");
+      overlays.append(iconProvider.unknown());
     else if(u -> isFailing())
-      overlays.append("face-sick");
+      overlays.append(iconProvider.failing());
     else
-      overlays.append("face-cool");
+      overlays.append(iconProvider.healthy());
 
     //define icon
     QString icon;

@@ -10,9 +10,12 @@
 #include "drivepanel.h"
 #include "mdraidpanel.h"
 
-#include "settings/diskmonitor_settings.h"
+#include "diskmonitor_settings.h"
 #include "appearance.h"
 #include "smart.h"
+
+
+#include <QDebug>
 
 
 /*
@@ -41,9 +44,9 @@ MainWindow::MainWindow(QWidget* parent) :
   ui -> listView -> setGridSize( QSize(150, 100));
   ui -> listView -> setMinimumHeight(100);
 
-  StorageUnitModel* model = new StorageUnitModel();
-  ui -> listView -> setModel(model);
-  connect(ui -> actionRefresh, SIGNAL(triggered()), model, SLOT(refresh()));
+  storageUnitModel = new StorageUnitModel();
+  ui -> listView -> setModel(storageUnitModel);
+  connect(ui -> actionRefresh, SIGNAL(triggered()), storageUnitModel, SLOT(refresh()));
 
   //connect(ui -> listView, SIGNAL(activated(QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
   connect(ui -> listView -> selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
@@ -69,6 +72,7 @@ MainWindow::MainWindow(QWidget* parent) :
    * Setup settings
    */
   connect(ui -> actionSettings, SIGNAL(triggered()), this, SLOT(showSettings()));
+  connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(configChanged()));
 }
 
 
@@ -78,6 +82,7 @@ MainWindow::MainWindow(QWidget* parent) :
  */
 MainWindow::~MainWindow()
 {
+  delete storageUnitModel;
   delete ui;
 }
 
@@ -154,18 +159,18 @@ void MainWindow::updateHealthStatus(StorageUnit* unit)
   QPixmap icon;
 
   if(!unit -> isFailingStatusKnown()) {
-    style = "QLabel { color: orange; }";
+    style = "QLabel { color: " + DiskMonitorSettings::warningColor().name() + "; }";
     text = tr("Unknown");
-    icon = QIcon::fromTheme("face-confused").pixmap(QSize(16,16));
+    icon = QIcon::fromTheme(iconProvider.unknown()).pixmap(QSize(16,16));
 
   } else if(unit -> isFailing()) {
-    style = "QLabel { color: red; }";
+    style = "QLabel { color: " + DiskMonitorSettings::errorColor().name() + "; }";
     text = tr("Failing");
-    icon = QIcon::fromTheme("face-sick").pixmap(QSize(16,16));
+    icon = QIcon::fromTheme(iconProvider.failing()).pixmap(QSize(16,16));
 
   } else {
     text = tr("Healthy");
-    icon = QIcon::fromTheme("face-cool").pixmap(QSize(16,16));
+    icon = QIcon::fromTheme(iconProvider.healthy()).pixmap(QSize(16,16));
   }
 
   ui -> iconLabel -> setPixmap(icon);
@@ -190,5 +195,18 @@ void MainWindow::showSettings()
   dialog -> addPage(new SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
 
   dialog->show();
+}
+
+
+
+/*
+ * Handle configuration change, reload main list and details panel
+ */
+void MainWindow::configChanged()
+{
+  qDebug() << "DiskMonitor::MainWindow - Configuration changed, updating UI...";
+
+  storageUnitModel -> refresh();
+  refreshDetails();
 }
 

@@ -1,6 +1,6 @@
 #include "mdraidmembersmodel.h"
 
-#include "settings/diskmonitor_settings.h"
+#include "diskmonitor_settings.h"
 
 #include <QFont>
 #include <QColor>

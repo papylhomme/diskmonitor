@@ -1,5 +1,7 @@
 set( SETTINGS_SRCS 
   kconfiglistwidget.cpp
+  invisiblebuttongroup.cpp
+  iconprovider.cpp
   appearance.cpp
   smart.cpp
 )
@@ -16,6 +18,7 @@ add_library( libsettings STATIC ${SETTINGS_SRCS} )
 target_link_libraries( libsettings
   Qt5::Core
   KF5::ConfigWidgets
+  KF5::IconThemes
 )
 
 

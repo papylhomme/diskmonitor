@@ -3,8 +3,8 @@
 
 #include <KMainWindow>
 
-#include "dbus_metatypes.h"
-#include "storageunit.h"
+#include "storageunitmodel.h"
+#include "iconprovider.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,11 +23,15 @@ public:
 
 private:
     Ui::MainWindow* ui;
+    StorageUnitModel* storageUnitModel;
+
+    IconProvider iconProvider;
 
 public slots:
   void unitSelected(const QModelIndex& index);
   void refreshDetails();
   void showSettings();
+  void configChanged();
 };
 
 #endif // MAINWINDOW_H

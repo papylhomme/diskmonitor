@@ -13,6 +13,26 @@
       <label>Defines the color used for warnings.</label>
       <default>orange</default>
     </entry>
+    <entry name="IconMode" type="Enum">
+      <choices name="DiskMonitor::IconMode::Enum">
+        <choice name="IconMode::Emotes"/>
+        <choice name="IconMode::Dialogs"/>
+        <choice name="IconMode::Custom"/>
+      </choices>
+      <default>IconMode::Dialogs</default>
+    </entry>
+    <entry name="HealthyIcon" type="String">
+      <label>Defines the icon used for healthy unit.</label>
+      <default>face-cool</default>
+    </entry>
+    <entry name="FailingIcon" type="String">
+      <label>Defines the icon used for failing unit.</label>
+      <default>face-sick</default>
+    </entry>
+    <entry name="UnknownIcon" type="String">
+      <label>Defines the icon used when health status is unknown.</label>
+      <default>face-confused</default>
+    </entry>
   </group>
   <group name="SMART">
     <entry name="SensitiveAttributes" type="IntList">

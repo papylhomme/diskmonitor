@@ -19,7 +19,7 @@
         <choice name="IconMode::Dialogs"/>
         <choice name="IconMode::Custom"/>
       </choices>
-      <default>IconMode::Dialogs</default>
+      <default>IconMode::Emotes</default>
     </entry>
     <entry name="HealthyIcon" type="String">
       <label>Defines the icon used for healthy unit.</label>

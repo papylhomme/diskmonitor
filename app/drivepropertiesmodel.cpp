@@ -102,13 +102,13 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 
     //set the row background to 'error' if value < threshold
     if(attr.value <= attr.threshold) {
-      QColor errorColor = appearanceConfig -> readEntry("color.error", QColor("red"));
+      QColor errorColor = appearanceConfig -> readEntry("ErrorColor", QColor("red"));
       QBrush brush(errorColor);
       return QVariant(brush);
 
     //set the row background to 'warning' if value is non 0 for sensitive attributes
     } else if(attr.pretty != 0 && sensitiveAttributes.contains(attr.id)) {
-      QColor warningColor = appearanceConfig -> readEntry("color.warning", QColor("orange"));
+      QColor warningColor = appearanceConfig -> readEntry("WarningColor", QColor("orange"));
       QBrush brush(warningColor);
       return QVariant(brush);
 

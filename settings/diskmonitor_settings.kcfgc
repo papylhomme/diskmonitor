@@ -1,0 +1,5 @@
+File=diskmonitor_settings.kcfg 
+ClassName=DiskMonitorSettings 
+Singleton=true 
+Mutators=true
+

@@ -27,6 +27,7 @@ private:
 public slots:
   void unitSelected(const QModelIndex& index);
   void refreshDetails();
+  void showSettings();
 };
 
 #endif // MAINWINDOW_H

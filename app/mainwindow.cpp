@@ -3,15 +3,19 @@
 
 #include <QIcon>
 #include <KHelpMenu>
+#include <KConfigDialog>
+#include <KLocalizedString>
 
 #include "storageunitmodel.h"
-
 #include "drivepanel.h"
 #include "mdraidpanel.h"
 
+#include "settings/diskmonitor_settings.h"
+#include "appearance.h"
+
 
 /*
- *
+ * Constructor
  */
 MainWindow::MainWindow(QWidget* parent) :
     KMainWindow(parent),
@@ -19,9 +23,16 @@ MainWindow::MainWindow(QWidget* parent) :
 {
   ui -> setupUi(this);
 
+  /*
+   * setup KDE default help menu
+   */
   KHelpMenu* helpMenu = new KHelpMenu(this, "some text", false);
   menuBar() -> addMenu(helpMenu->menu());
 
+
+  /*
+   * setup the main list view
+   */
   //http://stackoverflow.com/questions/3639468/what-qt-widgets-to-use-for-read-only-scrollable-collapsible-icon-list
   ui -> listView -> setMovement(QListView::Static);
   ui -> listView -> setResizeMode(QListView::Adjust);
@@ -33,12 +44,18 @@ MainWindow::MainWindow(QWidget* parent) :
   ui -> listView -> setModel(model);
   connect(ui -> actionRefresh, SIGNAL(triggered()), model, SLOT(refresh()));
 
+  //connect(ui -> listView, SIGNAL(activated(QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
+  connect(ui -> listView -> selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
+
+
+  /*
+   * setup details panels
+   */
   ui -> stackedWidget -> addWidget(new DrivePanel(this));
   ui -> stackedWidget -> addWidget(new MDRaidPanel(this));
 
   ui -> splitter -> setStretchFactor(0, 1);
   ui -> splitter -> setStretchFactor(1, 2);
-
 
   //GroupBox title style
   QFont f;
@@ -46,14 +63,17 @@ MainWindow::MainWindow(QWidget* parent) :
 
   connect(ui -> refreshDetailsButton, SIGNAL(clicked()), this, SLOT(refreshDetails()));
 
-  //connect(ui -> listView, SIGNAL(activated(QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
-  connect(ui -> listView -> selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
+
+  /*
+   * Setup settings
+   */
+  connect(ui -> actionSettings, SIGNAL(triggered()), this, SLOT(showSettings()));
 }
 
 
 
 /*
- *
+ * Destructor
  */
 MainWindow::~MainWindow()
 {
@@ -63,7 +83,8 @@ MainWindow::~MainWindow()
 
 
 /*
- *
+ * Handle selection on the main list view and update
+ * the details panel accordingly
  */
 void MainWindow::unitSelected(const QModelIndex& index)
 {
@@ -104,7 +125,7 @@ void MainWindow::unitSelected(const QModelIndex& index)
 
 
 /*
- *
+ * Call the refresh action on the active panel
  */
 void MainWindow::refreshDetails()
 {
@@ -123,7 +144,7 @@ void MainWindow::refreshDetails()
 
 
 /*
- *
+ * Update the health status labels for the given unit
  */
 void MainWindow::updateHealthStatus(StorageUnit* unit)
 {
@@ -149,5 +170,27 @@ void MainWindow::updateHealthStatus(StorageUnit* unit)
   ui -> iconLabel -> setPixmap(icon);
   ui -> statusLabel -> setText(text);
   ui -> statusLabel -> setStyleSheet(style);
+}
+
+
+
+/*
+ * Display the application settings
+ */
+void MainWindow::showSettings()
+{
+  if(KConfigDialog::showDialog("settings"))
+    return;
+
+
+  KConfigDialog *dialog = new KConfigDialog(this, "settings", DiskMonitorSettings::self());
+  dialog -> setFaceType(KPageDialog::List);
+  //dialog->addPage(new General(0, "General"), i18n("General") );
+  dialog -> addPage(new Appearance(dialog), i18n("Appearance") );
+  /*
+  connect(dialog, SIGNAL(settingsChanged(const QString&)), mainWidget, SLOT(loadSettings()));
+  connect(dialog, SIGNAL(settingsChanged(const QString&)), this, SLOT(loadSettings()));
+  */
+  dialog->show();
 }
 

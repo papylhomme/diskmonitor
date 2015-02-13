@@ -91,13 +91,13 @@ QVariant MDRaidMembersModel::data(const QModelIndex& index, int role) const
 
     //set the row background to 'error' if device is faulty
     if(member.state.indexOf("faulty") >= 0) {
-      QColor errorColor = appearanceConfig -> readEntry("color.error", QColor("red"));
+      QColor errorColor = appearanceConfig -> readEntry("ErrorColor", QColor("red"));
       QBrush brush(errorColor);
       return QVariant(brush);
 
     //set the row background to 'warning' if read errors is positive
     } else if(member.numReadErrors > 0) {
-      QColor warningColor = appearanceConfig -> readEntry("color.warning", QColor("orange"));
+      QColor warningColor = appearanceConfig -> readEntry("WarningColor", QColor("orange"));
       QBrush brush(warningColor);
       return QVariant(brush);
 

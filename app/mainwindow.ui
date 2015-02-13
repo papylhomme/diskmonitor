@@ -140,6 +140,7 @@
     </property>
     <addaction name="separator"/>
     <addaction name="actionRefresh"/>
+    <addaction name="actionSettings"/>
     <addaction name="actionQuit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -156,6 +157,11 @@
   <action name="actionRefresh">
    <property name="text">
     <string>&amp;Refresh</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

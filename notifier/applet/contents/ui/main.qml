@@ -36,6 +36,10 @@ Item {
 
   DiskMonitor.IconProvider {
     id: iconProvider;
+
+    onHealthyChanged: updateTray();
+    onFailingChanged: updateTray();
+    onUnknownChanged: updateTray();
   }
 
   DiskMonitor.StorageUnitQmlModel {

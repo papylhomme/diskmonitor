@@ -1,9 +1,16 @@
 #include "storageunitqmlmodel.h"
 
-#include "udisks2wrapper.h"
-
-#include <QDebug>
+#include <KConfigDialog>
 #include <QProcess>
+#include <QDebug>
+
+
+#include "udisks2wrapper.h"
+#include "diskmonitor_settings.h"
+#include "appearance.h"
+#include "smart.h"
+
+
 
 
 /*
@@ -11,18 +18,18 @@
  */
 StorageUnitQmlModel::StorageUnitQmlModel()
 {
-  qDebug() << "StorageUnitQmlModel created !";
   UDisks2Wrapper* udisks2 = UDisks2Wrapper::getInstance();
-
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 
   storageUnits = udisks2 -> listStorageUnits();
   monitor();
 
+  connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(refresh()));
+
   timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(monitor()));
-  timer -> start(10000);
+  timer -> start(5 * 60 * 1000);
 }
 
 
@@ -220,4 +227,33 @@ void StorageUnitQmlModel::openApp(const QString& unitPath)
   QStringList params;
   params << unitPath;
   QProcess::startDetached("diskmonitor", params);
+}
+
+
+
+/*
+ * Refresh the model
+ */
+void StorageUnitQmlModel::refresh()
+{
+  monitor();
+}
+
+
+
+/*
+ * Show settings dialog
+ */
+void StorageUnitQmlModel::showSettings()
+{
+  if(KConfigDialog::showDialog("settings"))
+    return;
+
+  KConfigDialog *dialog = new KConfigDialog(NULL, "settings", DiskMonitorSettings::self());
+  dialog -> setFaceType(KPageDialog::List);
+  dialog -> addPage(new Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
+  dialog -> addPage(new SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
+
+  dialog->show();
+
 }

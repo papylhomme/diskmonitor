@@ -9,10 +9,21 @@ FocusScope {
 
   property var storageModel;
 
+  Toolbar {
+    id: toolbar
+
+    anchors.left: parent.left;
+    anchors.right: parent.right;
+    anchors.top: parent.top;
+  }
+
   PlasmaExtras.ScrollArea {
     id: scrollView;
 
-    anchors.fill: parent;
+    anchors.left: parent.left;
+    anchors.right: parent.right;
+    anchors.bottom: parent.bottom;
+    anchors.top: toolbar.bottom;
 
     ListView {
       id: storageUnitView;

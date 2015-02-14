@@ -28,6 +28,7 @@ signals:
   void unknownChanged();
 
 public slots:
+  void configChanged();
 };
 
 #endif // ICONPROVIDER_H

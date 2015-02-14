@@ -2,12 +2,13 @@
 
 #include "diskmonitor_settings.h"
 
+
 /*
  * Constructor
  */
 IconProvider::IconProvider(QObject *parent) : QObject(parent)
 {
-
+  connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(configChanged()));
 }
 
 
@@ -62,4 +63,16 @@ QString IconProvider::unknown() const
     case DiskMonitor::IconMode::Custom: return DiskMonitorSettings::unknownIcon();
     default: return "face-confused";
   }
+}
+
+
+
+/*
+ * Handle config change
+ */
+void IconProvider::configChanged()
+{
+  emit healthyChanged();
+  emit failingChanged();
+  emit unknownChanged();
 }

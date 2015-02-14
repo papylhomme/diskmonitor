@@ -57,6 +57,8 @@ signals:
   void failingChanged();
 
 public slots:
+  void refresh();
+  void showSettings();
   void openApp(const QString& unitPath);
 };
 

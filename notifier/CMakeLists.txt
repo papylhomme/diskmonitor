@@ -1,6 +1,5 @@
 set(NOTIFIER_SRCS
   storageunitqmlmodel.cpp
-  iconprovider.cpp
   qmlplugins.cpp
 )
 
@@ -8,9 +7,11 @@ add_library(diskmonitor_qmlplugins SHARED ${NOTIFIER_SRCS})
 
 target_link_libraries(diskmonitor_qmlplugins
   libdiskmonitor
+  libsettings
   Qt5::Core
   Qt5::DBus
   Qt5::Quick
+  KF5::I18n
 )
 
 

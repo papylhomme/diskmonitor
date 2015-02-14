@@ -21,7 +21,5 @@ target_link_libraries( libsettings
   KF5::IconThemes
 )
 
-
 install( FILES diskmonitor.kcfg  DESTINATION ${KCFG_INSTALL_DIR})
-install( FILES diskmonitor.rc  DESTINATION ${KXMLGUI_INSTALL_DIR}/diskmonitor)
 

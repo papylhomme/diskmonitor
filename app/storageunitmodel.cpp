@@ -170,7 +170,7 @@ void StorageUnitModel::storageUnitRemoved(StorageUnit* unit)
 /*
  * Handle StorageUnit updated signal and update the display accordingly
  */
-void StorageUnitModel::storageUnitUpdated(StorageUnit* unit)
+void StorageUnitModel::storageUnitUpdated(StorageUnit* /*unit*/)
 {
   if(inhibitUpdate)
     return;

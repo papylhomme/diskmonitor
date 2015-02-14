@@ -1,4 +1,4 @@
-File=diskmonitor_settings.kcfg 
+File=diskmonitor.kcfg 
 ClassName=DiskMonitorSettings 
 Singleton=true 
 Mutators=true

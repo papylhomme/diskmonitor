@@ -22,12 +22,16 @@ public slots:
     void refresh();
 
 private:
+    bool inhibitUpdate = false;
     IconProvider iconProvider;
     QList<StorageUnit*> storageUnits;
 
+    void init();
+
 private slots:
-    void storageUnitAdded(StorageUnit* drive);
-    void storageUnitRemoved(StorageUnit* path);
+    void storageUnitAdded(StorageUnit* unit);
+    void storageUnitRemoved(StorageUnit* unit);
+    void storageUnitUpdated(StorageUnit* unit);
 };
 
 #endif // STORAGEUNITMODEL_H

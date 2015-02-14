@@ -42,6 +42,8 @@ MainWindow::MainWindow(QWidget* parent) :
   ui -> listView -> setResizeMode(QListView::Adjust);
   ui -> listView -> setViewMode(QListView::IconMode);
   ui -> listView -> setGridSize( QSize(150, 100));
+  ui -> listView -> setWrapping(true);
+  ui -> listView -> setWordWrap(true);
   ui -> listView -> setMinimumHeight(100);
 
   storageUnitModel = new StorageUnitModel();
@@ -97,6 +99,13 @@ void MainWindow::unitSelected(const QModelIndex& index)
   int widgetIndex = 0;
   QString boxTitle = tr("Details");
 
+  //disconnect the old selected unit if needed
+  if(currentUnit != NULL)
+    disconnect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
+
+  /*
+   * No StorageUnit available, reset the view
+   */
   if(!index.isValid() || index.data(Qt::UserRole).value<StorageUnit*>() == NULL) {
     ui -> groupBox -> setTitle(boxTitle);
     ui -> stackedWidget -> setCurrentIndex(widgetIndex);
@@ -104,26 +113,30 @@ void MainWindow::unitSelected(const QModelIndex& index)
     return;
   }
 
+
+  /*
+   * StorageUnit selected, set the details panel accordingly
+   */
   StorageUnit* u = index.data(Qt::UserRole).value<StorageUnit*>();
-  u -> update();
-  updateHealthStatus(u);
+  currentUnit = u;
+  connect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
+  currentUnit -> update();
 
-  if(u -> isDrive()) {
-    DrivePanel* panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
-    panel -> setDrive((Drive*) u);
 
+  //select the panel to display
+  StorageUnitPanel* panel = NULL;
+  if(currentUnit -> isDrive()) {
     widgetIndex = 1;
+    panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
     boxTitle = tr("Drive") % " " % u -> getName() % " (" % u-> getDevice() % ")";
 
   } else if(u -> isMDRaid()) {
-    MDRaidPanel* panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
-    panel -> setMDRaid((MDRaid*) u);
-
     widgetIndex = 2;
+    panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
     boxTitle = tr("MDRaid") % " " % u -> getName() % " (" % u -> getDevice() % ")";
-
   }
 
+  panel -> setStorageUnit(currentUnit);
   ui -> groupBox -> setTitle(boxTitle);
   ui -> stackedWidget -> setCurrentIndex(widgetIndex);
 }
@@ -140,11 +153,6 @@ void MainWindow::refreshDetails()
     case 2: ((StorageUnitPanel*) ui -> stackedWidget -> currentWidget()) -> refresh(); break;
     default: break;
   }
-
-  QModelIndex currentIndex = ui -> listView -> currentIndex();
-
-  if(currentIndex.isValid() && currentIndex.data(Qt::UserRole).value<StorageUnit*>() != NULL)
-    updateHealthStatus(ui -> listView -> currentIndex().data(Qt::UserRole).value<StorageUnit*>());
 }
 
 
@@ -207,6 +215,5 @@ void MainWindow::configChanged()
   qDebug() << "DiskMonitor::MainWindow - Configuration changed, updating UI...";
 
   storageUnitModel -> refresh();
-  refreshDetails();
 }
 

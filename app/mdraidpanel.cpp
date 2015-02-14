@@ -7,7 +7,7 @@
 
 
 /*
- *
+ * Constructor
  */
 MDRaidPanel::MDRaidPanel(QWidget *parent) :
   StorageUnitPanel(new MDRaidPropertiesModel(), parent),
@@ -32,7 +32,7 @@ MDRaidPanel::MDRaidPanel(QWidget *parent) :
 
 
 /*
- *
+ * Destructor
  */
 MDRaidPanel::~MDRaidPanel()
 {
@@ -42,7 +42,7 @@ MDRaidPanel::~MDRaidPanel()
 
 
 /*
- *
+ * Set the raid to display in the panel. Can be NULL
  */
 void MDRaidPanel::setMDRaid(MDRaid* raid)
 {
@@ -53,7 +53,7 @@ void MDRaidPanel::setMDRaid(MDRaid* raid)
 
 
 /*
- *
+ * Retrieve the raid associated with the panel. Can be NULL
  */
 MDRaid* MDRaidPanel::getMDRaid()
 {
@@ -63,7 +63,7 @@ MDRaid* MDRaidPanel::getMDRaid()
 
 
 /*
- *
+ * Update the UI according to the state of the currently selected raid
  */
 void MDRaidPanel::updateUI()
 {
@@ -82,7 +82,7 @@ void MDRaidPanel::updateUI()
 
 
 /*
- *
+ * Test if an operation is currently running on the raid
  */
 bool MDRaidPanel::isOperationRunning()
 {
@@ -94,7 +94,7 @@ bool MDRaidPanel::isOperationRunning()
 
 
 /*
- *
+ * Slot to start scrubbing on the raid
  */
 void MDRaidPanel::startScrubbing()
 {

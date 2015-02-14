@@ -20,10 +20,11 @@ public:
   explicit StorageUnitPanel(StorageUnitPropertiesModel* model, QWidget *parent = 0);
   ~StorageUnitPanel();
 
+  void setStorageUnit(StorageUnit* unit);
+
 protected:
   StorageUnitPropertiesModel* model = NULL;
 
-  void setStorageUnit(StorageUnit* unit);
   virtual bool isOperationRunning() { return false; }
   virtual void updateUI() { }
 

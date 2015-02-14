@@ -1,5 +1,5 @@
 # DisKMonitor
-KDE tools to monitor SMART devices and MDRaid health status
+KDE tools to monitor SMART devices and MDRaid health status. Features a full application and a Plasma applet.
 
 # Requirements
 * **KF5**
@@ -10,9 +10,6 @@ KDE tools to monitor SMART devices and MDRaid health status
     cmake ..
     make
 
-# Planned
- * A small daemon app watching silently the status of devices and notifying the user via KDE Notifications when something goes wrong
- 
 # Screenshots
 
 DisKMonitor displaying MDRaid properties
@@ -21,6 +18,15 @@ DisKMonitor displaying MDRaid properties
 
 DisKMonitor displaying SMART properties
 ![My image](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/screenshot2.png)
+
+
+DisKMonitor applet on the desktop
+![My image](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet1.png)
+
+
+DisKMonitor applet on the tray
+![My image](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet2.png)
+
 
 
 

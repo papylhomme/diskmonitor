@@ -2,9 +2,10 @@
 #define STORAGEUNITMODEL_H
 
 #include <QAbstractListModel>
-#include <QMap>
 
 #include "drive.h"
+
+#include "iconprovider.h"
 
 class StorageUnitModel : public QAbstractListModel
 {
@@ -21,11 +22,16 @@ public slots:
     void refresh();
 
 private:
+    bool inhibitUpdate = false;
+    IconProvider iconProvider;
     QList<StorageUnit*> storageUnits;
 
+    void init();
+
 private slots:
-    void storageUnitAdded(StorageUnit* drive);
-    void storageUnitRemoved(StorageUnit* path);
+    void storageUnitAdded(StorageUnit* unit);
+    void storageUnitRemoved(StorageUnit* unit);
+    void storageUnitUpdated(StorageUnit* unit);
 };
 
 #endif // STORAGEUNITMODEL_H

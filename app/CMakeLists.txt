@@ -1,8 +1,3 @@
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
-
-
 set(APP_SRCS
   main.cpp
   humanize.cpp
@@ -24,10 +19,13 @@ ki18n_wrap_ui(APP_SRCS
   mdraidpanel.ui
 )
 
+qt5_add_resources(APP_SRCS resources.qrc)
+
 add_executable( diskmonitor ${APP_SRCS} )
 
 target_link_libraries( diskmonitor
   libdiskmonitor
+  libsettings
   Qt5::Core
   Qt5::DBus
   KF5::CoreAddons

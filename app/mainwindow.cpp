@@ -3,15 +3,23 @@
 
 #include <QIcon>
 #include <KHelpMenu>
+#include <KConfigDialog>
+#include <KLocalizedString>
 
 #include "storageunitmodel.h"
-
 #include "drivepanel.h"
 #include "mdraidpanel.h"
 
+#include "diskmonitor_settings.h"
+#include "appearance.h"
+#include "smart.h"
+
+
+#include <QDebug>
+
 
 /*
- *
+ * Constructor
  */
 MainWindow::MainWindow(QWidget* parent) :
     KMainWindow(parent),
@@ -19,26 +27,41 @@ MainWindow::MainWindow(QWidget* parent) :
 {
   ui -> setupUi(this);
 
+  /*
+   * setup KDE default help menu
+   */
   KHelpMenu* helpMenu = new KHelpMenu(this, "some text", false);
   menuBar() -> addMenu(helpMenu->menu());
 
+
+  /*
+   * setup the main list view
+   */
   //http://stackoverflow.com/questions/3639468/what-qt-widgets-to-use-for-read-only-scrollable-collapsible-icon-list
   ui -> listView -> setMovement(QListView::Static);
   ui -> listView -> setResizeMode(QListView::Adjust);
   ui -> listView -> setViewMode(QListView::IconMode);
   ui -> listView -> setGridSize( QSize(150, 100));
+  ui -> listView -> setWrapping(true);
+  ui -> listView -> setWordWrap(true);
   ui -> listView -> setMinimumHeight(100);
 
-  StorageUnitModel* model = new StorageUnitModel();
-  ui -> listView -> setModel(model);
-  connect(ui -> actionRefresh, SIGNAL(triggered()), model, SLOT(refresh()));
+  storageUnitModel = new StorageUnitModel();
+  ui -> listView -> setModel(storageUnitModel);
+  connect(ui -> actionRefresh, SIGNAL(triggered()), storageUnitModel, SLOT(refresh()));
 
+  //connect(ui -> listView, SIGNAL(activated(QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
+  connect(ui -> listView -> selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
+
+
+  /*
+   * setup details panels
+   */
   ui -> stackedWidget -> addWidget(new DrivePanel(this));
   ui -> stackedWidget -> addWidget(new MDRaidPanel(this));
 
   ui -> splitter -> setStretchFactor(0, 1);
   ui -> splitter -> setStretchFactor(1, 2);
-
 
   //GroupBox title style
   QFont f;
@@ -46,30 +69,43 @@ MainWindow::MainWindow(QWidget* parent) :
 
   connect(ui -> refreshDetailsButton, SIGNAL(clicked()), this, SLOT(refreshDetails()));
 
-  //connect(ui -> listView, SIGNAL(activated(QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
-  connect(ui -> listView -> selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
+
+  /*
+   * Setup settings
+   */
+  connect(ui -> actionSettings, SIGNAL(triggered()), this, SLOT(showSettings()));
+  connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(configChanged()));
 }
 
 
 
 /*
- *
+ * Destructor
  */
 MainWindow::~MainWindow()
 {
+  delete storageUnitModel;
   delete ui;
 }
 
 
 
 /*
- *
+ * Handle selection on the main list view and update
+ * the details panel accordingly
  */
 void MainWindow::unitSelected(const QModelIndex& index)
 {
   int widgetIndex = 0;
   QString boxTitle = tr("Details");
 
+  //disconnect the old selected unit if needed
+  if(currentUnit != NULL)
+    disconnect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
+
+  /*
+   * No StorageUnit available, reset the view
+   */
   if(!index.isValid() || index.data(Qt::UserRole).value<StorageUnit*>() == NULL) {
     ui -> groupBox -> setTitle(boxTitle);
     ui -> stackedWidget -> setCurrentIndex(widgetIndex);
@@ -77,26 +113,30 @@ void MainWindow::unitSelected(const QModelIndex& index)
     return;
   }
 
+
+  /*
+   * StorageUnit selected, set the details panel accordingly
+   */
   StorageUnit* u = index.data(Qt::UserRole).value<StorageUnit*>();
-  u -> update();
-  updateHealthStatus(u);
+  currentUnit = u;
+  connect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
+  currentUnit -> update();
 
-  if(u -> isDrive()) {
-    DrivePanel* panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
-    panel -> setDrive((Drive*) u);
 
+  //select the panel to display
+  StorageUnitPanel* panel = NULL;
+  if(currentUnit -> isDrive()) {
     widgetIndex = 1;
+    panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
     boxTitle = tr("Drive") % " " % u -> getName() % " (" % u-> getDevice() % ")";
 
   } else if(u -> isMDRaid()) {
-    MDRaidPanel* panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
-    panel -> setMDRaid((MDRaid*) u);
-
     widgetIndex = 2;
+    panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
     boxTitle = tr("MDRaid") % " " % u -> getName() % " (" % u -> getDevice() % ")";
-
   }
 
+  panel -> setStorageUnit(currentUnit);
   ui -> groupBox -> setTitle(boxTitle);
   ui -> stackedWidget -> setCurrentIndex(widgetIndex);
 }
@@ -104,7 +144,7 @@ void MainWindow::unitSelected(const QModelIndex& index)
 
 
 /*
- *
+ * Call the refresh action on the active panel
  */
 void MainWindow::refreshDetails()
 {
@@ -113,17 +153,12 @@ void MainWindow::refreshDetails()
     case 2: ((StorageUnitPanel*) ui -> stackedWidget -> currentWidget()) -> refresh(); break;
     default: break;
   }
-
-  QModelIndex currentIndex = ui -> listView -> currentIndex();
-
-  if(currentIndex.isValid() && currentIndex.data(Qt::UserRole).value<StorageUnit*>() != NULL)
-    updateHealthStatus(ui -> listView -> currentIndex().data(Qt::UserRole).value<StorageUnit*>());
 }
 
 
 
 /*
- *
+ * Update the health status labels for the given unit
  */
 void MainWindow::updateHealthStatus(StorageUnit* unit)
 {
@@ -132,22 +167,53 @@ void MainWindow::updateHealthStatus(StorageUnit* unit)
   QPixmap icon;
 
   if(!unit -> isFailingStatusKnown()) {
-    style = "QLabel { color: orange; }";
+    style = "QLabel { color: " + DiskMonitorSettings::warningColor().name() + "; }";
     text = tr("Unknown");
-    icon = QIcon::fromTheme("face-confused").pixmap(QSize(16,16));
+    icon = QIcon::fromTheme(iconProvider.unknown()).pixmap(QSize(16,16));
 
   } else if(unit -> isFailing()) {
-    style = "QLabel { color: red; }";
+    style = "QLabel { color: " + DiskMonitorSettings::errorColor().name() + "; }";
     text = tr("Failing");
-    icon = QIcon::fromTheme("face-sick").pixmap(QSize(16,16));
+    icon = QIcon::fromTheme(iconProvider.failing()).pixmap(QSize(16,16));
 
   } else {
     text = tr("Healthy");
-    icon = QIcon::fromTheme("face-cool").pixmap(QSize(16,16));
+    icon = QIcon::fromTheme(iconProvider.healthy()).pixmap(QSize(16,16));
   }
 
   ui -> iconLabel -> setPixmap(icon);
   ui -> statusLabel -> setText(text);
   ui -> statusLabel -> setStyleSheet(style);
+}
+
+
+
+/*
+ * Display the application settings
+ */
+void MainWindow::showSettings()
+{
+  if(KConfigDialog::showDialog("settings"))
+    return;
+
+
+  KConfigDialog *dialog = new KConfigDialog(this, "settings", DiskMonitorSettings::self());
+  dialog -> setFaceType(KPageDialog::List);
+  dialog -> addPage(new Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
+  dialog -> addPage(new SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
+
+  dialog->show();
+}
+
+
+
+/*
+ * Handle configuration change, reload main list and details panel
+ */
+void MainWindow::configChanged()
+{
+  qDebug() << "DiskMonitor::MainWindow - Configuration changed, updating UI...";
+
+  storageUnitModel -> refresh();
 }
 

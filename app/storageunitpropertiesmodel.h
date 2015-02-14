@@ -30,6 +30,9 @@ protected:
 
 public slots:
     void storageUnitRemoved(StorageUnit* unit);
+
+private slots:
+    void storageUnitUpdate(StorageUnit* unit);
 };
 
 #endif // STORAGEUNITPROPERTIESMODEL_H

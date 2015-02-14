@@ -28,12 +28,12 @@ public:
   bool isFailingStatusKnown() const;
 
 
+  //QMETA_TYPE require a public empty constructor, we can't
+  //use pure virtual here
   virtual void update()
   {
-    //QMETA_TYPE require a public empty constructor, we can't
-    //use pure virtual here
+    emit updated(this);
   }
-  //virtual void update() = 0;
 
   virtual bool isDrive() const { return false; }
   virtual bool isMDRaid() const { return false; }
@@ -53,6 +53,9 @@ protected:
   qulonglong getULongLongProperty(QDBusInterface*, const char*) const;
   double getDoubleProperty(QDBusInterface*, const char*) const;
   QString getStringProperty(QDBusInterface*, const char*) const;
+
+signals:
+  void updated(StorageUnit* unit);
 };
 
 Q_DECLARE_METATYPE(StorageUnit)

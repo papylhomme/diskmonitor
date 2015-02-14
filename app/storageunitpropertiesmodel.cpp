@@ -31,7 +31,16 @@ StorageUnitPropertiesModel::~StorageUnitPropertiesModel()
 void StorageUnitPropertiesModel::setStorageUnit(StorageUnit* unit)
 {
   beginResetModel();
+
+  if(this -> unit != NULL)
+    disconnect(this -> unit, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdate(StorageUnit*)));
+
   this -> unit = unit;
+
+  if(this -> unit != NULL)
+    connect(this -> unit, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdate(StorageUnit*)));
+
+
   updateInternalState();
   endResetModel();
 }
@@ -53,8 +62,22 @@ StorageUnit*StorageUnitPropertiesModel::getStorageUnit()
  */
 void StorageUnitPropertiesModel::storageUnitRemoved(StorageUnit* unit)
 {
-  if(this -> unit != NULL && this -> unit -> getObjectPath() == unit -> getObjectPath())
+  if(this -> unit != NULL && this -> unit -> getObjectPath() == unit -> getObjectPath()) {
+    disconnect(this -> unit, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdate(StorageUnit*)));
     setStorageUnit(NULL);
+  }
+}
+
+
+
+/*
+ * Handle storage unit updated
+ */
+void StorageUnitPropertiesModel::storageUnitUpdate(StorageUnit* /*unit*/)
+{
+  beginResetModel();
+  updateInternalState();
+  endResetModel();
 }
 
 
@@ -64,11 +87,7 @@ void StorageUnitPropertiesModel::storageUnitRemoved(StorageUnit* unit)
  */
 void StorageUnitPropertiesModel::refreshAll()
 {
-  if(unit != NULL) {
-    beginResetModel();
+  if(unit != NULL)
     unit -> update();
-    updateInternalState();
-    endResetModel();
-  }
 }
 

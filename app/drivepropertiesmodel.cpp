@@ -1,5 +1,7 @@
 #include "drivepropertiesmodel.h"
 
+#include "diskmonitor_settings.h"
+
 #include <QFont>
 #include <QBrush>
 #include <QColor>
@@ -13,8 +15,8 @@
  */
 DrivePropertiesModel::DrivePropertiesModel()
 {
+  sensitiveAttributes = DiskMonitorSettings::sensitiveAttributes();
   headerLabels << "Id" << "Name" << "Flags" << "Worst" << "Threshold" << "Normalized value" << "Value";
-  sensitiveAttributes << 1 << 5 << 7 << 196 << 197 << 198;
 }
 
 
@@ -24,7 +26,6 @@ DrivePropertiesModel::DrivePropertiesModel()
  */
 DrivePropertiesModel::~DrivePropertiesModel()
 {
-
 }
 
 
@@ -90,14 +91,14 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
     if(attr.value == -1)
       return QVariant(QBrush());
 
-    //set the row background to red if value < threshold
+    //set the row background to 'error' if value < threshold
     if(attr.value <= attr.threshold) {
-      QBrush brush(QColor("red"));
+      QBrush brush(DiskMonitorSettings::errorColor());
       return QVariant(brush);
 
-    //set the row background to orange if value is non 0 for sensitive attributes
+    //set the row background to 'warning' if value is non 0 for sensitive attributes
     } else if(attr.pretty != 0 && sensitiveAttributes.contains(attr.id)) {
-      QBrush brush(QColor("orange"));
+      QBrush brush(DiskMonitorSettings::warningColor());
       return QVariant(brush);
 
     } else {

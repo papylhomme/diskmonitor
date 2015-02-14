@@ -2,7 +2,6 @@
 #define DRIVEPROPERTIESMODEL_H
 
 #include "storageunitpropertiesmodel.h"
-
 #include "drive.h"
 
 

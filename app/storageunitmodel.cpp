@@ -3,15 +3,17 @@
 #include "udisks2wrapper.h"
 
 #include <QPixmap>
-#include <kiconloader.h>
+#include <KIconLoader>
+
+#include <QDebug>
 
 
 /*
- *
+ * Constructor
  */
 StorageUnitModel::StorageUnitModel()
 {
-  refresh();
+  init();
 
   UDisks2Wrapper* udisks2 = UDisks2Wrapper::getInstance();
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
@@ -21,7 +23,7 @@ StorageUnitModel::StorageUnitModel()
 
 
 /*
- *
+ * Destructor
  */
 StorageUnitModel::~StorageUnitModel()
 {
@@ -31,27 +33,48 @@ StorageUnitModel::~StorageUnitModel()
 
 
 /*
- *
+ * Init the internal state of the model
  */
-void StorageUnitModel::refresh() {
+void StorageUnitModel::init() {
   UDisks2Wrapper* udisks2 = UDisks2Wrapper::getInstance();
 
+  inhibitUpdate = true;
   beginResetModel();
 
   storageUnits.clear();
   QList<StorageUnit*> units = udisks2 -> listStorageUnits();
 
   foreach(StorageUnit* u, units) {
+    u -> update();
     storageUnits.append(u);
+    connect(u, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdated(StorageUnit*)));
   }
 
   endResetModel();
+  inhibitUpdate = false;
 }
 
 
 
 /*
- *
+ * Refresh the internal state
+ */
+void StorageUnitModel::refresh() {
+  qDebug() << "DiskMonitor::StorageUnitModel - refreshing...";
+
+  inhibitUpdate = true;
+  beginResetModel();
+  foreach(StorageUnit* u, storageUnits) {
+    u -> update();
+  }
+  endResetModel();
+  inhibitUpdate = false;
+}
+
+
+
+/*
+ * Get the number of rows contained in the model's data.
  */
 int StorageUnitModel::rowCount(const QModelIndex&) const
 {
@@ -61,7 +84,7 @@ int StorageUnitModel::rowCount(const QModelIndex&) const
 
 
 /*
- *
+ * Retrieve data for an item in the model
  */
 QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
 {
@@ -81,11 +104,11 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
     //define health status overlay
     QStringList overlays;
     if(!u -> isFailingStatusKnown())
-      overlays.append("face-confused");
+      overlays.append(iconProvider.unknown());
     else if(u -> isFailing())
-      overlays.append("face-sick");
+      overlays.append(iconProvider.failing());
     else
-      overlays.append("face-cool");
+      overlays.append(iconProvider.healthy());
 
     //define icon
     QString icon;
@@ -111,7 +134,7 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
 
 
 /*
- *
+ * Handle new StorageUnit
  */
 void StorageUnitModel::storageUnitAdded(StorageUnit* unit)
 {
@@ -120,18 +143,57 @@ void StorageUnitModel::storageUnitAdded(StorageUnit* unit)
   beginInsertRows(QModelIndex(), idx, idx);
   storageUnits.append(unit);
   endInsertRows();
+
+  connect(unit, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdated(StorageUnit*)));
 }
 
 
 
 /*
- *
+ * Handle removal of StorageUnit
  */
 void StorageUnitModel::storageUnitRemoved(StorageUnit* unit)
 {
   int idx = storageUnits.indexOf(unit);
 
-  beginRemoveRows(QModelIndex(), idx, idx);
-  storageUnits.removeAt(idx);
-  endRemoveRows();
+  if(idx >= 0) {
+    disconnect(unit, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdated(StorageUnit*)));
+
+    beginRemoveRows(QModelIndex(), idx, idx);
+    storageUnits.removeAt(idx);
+    endRemoveRows();
+  }
+}
+
+
+
+/*
+ * Handle StorageUnit updated signal and update the display accordingly
+ */
+void StorageUnitModel::storageUnitUpdated(StorageUnit* unit)
+{
+  if(inhibitUpdate)
+    return;
+
+  /*
+   * TODO FixThis
+   *
+   * Somehow emitting the dataChanged signal break the grid layout (items
+   * updated do not wrap anymore until the layout is resetted)
+   * So we go for the hammer and reset the model...
+   */
+  beginResetModel();
+  endResetModel();
+
+
+  /*
+  QVector<int> roles;
+  roles << Qt::DisplayRole << Qt::DecorationRole << Qt::ToolTipRole;
+  int index = storageUnits.indexOf(unit);
+
+  if(index >= 0) {
+    QModelIndex idx = createIndex(index, 0);
+    emit dataChanged(idx, idx, roles);
+  }
+  */
 }

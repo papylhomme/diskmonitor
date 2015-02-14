@@ -3,30 +3,41 @@
 
 #include <KMainWindow>
 
-#include "dbus_metatypes.h"
-#include "storageunit.h"
+#include "storageunitmodel.h"
+#include "iconprovider.h"
 
 namespace Ui {
 class MainWindow;
 }
 
+
+/*
+ * Main application window
+ */
 class MainWindow : public KMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget* parent = 0);
-    ~MainWindow();
-
-    void updateHealthStatus(StorageUnit*);
+  explicit MainWindow(QWidget* parent = 0);
+  ~MainWindow();
 
 
 private:
-    Ui::MainWindow* ui;
+  Ui::MainWindow* ui;
+
+  StorageUnit* currentUnit = NULL;
+  StorageUnitModel* storageUnitModel;
+
+  IconProvider iconProvider;
 
 public slots:
   void unitSelected(const QModelIndex& index);
+  void updateHealthStatus(StorageUnit*);
+
   void refreshDetails();
+  void showSettings();
+  void configChanged();
 };
 
 #endif // MAINWINDOW_H

@@ -2,7 +2,6 @@
 #define MDRAIDMEMBERSMODEL_H
 
 #include "storageunitpropertiesmodel.h"
-
 #include "mdraid.h"
 
 

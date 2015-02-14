@@ -27,6 +27,7 @@ find_package(KF5 REQUIRED COMPONENTS
   IconThemes
   XmlGui
   Notifications
+  ConfigWidgets
   Plasma
 )
 
@@ -37,6 +38,7 @@ kde_enable_exceptions()
 include_directories( ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/libdiskmonitor )
 
 add_subdirectory( libdiskmonitor )
+add_subdirectory( settings )
 add_subdirectory( app )
 add_subdirectory( notifier )
 

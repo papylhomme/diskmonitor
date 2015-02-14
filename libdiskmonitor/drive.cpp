@@ -125,7 +125,9 @@ void Drive::update()
   attributes.clear();
 
 
-  //retrieve general properties from the DRIVE_IFACE
+  /*
+   * retrieve general properties from the DRIVE_IFACE
+   */
   QDBusInterface* driveIface = UDisks2Wrapper::getInstance() -> driveIface(objectPath);
   this -> removable = getBoolProperty(driveIface, "Removable");
   delete driveIface;
@@ -137,7 +139,9 @@ void Drive::update()
   }
 
 
-  //retrieve SMART properties from the ATA_IFACE
+  /*
+   * retrieve SMART properties from the ATA_IFACE
+   */
   QDBusInterface* ataIface = UDisks2Wrapper::getInstance() -> ataIface(objectPath);
   this -> smartSupported = getBoolProperty(ataIface, "SmartSupported");
   this -> smartEnabled = getBoolProperty(ataIface, "SmartEnabled");
@@ -161,4 +165,6 @@ void Drive::update()
   }
 
   delete ataIface;
+
+  StorageUnit::update();
 }

@@ -34,6 +34,9 @@ MDRaid::~MDRaid()
  */
 void MDRaid::update()
 {
+  /*
+   * Retrieve raid properties
+   */
   QDBusInterface* raidIface = UDisks2Wrapper::getInstance() -> mdraidIface(objectPath);
 
   this -> failing = getBoolProperty(raidIface, "Degraded");
@@ -54,6 +57,12 @@ void MDRaid::update()
   this -> syncCompleted = getDoubleProperty(raidIface, "SyncCompleted");
   this -> syncRemainingTime = getULongLongProperty(raidIface, "SyncRemainingTime");
 
+  delete raidIface;
+
+
+  /*
+   * Retrieve members properties
+   */
   QDBusInterface* propIface = UDisks2Wrapper::getInstance() -> propertiesIface(objectPath);
 
   //handle ActiveDevices properties using DBus Properties interface as a direct read fails
@@ -69,7 +78,9 @@ void MDRaid::update()
     members << m;
   }
 
-  delete raidIface;
+  delete propIface;
+
+  StorageUnit::update();
 }
 
 

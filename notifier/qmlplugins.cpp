@@ -14,5 +14,5 @@ void QmlPlugins::registerTypes(const char* uri)
     // @uri org.papylhomme.diskmonitor.StorageUnitQmlModel
     qmlRegisterType<StorageUnitQmlModel>(uri, 0, 1, "StorageUnitQmlModel");
     // @uri org.papylhomme.diskmonitor.IconProvider
-    qmlRegisterType<IconProvider>(uri, 0, 1, "IconProvider");
+    qmlRegisterType<Settings::IconProvider>(uri, 0, 1, "IconProvider");
 }

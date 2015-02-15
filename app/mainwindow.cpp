@@ -199,8 +199,8 @@ void MainWindow::showSettings()
 
   KConfigDialog *dialog = new KConfigDialog(this, "settings", DiskMonitorSettings::self());
   dialog -> setFaceType(KPageDialog::List);
-  dialog -> addPage(new Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
-  dialog -> addPage(new SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
+  dialog -> addPage(new Settings::Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
+  dialog -> addPage(new Settings::SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
 
   dialog->show();
 }

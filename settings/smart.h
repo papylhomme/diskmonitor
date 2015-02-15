@@ -3,23 +3,25 @@
 
 #include "ui_smart.h"
 
+namespace Settings {
 
-/*
- * Config page for SMART settings
- */
-class SMART : public QWidget, public Ui::SMART
-{
-  Q_OBJECT
+  /*
+   * Config page for SMART settings
+   */
+  class SMART : public QWidget, public Ui::SMART
+  {
+    Q_OBJECT
 
-public:
-    explicit SMART(QWidget *parent); 
+  public:
+      explicit SMART(QWidget *parent);
 
-public slots:
-  void add();
-  void remove();
-  void clear();
-};
+  public slots:
+    void add();
+    void remove();
+    void clear();
+  };
 
+}
 
 
 #endif //SMART_H

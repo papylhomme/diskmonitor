@@ -29,7 +29,7 @@ private:
   StorageUnit* currentUnit = NULL;
   StorageUnitModel* storageUnitModel;
 
-  IconProvider iconProvider;
+  Settings::IconProvider iconProvider;
 
 public slots:
   void unitSelected(const QModelIndex& index);

@@ -3,6 +3,10 @@
 #include "diskmonitor_settings.h"
 
 
+using namespace Settings;
+
+
+
 /*
  * Constructor
  */

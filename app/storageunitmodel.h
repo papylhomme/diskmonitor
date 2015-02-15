@@ -23,7 +23,7 @@ public slots:
 
 private:
     bool inhibitUpdate = false;
-    IconProvider iconProvider;
+    Settings::IconProvider iconProvider;
     QList<StorageUnit*> storageUnits;
 
     void init();

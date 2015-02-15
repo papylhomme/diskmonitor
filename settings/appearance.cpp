@@ -2,6 +2,10 @@
 
 #include "iconmode.h"
 
+using namespace Settings;
+
+
+
 /*
  * Constructor
  */

@@ -5,18 +5,21 @@
 
 #include "invisiblebuttongroup.h"
 
+namespace Settings {
 
-/*
- * Config page for general appearance settings
- */
-class Appearance : public QWidget, public Ui::Appearance
-{
-public:
-  explicit Appearance(QWidget *parent);
+  /*
+   * Config page for general appearance settings
+   */
+  class Appearance : public QWidget, public Ui::Appearance
+  {
+  public:
+    explicit Appearance(QWidget *parent);
 
-private:
-  InvisibleButtonGroup* iconModeButtonGroup;
-};
+  private:
+    InvisibleButtonGroup* iconModeButtonGroup;
+  };
+
+}
 
 
 

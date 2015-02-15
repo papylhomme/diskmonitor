@@ -3,6 +3,8 @@
 #include <KConfigDialogManager>
 
 
+using namespace Settings;
+
 
 /*
  * Constructor

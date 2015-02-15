@@ -4,31 +4,35 @@
 #include <QObject>
 
 
-/*
- * Component to provide icons depending on the configuration
- */
-class IconProvider : public QObject
-{
-  Q_OBJECT
-  Q_PROPERTY(QString healthy READ healthy NOTIFY healthyChanged)
-  Q_PROPERTY(QString failing READ failing NOTIFY failingChanged)
-  Q_PROPERTY(QString unknown READ unknown NOTIFY unknownChanged)
+namespace Settings {
 
-public:
-  explicit IconProvider(QObject *parent = 0);
-  ~IconProvider();
+  /*
+   * Component to provide icons depending on the configuration
+   */
+  class IconProvider : public QObject
+  {
+    Q_OBJECT
+    Q_PROPERTY(QString healthy READ healthy NOTIFY healthyChanged)
+    Q_PROPERTY(QString failing READ failing NOTIFY failingChanged)
+    Q_PROPERTY(QString unknown READ unknown NOTIFY unknownChanged)
 
-  QString healthy() const;
-  QString failing() const;
-  QString unknown() const;
+  public:
+    explicit IconProvider(QObject *parent = 0);
+    ~IconProvider();
 
-signals:
-  void healthyChanged();
-  void failingChanged();
-  void unknownChanged();
+    QString healthy() const;
+    QString failing() const;
+    QString unknown() const;
 
-public slots:
-  void configChanged();
-};
+  signals:
+    void healthyChanged();
+    void failingChanged();
+    void unknownChanged();
+
+  public slots:
+    void configChanged();
+  };
+
+}
 
 #endif // ICONPROVIDER_H

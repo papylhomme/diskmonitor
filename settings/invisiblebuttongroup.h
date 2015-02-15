@@ -2,30 +2,42 @@
 #define INVISIBLEBUTTONGROUP_H
 
 #include <QWidget>
+#include <QButtonGroup>
+#include <QAbstractButton>
 
 
 class QAbstractButton;
 
-class InvisibleButtonGroupPrivate;
-class InvisibleButtonGroup : public QWidget {
-  Q_OBJECT
-  Q_PROPERTY(int current READ selected WRITE setSelected)
-public:
-  explicit InvisibleButtonGroup(QWidget* parent = 0);
-  ~InvisibleButtonGroup();
+namespace Settings {
 
-  int selected() const;
+  class InvisibleButtonGroupPrivate;
+  class InvisibleButtonGroup : public QWidget {
+    Q_OBJECT
+    Q_PROPERTY(int current READ selected WRITE setSelected)
+  public:
+    explicit InvisibleButtonGroup(QWidget* parent = 0);
+    ~InvisibleButtonGroup();
 
-  void addButton(QAbstractButton* button, int id);
+    int selected() const;
 
-public Q_SLOTS:
-  void setSelected(int id);
+    void addButton(QAbstractButton* button, int id);
 
-Q_SIGNALS:
-  void selectionChanged(int id);
+  public Q_SLOTS:
+    void setSelected(int id);
 
-private:
-  InvisibleButtonGroupPrivate* const d;
-};
+  Q_SIGNALS:
+    void selectionChanged(int id);
+
+  private:
+    InvisibleButtonGroupPrivate* const d;
+  };
+
+
+  class InvisibleButtonGroupPrivate {
+  public:
+    QButtonGroup* mGroup;
+  };
+
+}
 
 #endif /* INVISIBLEBUTTONGROUP_H */

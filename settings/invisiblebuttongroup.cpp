@@ -1,15 +1,11 @@
 #include "invisiblebuttongroup.h"
 
-#include <QAbstractButton>
-#include <QButtonGroup>
-
 #include <kconfigdialogmanager.h>
 
 
-class InvisibleButtonGroupPrivate {
-public:
-  QButtonGroup* mGroup;
-};
+using namespace Settings;
+
+
 
 
 InvisibleButtonGroup::InvisibleButtonGroup(QWidget* parent) :

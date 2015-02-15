@@ -9,6 +9,7 @@
 #include "diskmonitor_settings.h"
 #include "appearance.h"
 #include "smart.h"
+#include "applet.h"
 
 
 
@@ -29,7 +30,7 @@ StorageUnitQmlModel::StorageUnitQmlModel()
 
   timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(monitor()));
-  timer -> start(5 * 60 * 1000);
+  timer -> start(DiskMonitorSettings::refreshTimeout() * 60 * 1000);
 }
 
 
@@ -166,7 +167,7 @@ void StorageUnitQmlModel::storageUnitRemoved(StorageUnit* unit)
  * for problems
  */
 void StorageUnitQmlModel::monitor() {
-  qDebug() << "StorageUnitQmlModel::monitor";
+  qDebug() << "StorageUnitQmlModel::monitor (" << UDisks2Wrapper::instance() << ")";
 
   beginResetModel();
   foreach(StorageUnit* unit, storageUnits) {
@@ -214,6 +215,18 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
 
 
 /*
+ * Handle settings changed from the configuration dialog
+ */
+void StorageUnitQmlModel::settingsChanged()
+{
+  qDebug() << "StorageMonitor: Settings changed";
+  timer -> stop();
+  timer -> start(DiskMonitorSettings::refreshTimeout() * 60 * 1000);
+}
+
+
+
+/*
  * Slot to open the main DisKMonitor application
  *
  * @param unitPath The DBus path to the unit to display
@@ -247,10 +260,12 @@ void StorageUnitQmlModel::showSettings()
     return;
 
   KConfigDialog *dialog = new KConfigDialog(NULL, "settings", DiskMonitorSettings::self());
+  connect(dialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChanged()));
+
   dialog -> setFaceType(KPageDialog::List);
-  dialog -> addPage(new Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
-  dialog -> addPage(new SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
+  dialog -> addPage(new Settings::Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
+  dialog -> addPage(new Settings::SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
+  dialog -> addPage(new Settings::Applet(dialog), i18n("Applet"), "preferences-desktop-plasma", i18n("Applet options"));
 
-  dialog->show();
-
+  dialog -> show();
 }

@@ -1,6 +1,10 @@
 #include "smart.h"
 
 
+using namespace Settings;
+
+
+
 /*
  * Constructor
  */

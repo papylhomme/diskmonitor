@@ -42,9 +42,6 @@ StorageUnitQmlModel::~StorageUnitQmlModel()
   timer -> stop();
   delete timer;
 
-  //free the wrapper instance
-  UDisks2Wrapper::freeInstance();
-
   qDebug() << "StorageUnitQmlModel destructed !";
 }
 

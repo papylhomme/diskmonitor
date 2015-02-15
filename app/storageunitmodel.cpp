@@ -15,7 +15,7 @@ StorageUnitModel::StorageUnitModel()
 {
   init();
 
-  UDisks2Wrapper* udisks2 = UDisks2Wrapper::getInstance();
+  UDisks2Wrapper* udisks2 = UDisks2Wrapper::instance();
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 }
@@ -36,7 +36,7 @@ StorageUnitModel::~StorageUnitModel()
  * Init the internal state of the model
  */
 void StorageUnitModel::init() {
-  UDisks2Wrapper* udisks2 = UDisks2Wrapper::getInstance();
+  UDisks2Wrapper* udisks2 = UDisks2Wrapper::instance();
 
   inhibitUpdate = true;
   beginResetModel();

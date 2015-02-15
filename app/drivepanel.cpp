@@ -128,7 +128,7 @@ bool DrivePanel::isOperationRunning()
  * Enable SMART for the given drive
  */
 void DrivePanel::enableSmart() {
-  UDisks2Wrapper::getInstance() -> enableSMART(getDrive());
+  UDisks2Wrapper::instance() -> enableSMART(getDrive());
   //delay the refresh as UDisks2 may take some time to update the status
   QTimer::singleShot(2000, this, SLOT(refresh()));
 }
@@ -164,7 +164,7 @@ void DrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
   Drive* currentDrive = getDrive();
 
   if(currentDrive != NULL) {
-    UDisks2Wrapper::getInstance() -> startSMARTSelfTest(currentDrive, type);
+    UDisks2Wrapper::instance() -> startSMARTSelfTest(currentDrive, type);
     //delay the refresh as UDisks2 may take some time to update the status
     QTimer::singleShot(2000, this, SLOT(refresh()));
   }

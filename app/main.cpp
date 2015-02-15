@@ -27,13 +27,10 @@ int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
   app.setWindowIcon(QIcon(":/images/icon.svg"));
 
-  UDisks2Wrapper::getInstance();
+  UDisks2Wrapper::instance();
   MainWindow* w = new MainWindow();
   w -> show();
 
-  int res = app.exec();
-  UDisks2Wrapper::freeInstance();
-
-  return res;
+  return app.exec();
 }
 

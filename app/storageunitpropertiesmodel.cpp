@@ -10,7 +10,7 @@
  */
 StorageUnitPropertiesModel::StorageUnitPropertiesModel()
 {
-  connect(UDisks2Wrapper::getInstance(), SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
+  connect(UDisks2Wrapper::instance(), SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 }
 
 

@@ -37,7 +37,7 @@ void MDRaid::update()
   /*
    * Retrieve raid properties
    */
-  QDBusInterface* raidIface = UDisks2Wrapper::getInstance() -> mdraidIface(objectPath);
+  QDBusInterface* raidIface = UDisks2Wrapper::instance() -> mdraidIface(objectPath);
 
   this -> failing = getBoolProperty(raidIface, "Degraded");
   //only set failingStatusKnown if DBus access hasn't failed
@@ -64,7 +64,7 @@ void MDRaid::update()
   /*
    * Retrieve members properties
    */
-  QDBusInterface* propIface = UDisks2Wrapper::getInstance() -> propertiesIface(objectPath);
+  QDBusInterface* propIface = UDisks2Wrapper::instance() -> propertiesIface(objectPath);
 
   //handle ActiveDevices properties using DBus Properties interface as a direct read fails
   members.clear();

@@ -101,7 +101,7 @@ void MDRaidPanel::startScrubbing()
   MDRaid* currentMDRaid = getMDRaid();
 
   if(currentMDRaid != NULL) {
-    UDisks2Wrapper::getInstance() -> startMDRaidScrubbing(currentMDRaid);
+    UDisks2Wrapper::instance() -> startMDRaidScrubbing(currentMDRaid);
     //delay the refresh as UDisks2 may take some time to update the status
     QTimer::singleShot(2000, this, SLOT(refresh()));
   }

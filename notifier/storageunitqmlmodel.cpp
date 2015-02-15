@@ -18,7 +18,7 @@
  */
 StorageUnitQmlModel::StorageUnitQmlModel()
 {
-  UDisks2Wrapper* udisks2 = UDisks2Wrapper::getInstance();
+  UDisks2Wrapper* udisks2 = UDisks2Wrapper::instance();
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 

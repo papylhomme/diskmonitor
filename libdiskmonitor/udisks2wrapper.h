@@ -51,10 +51,10 @@ public:
   };
 
 
+  UDisks2Wrapper();
   ~UDisks2Wrapper();
 
-  static UDisks2Wrapper* getInstance();
-  static void freeInstance();
+  static UDisks2Wrapper* instance();
 
   QList<StorageUnit*> listStorageUnits();
   void startMDRaidScrubbing(MDRaid* mdraid) const;
@@ -68,9 +68,6 @@ public:
 
 
 private:
-  static UDisks2Wrapper* instance;
-  UDisks2Wrapper();
-
   void initialize();
   bool hasATAIface(QDBusObjectPath objectPath) const;
   StorageUnit* createNewUnitFromBlockDevice(const InterfaceList& interfaces) const;

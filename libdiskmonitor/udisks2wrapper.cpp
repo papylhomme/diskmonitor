@@ -8,7 +8,7 @@
 /*
  * Singleton instance
  */
-UDisks2Wrapper* UDisks2Wrapper::instance = NULL;
+Q_GLOBAL_STATIC(UDisks2Wrapper, myUDisks2WrapperInstance)
 
 
 
@@ -122,24 +122,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, MDRaidMember& rai
 /*
  * Retrieve an instance of UDisks2Wrapper. ATM not thread-safe
  */
-UDisks2Wrapper* UDisks2Wrapper::getInstance() {
-  if(UDisks2Wrapper::instance == NULL)
-    UDisks2Wrapper::instance = new UDisks2Wrapper();
-
-  return UDisks2Wrapper::instance;
-}
-
-
-
-/*
- * Release the instance of UDisksWrapper. ATM not thread safe
- */
-void UDisks2Wrapper::freeInstance()
-{
-  if(UDisks2Wrapper::instance != NULL) {
-    delete UDisks2Wrapper::instance;
-    UDisks2Wrapper::instance = NULL;
-  }
+UDisks2Wrapper* UDisks2Wrapper::instance() {
+  return myUDisks2WrapperInstance;
 }
 
 

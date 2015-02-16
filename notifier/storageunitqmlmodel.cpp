@@ -1,6 +1,5 @@
 #include "storageunitqmlmodel.h"
 
-#include <KConfigDialog>
 #include <KNotification>
 #include <QProcess>
 #include <QDebug>
@@ -8,6 +7,7 @@
 
 #include "udisks2wrapper.h"
 #include "diskmonitor_settings.h"
+#include "configdialog.h"
 #include "appearance.h"
 #include "smart.h"
 #include "applet.h"
@@ -27,7 +27,7 @@ StorageUnitQmlModel::StorageUnitQmlModel()
   storageUnits = udisks2 -> listStorageUnits();
   monitor();
 
-  connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(refresh()));
+  connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(configChanged()));
 
   timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(monitor()));
@@ -251,11 +251,17 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
 /*
  * Handle settings changed from the configuration dialog
  */
-void StorageUnitQmlModel::settingsChanged()
+void StorageUnitQmlModel::configChanged()
 {
   qDebug() << "StorageMonitor: Settings changed";
   timer -> stop();
   timer -> start(DiskMonitorSettings::refreshTimeout() * 60 * 1000);
+
+  //refresh the view
+  monitor();
+
+  //refresh the tooltip
+  emit statusChanged();
 }
 
 
@@ -280,7 +286,8 @@ void StorageUnitQmlModel::openApp(const QString& unitPath)
  */
 void StorageUnitQmlModel::refresh()
 {
-  monitor();
+  //will call monitor by slot configChanged
+  DiskMonitorSettings::self() -> load();
 }
 
 
@@ -290,16 +297,5 @@ void StorageUnitQmlModel::refresh()
  */
 void StorageUnitQmlModel::showSettings()
 {
-  if(KConfigDialog::showDialog("settings"))
-    return;
-
-  KConfigDialog *dialog = new KConfigDialog(NULL, "settings", DiskMonitorSettings::self());
-  connect(dialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChanged()));
-
-  dialog -> setFaceType(KPageDialog::List);
-  dialog -> addPage(new Settings::Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
-  dialog -> addPage(new Settings::SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
-  dialog -> addPage(new Settings::Applet(dialog), i18n("Applet"), "preferences-desktop-plasma", i18n("Applet options"));
-
-  dialog -> show();
+  Settings::ConfigDialog::showDialog(NULL, true);
 }

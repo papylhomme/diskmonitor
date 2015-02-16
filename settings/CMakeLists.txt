@@ -1,4 +1,6 @@
 set( SETTINGS_SRCS 
+  configdialog.cpp
+  configskeleton.cpp
   kconfiglistwidget.cpp
   invisiblebuttongroup.cpp
   iconprovider.cpp

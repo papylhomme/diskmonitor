@@ -3,7 +3,6 @@
 
 #include <QIcon>
 #include <KHelpMenu>
-#include <KConfigDialog>
 #include <KLocalizedString>
 
 #include "storageunitmodel.h"
@@ -11,8 +10,7 @@
 #include "mdraidpanel.h"
 
 #include "diskmonitor_settings.h"
-#include "appearance.h"
-#include "smart.h"
+#include "configdialog.h"
 
 
 #include <QDebug>
@@ -31,7 +29,7 @@ MainWindow::MainWindow(QWidget* parent) :
    * setup KDE default help menu
    */
   KHelpMenu* helpMenu = new KHelpMenu(this, "some text", false);
-  menuBar() -> addMenu(helpMenu->menu());
+  menuBar() -> addMenu(helpMenu -> menu());
 
 
   /*
@@ -193,16 +191,7 @@ void MainWindow::updateHealthStatus(StorageUnit* unit)
  */
 void MainWindow::showSettings()
 {
-  if(KConfigDialog::showDialog("settings"))
-    return;
-
-
-  KConfigDialog *dialog = new KConfigDialog(this, "settings", DiskMonitorSettings::self());
-  dialog -> setFaceType(KPageDialog::List);
-  dialog -> addPage(new Settings::Appearance(dialog), i18n("Appearance"), "preferences-desktop-icons", i18n("Appearance options"));
-  dialog -> addPage(new Settings::SMART(dialog), i18n("S.M.A.R.T"), "drive-harddisk", i18n("S.M.A.R.T options") );
-
-  dialog->show();
+  Settings::ConfigDialog::showDialog(this);
 }
 
 

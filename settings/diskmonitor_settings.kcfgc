@@ -2,4 +2,5 @@ File=diskmonitor.kcfg
 ClassName=DiskMonitorSettings 
 Singleton=true 
 Mutators=true
-IncludeFiles=iconmode.h
+IncludeFiles=iconmode.h,configskeleton.h
+Inherits=Settings::ConfigSkeleton

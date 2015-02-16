@@ -1,6 +1,7 @@
 #include "storageunitqmlmodel.h"
 
 #include <KConfigDialog>
+#include <KNotification>
 #include <QProcess>
 #include <QDebug>
 
@@ -54,6 +55,25 @@ StorageUnitQmlModel::~StorageUnitQmlModel()
 bool StorageUnitQmlModel::failing() const
 {
   return hasFailing;
+}
+
+
+
+/*
+ * Get a message describing the current status
+ */
+QString StorageUnitQmlModel::status() const
+{
+  if(!hasFailing)
+    return i18n("Everything looks healthy.");
+  else {
+    QString details;
+
+    foreach(StorageUnit* unit, failingUnits)
+      details = "<br/><i>" + unit -> getName() + " (" + unit -> getDevice() + ")</i>";
+
+    return i18n("The following storage units are in failing state:") + details;
+  }
 }
 
 
@@ -198,17 +218,31 @@ void StorageUnitQmlModel::processUnit(StorageUnit* unit)
 void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
 {
   bool localFailing = false;
+  failingUnits.clear();
 
+  //test each unit
   foreach(StorageUnit* unit, units) {
     if(unit -> isFailing()) {
       localFailing = true;
+      failingUnits << unit;
     }
   }
 
+
+  //Status changed, notify the user
   if(hasFailing != localFailing) {
     qDebug() << "StorageMonitor: Changing failing status to " << localFailing;
     hasFailing = localFailing;
-    emit failingChanged();
+    emit statusChanged();
+
+    KNotification::event(hasFailing ? "failing" : "healthy",
+                         hasFailing ? i18n("Storage units failing") : i18n("Storage units are back to healthy status"),
+                         status(),
+                         hasFailing ? iconProvider.failing() : iconProvider.healthy(),
+                         NULL,
+                         KNotification::Persistent,
+                         "diskmonitor"
+                         );
   }
 }
 

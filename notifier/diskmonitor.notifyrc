@@ -1,0 +1,20 @@
+[Global]
+IconName=diskmonitor
+Comment=DisKMonitor
+Name=DisKMonitor
+
+[Context/folder]
+Name=Group name
+
+[Event/failing]
+Name=Unit failing
+Comment=One of the storage unit is failing
+Contexts=folder
+Action=Sound|Popup
+
+[Event/healthy]
+Name=Unit back to normal
+Comment=Everything is back to normal
+Contexts=folder
+Action=Sound|Popup
+

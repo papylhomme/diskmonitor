@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #include "storageunit.h"
+#include "iconprovider.h"
 
 
 
@@ -17,7 +18,8 @@
 class StorageUnitQmlModel : public QAbstractListModel
 {
   Q_OBJECT
-  Q_PROPERTY(bool failing READ failing NOTIFY failingChanged)
+  Q_PROPERTY(bool failing READ failing)
+  Q_PROPERTY(QString status READ status NOTIFY statusChanged)
 
 public:
   enum AnimalRoles {
@@ -33,16 +35,19 @@ public:
   ~StorageUnitQmlModel();
 
   bool failing() const;
+  QString status() const;
 
   virtual QHash<int, QByteArray> roleNames() const;
   int rowCount(const QModelIndex & parent = QModelIndex()) const;
   QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
 private:
+  Settings::IconProvider iconProvider;
   QTimer* timer;
   QList<StorageUnit*> storageUnits;
 
   bool hasFailing = false;
+  QList<StorageUnit*> failingUnits;
 
   void processUnit(StorageUnit* unit);
   void processUnits(const QList<StorageUnit*> & units);
@@ -54,7 +59,7 @@ private slots:
   void monitor();
 
 signals:
-  void failingChanged();
+  void statusChanged();
 
 public slots:
   void settingsChanged();

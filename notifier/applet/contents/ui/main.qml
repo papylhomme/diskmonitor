@@ -23,12 +23,12 @@ Item {
       //mainWindow.Plasmoid.status = PlasmaCore.Types.RequireAttentionStatus;
       mainWindow.Plasmoid.status = 3;
       mainWindow.Plasmoid.icon = iconProvider.failing;
-      mainWindow.Plasmoid.toolTipSubText = i18n("At least one storage unit is failing !");
+      mainWindow.Plasmoid.toolTipSubText = myStorageModel.status;
     } else {
       //mainWindow.Plasmoid.status = PlasmaCore.Types.PassiveStatus;
       mainWindow.Plasmoid.status = 1;
       mainWindow.Plasmoid.icon = iconProvider.healthy;
-      mainWindow.Plasmoid.toolTipSubText = i18n("Everything looks healthy");
+      mainWindow.Plasmoid.toolTipSubText = myStorageModel.status;
     }
   }
 
@@ -44,7 +44,7 @@ Item {
 
   DiskMonitor.StorageUnitQmlModel {
     id: myStorageModel;
-    onFailingChanged: updateTray();
+    onStatusChanged: updateTray();
   }
 
   Plasmoid.compactRepresentation: CompactRepresentation { }

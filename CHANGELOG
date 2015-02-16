@@ -1,0 +1,8 @@
+Version 0.2:
++ Add settings to configure appearance
++ Add settings to configure SMART sensitive attributes
++ Add Plasma applet to monitor the storage units
++ Notify when the health status has changed
+
+Version 0.1:
+* First release, features the main application

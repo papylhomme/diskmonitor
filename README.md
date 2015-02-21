@@ -7,25 +7,28 @@ KDE tools to monitor SMART devices and MDRaid health status. Features a full app
 
 # Build
     mkdir build && cd build
-    cmake ..
+    cmake .. -DCMAKE_INSTALL_PREFIX=$(kf5-config --prefix) \
+           -DCMAKE_BUILD_TYPE=Release \
+           -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+
     make
 
 # Screenshots
 
 DisKMonitor displaying MDRaid properties
-![My image](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/screenshot1.png)
+![MDRaid properties](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/screenshot1.png)
 
 
 DisKMonitor displaying SMART properties
-![My image](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/screenshot2.png)
+![SMART properties](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/screenshot2.png)
 
 
 DisKMonitor applet on the desktop
-![My image](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet1.png)
+![Applet - Desktop](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet1.png)
 
 
 DisKMonitor applet on the tray
-![My image](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet2.png)
+![Applet - Tray](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet2.png)
 
 
 

@@ -19,37 +19,38 @@ PlasmaComponents.ListItem {
     PlasmaCore.IconItem {
       id: unitIcon;
       source: icon;
+      height: col.height;
     }
 
   
     Column {
+      id: col;
       Layout.fillWidth: true;
+      Layout.minimumWidth: deviceLabel.paintedWidth;
 
       PlasmaComponents.Label {
         id: unitLabel;
         text: name;
-        font.weight: Font.Bold;
         height: paintedHeight;
+        width: parent.width;
+        elide: Text.ElideRight;
+        font.weight: Font.Bold;
+        color: (failing & failingKnown) ? "red": PlasmaCore.ColorScope.textColor;
       }
     
       PlasmaComponents.Label {
         id: deviceLabel;
         text: device;
         height: paintedHeight;
+        width: parent.width;
+        elide: Text.ElideRight;
+        color: (failing & failingKnown) ? "red": PlasmaCore.ColorScope.textColor;
       }
     }
 
 
-    PlasmaComponents.Label {
-      id: healthLabel;
-
-      text: failingKnown ? (failing? i18n("Failing") : i18n("Healthy")) : i18n("Unknown");
-      color: (failing & failingKnown) ? "red": PlasmaCore.ColorScope.textColor;
-      font.weight : (failing & failingKnown) ? Font.Bold : theme.defaultFont.weight;
-    }
-
-
     PlasmaCore.IconItem {
+      height: col.height;
       source: failingKnown ? (failing? iconProvider.failing : iconProvider.healthy) : iconProvider.unknown;
     }
   }

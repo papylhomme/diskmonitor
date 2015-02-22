@@ -12,7 +12,6 @@ Item {
   //Plasmoid.status: PlasmaCore.Types.NeedsAttentionStatus;
   //Plasmoid.status: PlasmaCore.Types.RequireAttentionStatus;
   Plasmoid.status: PlasmaCore.Types.PassiveStatus;
-  Plasmoid.associatedApplication: "diskmonitor";
 
 
 

@@ -9,21 +9,10 @@ FocusScope {
 
   property var storageModel;
 
-  Toolbar {
-    id: toolbar
-
-    anchors.left: parent.left;
-    anchors.right: parent.right;
-    anchors.top: parent.top;
-  }
-
   PlasmaExtras.ScrollArea {
     id: scrollView;
 
-    anchors.left: parent.left;
-    anchors.right: parent.right;
-    anchors.bottom: parent.bottom;
-    anchors.top: toolbar.bottom;
+    anchors.fill: parent;
 
     ListView {
       id: storageUnitView;
@@ -33,7 +22,16 @@ FocusScope {
       model: storageModel;
       currentIndex: -1;
       boundsBehavior: Flickable.StopAtBounds;
-      delegate: StorageUnit { }
+      delegate: Component {
+            id: delegateComponent
+
+            Loader {
+
+            anchors.left: parent.left;
+            anchors.right: parent.right;
+              source: plasmoid.configuration.layoutSmall ? "StorageUnitSmall.qml" : "StorageUnitBig.qml";
+            }
+      }
     }
   }
 }

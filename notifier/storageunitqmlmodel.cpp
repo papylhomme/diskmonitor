@@ -6,7 +6,6 @@
 
 
 #include "udisks2wrapper.h"
-#include "diskmonitor_settings.h"
 #include "configdialog.h"
 #include "appearance.h"
 #include "smart.h"
@@ -27,11 +26,9 @@ StorageUnitQmlModel::StorageUnitQmlModel()
   storageUnits = udisks2 -> listStorageUnits();
   monitor();
 
-  connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(configChanged()));
-
   timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(monitor()));
-  timer -> start(DiskMonitorSettings::refreshTimeout() * 60 * 1000);
+  timer -> start(timeout * 60 * 1000);
 }
 
 
@@ -74,6 +71,30 @@ QString StorageUnitQmlModel::status() const
 
     return i18n("The following storage units are in failing state:") + details;
   }
+}
+
+
+
+/*
+ * Get the refresh timeout value
+ */
+int StorageUnitQmlModel::refreshTimeout() const
+{
+  return timeout;
+}
+
+
+
+/*
+ * Set the refresh timeout value. Calling this method
+ * will emit refreshTimeoutChanged(newTimeout)
+ */
+void StorageUnitQmlModel::setRefreshTimeout(int timeout) {
+  this -> timeout = timeout;
+  this -> timer -> stop();
+  this -> timer -> start(timeout * 60 * 1000);
+  emit refreshTimeoutChanged(timeout);
+  qDebug() << "StorageUnitQmlModel refresh timeout changed to " << timeout;
 }
 
 
@@ -249,24 +270,6 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
 
 
 /*
- * Handle settings changed from the configuration dialog
- */
-void StorageUnitQmlModel::configChanged()
-{
-  qDebug() << "StorageMonitor: Settings changed";
-  timer -> stop();
-  timer -> start(DiskMonitorSettings::refreshTimeout() * 60 * 1000);
-
-  //refresh the view
-  monitor();
-
-  //refresh the tooltip
-  emit statusChanged();
-}
-
-
-
-/*
  * Slot to open the main DisKMonitor application
  *
  * @param unitPath The DBus path to the unit to display
@@ -286,8 +289,7 @@ void StorageUnitQmlModel::openApp(const QString& unitPath)
  */
 void StorageUnitQmlModel::refresh()
 {
-  //will call monitor by slot configChanged
-  DiskMonitorSettings::self() -> load();
+  monitor();
 }
 
 

@@ -15,7 +15,40 @@ Item {
   Plasmoid.associatedApplication: "diskmonitor";
 
 
-  Component.onCompleted: updateTray();
+
+  DiskMonitor.IconProvider {
+    id: iconProvider;
+
+    onHealthyChanged: updateTray();
+    onFailingChanged: updateTray();
+    onUnknownChanged: updateTray();
+  }
+
+  DiskMonitor.StorageUnitQmlModel {
+    id: myStorageModel;
+    refreshTimeout: plasmoid.configuration.refreshTimeout;
+    onStatusChanged: updateTray();
+  }
+
+  Plasmoid.compactRepresentation: CompactRepresentation { }
+  Plasmoid.fullRepresentation: PopupDialog {
+    id: dialogItem;
+
+    storageModel: myStorageModel;
+
+    anchors.fill: parent;
+    focus: true;
+  }
+
+
+  function action_refresh() {
+    myStorageModel.refresh();
+  }
+
+
+  function action_openapp() {
+    myStorageModel.openApp("");
+  }
 
 
   function updateTray() {
@@ -34,28 +67,10 @@ Item {
 
 
 
-  DiskMonitor.IconProvider {
-    id: iconProvider;
-
-    onHealthyChanged: updateTray();
-    onFailingChanged: updateTray();
-    onUnknownChanged: updateTray();
-  }
-
-  DiskMonitor.StorageUnitQmlModel {
-    id: myStorageModel;
-    onStatusChanged: updateTray();
-  }
-
-  Plasmoid.compactRepresentation: CompactRepresentation { }
-  Plasmoid.fullRepresentation: PopupDialog {
-    id: dialogItem;
-
-    storageModel: myStorageModel;
-
-    anchors.fill: parent;
-    anchors.margins: 20;
-    focus: true;
+  Component.onCompleted: {
+    updateTray();
+    plasmoid.setAction("refresh", i18n("Refresh"));
+    plasmoid.setAction("openapp", i18n("Open application"));
   }
 
 }

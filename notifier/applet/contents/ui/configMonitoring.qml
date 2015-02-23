@@ -9,6 +9,7 @@ Item {
   height: parent.height
 
   property alias cfg_refreshTimeout: refreshTimeout.value
+  property alias cfg_notifyEnabled: notifyEnabled.checked
 
   ColumnLayout {
     anchors.left: parent.left
@@ -20,21 +21,30 @@ Item {
       title: i18n("General")
       flat: true
 
-      RowLayout {
-        anchors.top: parent.top
-        anchors.topMargin: 10
+      ColumnLayout {
+        spacing: 20
 
-        PlasmaComponents.Label {
-          text: i18n("Refresh timeout")
+        RowLayout {
+          anchors.top: parent.top
+          anchors.topMargin: 10
+  
+          PlasmaComponents.Label {
+            text: i18n("Refresh timeout")
+          }
+  
+  
+          QtControls.SpinBox {
+            id: refreshTimeout
+            minimumValue: 1
+            maximumValue: 240
+            suffix: i18n(" min")
+            horizontalAlignment: Qt.AlignRight
+          }
         }
 
-
-        QtControls.SpinBox {
-          id: refreshTimeout
-          minimumValue: 1
-          maximumValue: 240
-          suffix: i18n(" min")
-          horizontalAlignment: Qt.AlignRight
+        QtControls.CheckBox {
+          id: notifyEnabled
+          text: i18n("Notify health status change")
         }
       }
 
@@ -43,6 +53,7 @@ Item {
 
   Component.onCompleted: {
     refreshTimeout.value = plasmoid.configuration.refreshTimeout;
+    notifyEnabled.checked = plasmoid.configuration.notifyEnabled;
   }
 
 }

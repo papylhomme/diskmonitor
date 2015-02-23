@@ -47,6 +47,9 @@
     <entry name="refreshTimeout" type="Int">
       <default>5</default>
     </entry>
+    <entry name="notifyEnabled" type="Bool">
+      <default>true</default>
+    </entry>
   </group>
 
 </kcfg>

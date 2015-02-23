@@ -21,6 +21,7 @@ class StorageUnitQmlModel : public QAbstractListModel
   Q_PROPERTY(bool failing READ failing)
   Q_PROPERTY(QString status READ status NOTIFY statusChanged)
   Q_PROPERTY(int refreshTimeout READ refreshTimeout WRITE setRefreshTimeout NOTIFY refreshTimeoutChanged)
+  Q_PROPERTY(bool notifyEnabled READ notifyEnabled WRITE setNotifyEnabled)
 
 public:
   enum AnimalRoles {
@@ -41,6 +42,9 @@ public:
   int refreshTimeout() const;
   void setRefreshTimeout(int timeout);
 
+  bool notifyEnabled() const;
+  void setNotifyEnabled(bool notify);
+
   virtual QHash<int, QByteArray> roleNames() const;
   int rowCount(const QModelIndex & parent = QModelIndex()) const;
   QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
@@ -53,6 +57,8 @@ private:
 
   int timeout = 5;
   QTimer* timer;
+
+  bool notify = false;
 
   Settings::IconProvider iconProvider;
 

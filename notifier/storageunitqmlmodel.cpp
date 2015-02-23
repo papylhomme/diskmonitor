@@ -24,11 +24,14 @@ StorageUnitQmlModel::StorageUnitQmlModel()
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 
   storageUnits = udisks2 -> listStorageUnits();
-  monitor();
 
   timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(monitor()));
   timer -> start(timeout * 60 * 1000);
+
+  //delay the fist monitor in order to let the applet
+  //configure its value (mainly notifyEnabled)
+  QTimer::singleShot(2000, this, SLOT(monitor()));
 }
 
 
@@ -94,7 +97,25 @@ void StorageUnitQmlModel::setRefreshTimeout(int timeout) {
   this -> timer -> stop();
   this -> timer -> start(timeout * 60 * 1000);
   emit refreshTimeoutChanged(timeout);
-  qDebug() << "StorageUnitQmlModel refresh timeout changed to " << timeout;
+}
+
+
+
+/*
+ * Get the notifyEnabled value
+ */
+bool StorageUnitQmlModel::notifyEnabled() const
+{
+  return notify;
+}
+
+
+
+/*
+ * Set the notifyEnabled value
+ */
+void StorageUnitQmlModel::setNotifyEnabled(bool notify) {
+  this -> notify = notify;
 }
 
 
@@ -256,14 +277,15 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
     hasFailing = localFailing;
     emit statusChanged();
 
-    KNotification::event(hasFailing ? "failing" : "healthy",
-                         hasFailing ? i18n("Storage units failing") : i18n("Storage units are back to healthy status"),
-                         status(),
-                         hasFailing ? iconProvider.failing() : iconProvider.healthy(),
-                         NULL,
-                         KNotification::Persistent,
-                         "diskmonitor"
-                         );
+    if(notifyEnabled())
+      KNotification::event(hasFailing ? "failing" : "healthy",
+                           hasFailing ? i18n("Storage units failing") : i18n("Storage units are back to healthy status"),
+                           status(),
+                           hasFailing ? iconProvider.failing() : iconProvider.healthy(),
+                           NULL,
+                           KNotification::Persistent,
+                           "diskmonitor"
+                           );
   }
 }
 

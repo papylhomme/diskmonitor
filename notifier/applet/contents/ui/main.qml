@@ -25,6 +25,7 @@ Item {
   DiskMonitor.StorageUnitQmlModel {
     id: myStorageModel;
     refreshTimeout: plasmoid.configuration.refreshTimeout;
+    notifyEnabled: plasmoid.configuration.notifyEnabled;
     onStatusChanged: updateTray();
   }
 
@@ -51,7 +52,7 @@ Item {
 
   function updateTray() {
     if(myStorageModel.failing) {
-      mainWindow.Plasmoid.status = requireAttentionStatus;
+      mainWindow.Plasmoid.status = needsAttentionStatus;
       mainWindow.Plasmoid.icon = iconProvider.failing;
       mainWindow.Plasmoid.toolTipSubText = myStorageModel.status;
     } else {

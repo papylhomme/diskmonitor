@@ -31,6 +31,9 @@ int main(int argc, char *argv[]) {
   MainWindow* w = new MainWindow();
   w -> show();
 
+  if(argc == 2)
+    w -> setSelectedUnit(QString(argv[1]));
+
   return app.exec();
 }
 

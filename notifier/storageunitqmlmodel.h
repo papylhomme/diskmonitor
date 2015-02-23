@@ -79,7 +79,7 @@ signals:
 public slots:
   void refresh();
   void showSettings();
-  void openApp(const QString& unitPath);
+  void openApp(const QString& unitPath = QString());
 };
 
 #endif // STORAGEUNITQMLMODEL_H

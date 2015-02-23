@@ -298,10 +298,14 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
  */
 void StorageUnitQmlModel::openApp(const QString& unitPath)
 {
-  qDebug() << "Request to open the app for unit " << unitPath;
-  QStringList params;
-  params << unitPath;
-  QProcess::startDetached("diskmonitor", params);
+  if(unitPath.isEmpty())
+    QProcess::startDetached("diskmonitor");
+
+  else {
+    QStringList params;
+    params << unitPath;
+    QProcess::startDetached("diskmonitor", params);
+  }
 }
 
 

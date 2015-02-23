@@ -89,6 +89,26 @@ MainWindow::~MainWindow()
 
 
 /*
+ * Set the select unit
+ *
+ * @param path The unit path
+ */
+void MainWindow::setSelectedUnit(const QString& path)
+{
+  QList<StorageUnit*> units = UDisks2Wrapper::instance() -> listStorageUnits();
+
+  int i = 0;
+  foreach(StorageUnit* u, units) {
+    if(u -> getPath() == path)
+      ui -> listView -> setCurrentIndex(storageUnitModel -> index(i, 0));
+
+    i++;
+  }
+}
+
+
+
+/*
  * Handle selection on the main list view and update
  * the details panel accordingly
  */

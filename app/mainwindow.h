@@ -22,6 +22,8 @@ public:
   explicit MainWindow(QWidget* parent = 0);
   ~MainWindow();
 
+  void setSelectedUnit(const QString& path);
+
 
 private:
   Ui::MainWindow* ui;

@@ -45,7 +45,7 @@ Item {
 
 
   function action_openapp() {
-    myStorageModel.openApp("");
+    myStorageModel.openApp();
   }
 
 

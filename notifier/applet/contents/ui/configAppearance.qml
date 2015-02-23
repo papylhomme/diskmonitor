@@ -140,13 +140,13 @@ Item {
         }
 
         PlasmaCore.IconItem {
-          source: "face-cool";
+          source: "face-cool"
         }
         PlasmaCore.IconItem {
-          source: "face-sick";
+          source: "face-sick"
         }
         PlasmaCore.IconItem {
-          source: "face-confused";
+          source: "face-confused"
         }
 
 
@@ -158,13 +158,13 @@ Item {
         }
 
         PlasmaCore.IconItem {
-          source: "dialog-ok";
+          source: "dialog-ok"
         }
         PlasmaCore.IconItem {
-          source: "dialog-error";
+          source: "dialog-error"
         }
         PlasmaCore.IconItem {
-          source: "unknown";
+          source: "unknown"
         }
 
         //custom icons

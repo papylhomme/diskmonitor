@@ -6,52 +6,52 @@ import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 
 
 PlasmaComponents.ListItem {
-  id: storageUnitItem;
-  enabled: true;
+  id: storageUnitItem
+  enabled: true
 
 
   RowLayout {
-    id: layout;
-    anchors.left: parent.left;
-    anchors.right: parent.right;
+    id: layout
+    anchors.left: parent.left
+    anchors.right: parent.right
 
   
     PlasmaCore.IconItem {
-      id: unitIcon;
-      source: icon;
-      height: col.height;
+      id: unitIcon
+      source: icon
+      height: col.height
     }
 
   
     Column {
-      id: col;
-      Layout.fillWidth: true;
-      Layout.minimumWidth: deviceLabel.paintedWidth;
+      id: col
+      Layout.fillWidth: true
+      Layout.minimumWidth: deviceLabel.paintedWidth
 
       PlasmaComponents.Label {
-        id: unitLabel;
-        text: name;
-        height: paintedHeight;
-        width: parent.width;
-        elide: Text.ElideRight;
-        font.weight: Font.Bold;
-        color: (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor;
+        id: unitLabel
+        text: name
+        height: paintedHeight
+        width: parent.width
+        elide: Text.ElideRight
+        font.weight: Font.Bold
+        color: { (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor; }
       }
     
       PlasmaComponents.Label {
-        id: deviceLabel;
-        text: device;
-        height: paintedHeight;
-        width: parent.width;
-        elide: Text.ElideRight;
-        color: (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor;
+        id: deviceLabel
+        text: device
+        height: paintedHeight
+        width: parent.width
+        elide: Text.ElideRight
+        color: { (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor; }
       }
     }
 
 
     PlasmaCore.IconItem {
-      height: col.height;
-      source: failingKnown ? (failing? iconProvider.failing : iconProvider.healthy) : iconProvider.unknown;
+      height: col.height
+      source: { failingKnown ? (failing? iconProvider.failing : iconProvider.healthy) : iconProvider.unknown; }
     }
   }
 

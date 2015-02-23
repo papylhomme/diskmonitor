@@ -7,33 +7,32 @@ import org.papylhomme.diskmonitor 0.1 as DiskMonitor
  
 FocusScope {
 
-  property var storageModel;
+  property var storageModel
 
   PlasmaExtras.ScrollArea {
-    id: scrollView;
+    id: scrollView
 
-    anchors.fill: parent;
+    anchors.fill: parent
 
     ListView {
-      id: storageUnitView;
+      id: storageUnitView
 
-      anchors.fill: parent;
-      clip: true;
-      model: storageModel;
-      currentIndex: -1;
-      boundsBehavior: Flickable.StopAtBounds;
+      anchors.fill: parent
+      clip: true
+      model: storageModel
+      currentIndex: -1
+      boundsBehavior: Flickable.StopAtBounds
       delegate: Component {
         id: delegateComponent
 
         Loader {
-
-        anchors.left: parent.left;
-        anchors.right: parent.right;
+          anchors.left: parent.left
+          anchors.right: parent.right
           source: {
             if(plasmoid.configuration.layoutSmall)
               return "StorageUnitSmall.qml";
             else if(plasmoid.configuration.layoutMinimalist)
-              return "StorageUnitMinimalist.qml"
+              return "StorageUnitMinimalist.qml";
             else
               return "StorageUnitBig.qml";
           }

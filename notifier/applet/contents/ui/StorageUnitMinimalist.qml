@@ -6,23 +6,23 @@ import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 
 
 PlasmaComponents.ListItem {
-  id: storageUnitItem;
-  enabled: true;
+  id: storageUnitItem
+  enabled: true
 
 
   RowLayout {
-    id: layout;
-    anchors.left: parent.left;
-    anchors.right: parent.right;
+    id: layout
+    anchors.left: parent.left
+    anchors.right: parent.right
 
   
     PlasmaComponents.Label {
-      id: unitLabel;
-      Layout.fillWidth: true;
-      text: plasmoid.configuration.includeDriveId ? device + " (" + name + ")" : device;
-      width: parent.width;
-      elide: Text.ElideRight;
-      color: (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor;
+      id: unitLabel
+      Layout.fillWidth: true
+      text: { plasmoid.configuration.includeDriveId ? device + " (" + name + ")" : device; }
+      width: parent.width
+      elide: Text.ElideRight
+      color: { (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor; }
     }
   }
 

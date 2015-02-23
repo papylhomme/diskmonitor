@@ -4,38 +4,38 @@ import org.kde.plasma.plasmoid 2.0
 import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 
 Item {
-  id: mainWindow;
+  id: mainWindow
 
   property int passiveStatus: PlasmaCore.Types.PassiveStatus
   property int needsAttentionStatus: PlasmaCore.Types.NeedsAttentionStatus
   property int requireAttentionStatus: PlasmaCore.Types.RequireAttentionStatus
 
-  Plasmoid.toolTipMainText: i18n("DisKMonitor");
-  Plasmoid.toolTipSubText: i18n("Everything look healthy");
-  Plasmoid.icon: iconProvider.healthy;
-  Plasmoid.status: PlasmaCore.Types.PassiveStatus;
+  Plasmoid.toolTipMainText: i18n("DisKMonitor")
+  Plasmoid.toolTipSubText: i18n("Everything look healthy")
+  Plasmoid.icon: iconProvider.healthy
+  Plasmoid.status: PlasmaCore.Types.PassiveStatus
 
 
 
   IconProvider {
-    id: iconProvider;
+    id: iconProvider
   }
 
   DiskMonitor.StorageUnitQmlModel {
-    id: myStorageModel;
-    refreshTimeout: plasmoid.configuration.refreshTimeout;
-    notifyEnabled: plasmoid.configuration.notifyEnabled;
-    onStatusChanged: updateTray();
+    id: myStorageModel
+    refreshTimeout: plasmoid.configuration.refreshTimeout
+    notifyEnabled: plasmoid.configuration.notifyEnabled
+    onStatusChanged: { updateTray(); }
   }
 
   Plasmoid.compactRepresentation: CompactRepresentation { }
   Plasmoid.fullRepresentation: PopupDialog {
-    id: dialogItem;
+    id: dialogItem
 
-    storageModel: myStorageModel;
+    storageModel: myStorageModel
 
-    anchors.fill: parent;
-    focus: true;
+    anchors.fill: parent
+    focus: true
   }
 
 

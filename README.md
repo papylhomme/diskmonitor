@@ -13,23 +13,64 @@ KDE tools to monitor SMART devices and MDRaid health status. Features a full app
 
     make
 
-# Screenshots
+# Features
 
-DisKMonitor displaying MDRaid properties
-![MDRaid properties](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/screenshot1.png)
+## Application
 
+- Display S.M.A.R.T. attributes for harddrives supporting it
+- Start and monitor progress of S.M.A.R.T. Short and Extended self test 
 
-DisKMonitor displaying SMART properties
 ![SMART properties](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/screenshot2.png)
 
+- Display properties for MDRaid arrays
+- Start and monitor progress of data scrubbing on MDRaid arrays
 
-DisKMonitor applet on the desktop
+![MDRaid properties](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/screenshot1.png)
+
+## Applet
+
+- Display basic health status for storage units
+- Can be used on the desktop, on a panel or as a systray icon (see systray settings to activate)
+- Use KDE notification for health status change
+- Highly configurable interface
+
 ![Applet - Desktop](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet1.png)
 
-
-DisKMonitor applet on the tray
 ![Applet - Tray](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet2.png)
 
+# Test health status change
 
+The easiest way to test the monitoring is by using a "fake" raid array. The idea is to create a small array
+using loop devices :
 
+```
+# you may need to load the 'loop' module
+modprobe loop
 
+# then create two files for use as block devices
+dd if=/dev/zero of=/root/raid/r0 bs=1M count=20
+dd if=/dev/zero of=/root/raid/r1 bs=1M count=20
+
+# attach the files to loop devices
+losetup /dev/loop0 /root/raid/r0
+losetup /dev/loop1 /root/raid/r1
+
+# to check everything went ok
+losetup -a
+
+# now create a new raid array
+mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/loop0 /dev/loop1
+
+# check the raid status
+cat /proc/mdstat
+```
+
+Then you can fail and restore raid devices at will :
+```
+# fail the loop0 device
+mdadm --manage /dev/md0 -f /dev/loop0
+
+# restore the raid by removing and readding the device
+mdadm --manage /dev/md0 -r /dev/loop0
+mdadm --manage /dev/md0 -a /dev/loop0
+```

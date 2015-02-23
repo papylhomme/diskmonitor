@@ -11,6 +11,8 @@ Item {
   property alias cfg_refreshTimeout: refreshTimeout.value
 
   ColumnLayout {
+    anchors.left: parent.left
+    anchors.right: parent.right
 
     QtControls.GroupBox {
       Layout.fillWidth: true
@@ -19,15 +21,20 @@ Item {
       flat: true
 
       RowLayout {
+        anchors.top: parent.top
+        anchors.topMargin: 10
+
         PlasmaComponents.Label {
-          text: "Refresh timeout"
+          text: i18n("Refresh timeout")
         }
 
 
         QtControls.SpinBox {
           id: refreshTimeout
-         minimumValue: 1
+          minimumValue: 1
           maximumValue: 240
+          suffix: i18n(" min")
+          horizontalAlignment: Qt.AlignRight
         }
       }
 

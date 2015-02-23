@@ -12,6 +12,36 @@
     <entry name="layoutBig" type="Bool">
       <default>true</default>
     </entry>
+    <entry name="layoutMinimalist" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="includeDriveId" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="iconsFaces" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="iconsDialog" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="iconsCustom" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="iconHealthy" type="String">
+      <default>orange</default>
+    </entry>
+    <entry name="iconFailing" type="String">
+      <default></default>
+    </entry>
+    <entry name="iconUnknown" type="String">
+      <default></default>
+    </entry>
+    <entry name="warningColor" type="String">
+      <default>orange</default>
+    </entry>
+    <entry name="errorColor" type="String">
+      <default>red</default>
+    </entry>
   </group>
   <group name="Monitoring">
     <entry name="refreshTimeout" type="Int">

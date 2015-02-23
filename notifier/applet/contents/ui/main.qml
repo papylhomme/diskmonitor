@@ -6,21 +6,20 @@ import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 Item {
   id: mainWindow;
 
+  property int passiveStatus: PlasmaCore.Types.PassiveStatus
+  property int needsAttentionStatus: PlasmaCore.Types.NeedsAttentionStatus
+  property int requireAttentionStatus: PlasmaCore.Types.RequireAttentionStatus
+
   Plasmoid.toolTipMainText: i18n("DisKMonitor");
   Plasmoid.toolTipSubText: i18n("Everything look healthy");
   Plasmoid.icon: iconProvider.healthy;
-  //Plasmoid.status: PlasmaCore.Types.NeedsAttentionStatus;
-  //Plasmoid.status: PlasmaCore.Types.RequireAttentionStatus;
   Plasmoid.status: PlasmaCore.Types.PassiveStatus;
+  Plasmoid.associatedApplication: "diskmonitor";
 
 
 
-  DiskMonitor.IconProvider {
+  IconProvider {
     id: iconProvider;
-
-    onHealthyChanged: updateTray();
-    onFailingChanged: updateTray();
-    onUnknownChanged: updateTray();
   }
 
   DiskMonitor.StorageUnitQmlModel {
@@ -52,13 +51,11 @@ Item {
 
   function updateTray() {
     if(myStorageModel.failing) {
-      //mainWindow.Plasmoid.status = PlasmaCore.Types.RequireAttentionStatus;
-      mainWindow.Plasmoid.status = 3;
+      mainWindow.Plasmoid.status = requireAttentionStatus;
       mainWindow.Plasmoid.icon = iconProvider.failing;
       mainWindow.Plasmoid.toolTipSubText = myStorageModel.status;
     } else {
-      //mainWindow.Plasmoid.status = PlasmaCore.Types.PassiveStatus;
-      mainWindow.Plasmoid.status = 1;
+      mainWindow.Plasmoid.status = passiveStatus;
       mainWindow.Plasmoid.icon = iconProvider.healthy;
       mainWindow.Plasmoid.toolTipSubText = myStorageModel.status;
     }
@@ -70,6 +67,13 @@ Item {
     updateTray();
     plasmoid.setAction("refresh", i18n("Refresh"));
     plasmoid.setAction("openapp", i18n("Open application"));
+  }
+
+
+  //handle this as config change isn't correctly propagated
+  //to Plasmoid.icon 
+  Plasmoid.onUserConfiguringChanged: {
+    updateTray();
   }
 
 }

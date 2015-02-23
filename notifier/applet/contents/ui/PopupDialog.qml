@@ -23,14 +23,21 @@ FocusScope {
       currentIndex: -1;
       boundsBehavior: Flickable.StopAtBounds;
       delegate: Component {
-            id: delegateComponent
+        id: delegateComponent
 
-            Loader {
+        Loader {
 
-            anchors.left: parent.left;
-            anchors.right: parent.right;
-              source: plasmoid.configuration.layoutSmall ? "StorageUnitSmall.qml" : "StorageUnitBig.qml";
-            }
+        anchors.left: parent.left;
+        anchors.right: parent.right;
+          source: {
+            if(plasmoid.configuration.layoutSmall)
+              return "StorageUnitSmall.qml";
+            else if(plasmoid.configuration.layoutMinimalist)
+              return "StorageUnitMinimalist.qml"
+            else
+              return "StorageUnitBig.qml";
+          }
+        }
       }
     }
   }

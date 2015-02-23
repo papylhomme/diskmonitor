@@ -35,7 +35,7 @@ PlasmaComponents.ListItem {
         width: parent.width;
         elide: Text.ElideRight;
         font.weight: Font.Bold;
-        color: (failing & failingKnown) ? "red": PlasmaCore.ColorScope.textColor;
+        color: (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor;
       }
     
       PlasmaComponents.Label {
@@ -44,7 +44,7 @@ PlasmaComponents.ListItem {
         height: paintedHeight;
         width: parent.width;
         elide: Text.ElideRight;
-        color: (failing & failingKnown) ? "red": PlasmaCore.ColorScope.textColor;
+        color: (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor;
       }
     }
 

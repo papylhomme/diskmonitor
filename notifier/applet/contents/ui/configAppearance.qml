@@ -9,6 +9,7 @@ Item {
   anchors.fill: parent
 
   property alias cfg_includeDriveId: includeDriveId.checked
+  property alias cfg_smallDeviceName: smallDeviceName.checked
   property alias cfg_layoutBig: layoutBig.checked
   property alias cfg_layoutSmall: layoutSmall.checked
   property alias cfg_layoutMinimalist: layoutMinimalist.checked
@@ -48,10 +49,15 @@ Item {
         anchors.topMargin: 10
 
         QtControls.CheckBox {
+          id: smallDeviceName
+          text: i18n("Use small device name")
+        }
+
+        QtControls.CheckBox {
           id: includeDriveId
           text: i18n("Include drive id on small layouts")
         }
- 
+
         QtControls.ExclusiveGroup { id: layoutType }
 
         GridLayout {
@@ -230,6 +236,8 @@ Item {
 
   Component.onCompleted: {
     includeDriveId.checked = plasmoid.configuration.includeDriveId;
+    smallDeviceName.checked = plasmoid.configuration.smallDeviceName;
+
     warningColor.color = plasmoid.configuration.warningColor;
     errorColor.color = plasmoid.configuration.errorColor;
 

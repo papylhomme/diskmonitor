@@ -40,7 +40,7 @@ PlasmaComponents.ListItem {
     
       PlasmaComponents.Label {
         id: deviceLabel
-        text: device
+        text: { plasmoid.configuration.smallDeviceName ? device.split("/").pop() : device; }
         height: paintedHeight
         width: parent.width
         elide: Text.ElideRight

@@ -28,10 +28,20 @@ PlasmaComponents.ListItem {
     PlasmaComponents.Label {
       id: unitLabel
       Layout.fillWidth: true
-      text: { plasmoid.configuration.includeDriveId ? device + " (" + name + ")" : device; }
       width: parent.width
       elide: Text.ElideRight
       color: { (failing & failingKnown) ? "red": PlasmaCore.ColorScope.textColor; }
+      text: {
+        if(plasmoid.configuration.smallDeviceName)
+          var dev = device.split("/").pop();
+        else
+          var dev = device;
+
+        if(plasmoid.configuration.includeDriveId)
+          return dev + " (" + name + ")"
+        else
+          return dev;
+        }
     }
 
 

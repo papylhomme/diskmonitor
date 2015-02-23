@@ -14,7 +14,6 @@ Item {
   Plasmoid.toolTipSubText: i18n("Everything look healthy");
   Plasmoid.icon: iconProvider.healthy;
   Plasmoid.status: PlasmaCore.Types.PassiveStatus;
-  Plasmoid.associatedApplication: "diskmonitor";
 
 
 

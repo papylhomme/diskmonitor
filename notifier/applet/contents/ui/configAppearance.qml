@@ -69,7 +69,7 @@ Item {
           //big layout
           QtControls.RadioButton {
             id: layoutBig
-            text: i18n("Big layout")
+            text: i18n("Big")
             exclusiveGroup: layoutType
           }
   
@@ -78,7 +78,7 @@ Item {
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
-            property string name: i18n("Drive ID")
+            property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
 
@@ -95,7 +95,7 @@ Item {
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
-            property string name: i18n("Drive ID")
+            property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
 
@@ -112,7 +112,7 @@ Item {
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
-            property string name: i18n("Drive ID")
+            property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
         }

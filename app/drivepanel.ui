@@ -31,11 +31,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="warningNotSupportedLabel">
-        <property name="text">
-         <string>W</string>
-        </property>
-       </widget>
+       <widget class="QLabel" name="warningNotSupportedLabel"/>
       </item>
       <item>
        <widget class="QLabel" name="label_3">
@@ -77,11 +73,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="warningNotEnabledLabel">
-        <property name="text">
-         <string>W</string>
-        </property>
-       </widget>
+       <widget class="QLabel" name="warningNotEnabledLabel"/>
       </item>
       <item>
        <widget class="QLabel" name="label_4">

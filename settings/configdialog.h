@@ -16,7 +16,7 @@ namespace Settings {
       ConfigDialog(QWidget* parent = NULL);
       ~ConfigDialog();
 
-      static bool showDialog(QWidget* parent = NULL, bool appletConfig = false);
+      static bool showDialog(QWidget* parent = NULL);
   };
 
 }

@@ -1,15 +1,12 @@
 #include "storageunitqmlmodel.h"
 
 #include <KNotification>
+#include <KLocalizedString>
 #include <QProcess>
 #include <QDebug>
 
 
 #include "udisks2wrapper.h"
-#include "configdialog.h"
-#include "appearance.h"
-#include "smart.h"
-#include "applet.h"
 
 
 

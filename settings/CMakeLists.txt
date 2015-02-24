@@ -6,13 +6,11 @@ set( SETTINGS_SRCS
   iconprovider.cpp
   appearance.cpp
   smart.cpp
-  applet.cpp
 )
 
 ki18n_wrap_ui( SETTINGS_SRCS 
   appearance.ui
   smart.ui
-  applet.ui
 )
 
 kconfig_add_kcfg_files( SETTINGS_SRCS diskmonitor_settings.kcfgc )

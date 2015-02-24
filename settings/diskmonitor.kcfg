@@ -40,10 +40,4 @@
       <default>1,5,7,196,197,198,201</default>
     </entry>
   </group>
-  <group name="Applet">
-    <entry name="RefreshTimeout" type="Int">
-    <label>Define the time interval between two refresh</label>
-    <default>5</default>
-    </entry>
-  </group>
 </kcfg>

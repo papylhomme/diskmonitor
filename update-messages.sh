@@ -45,13 +45,13 @@ echo "Merging translations"
 catalogs=`find ./app -name '*.po'`
 for cat in $catalogs; do
   echo $cat
-  msgmerge -o $cat.new $cat ${PROJECT}.pot
+  msgmerge -o $cat.new $cat app/${PROJECT}.pot
   mv $cat.new $cat
 done
 catalogs=`find ./applet -name '*.po'`
 for cat in $catalogs; do
   echo $cat
-  msgmerge -o $cat.new $cat ${APPLET}.pot
+  msgmerge -o $cat.new $cat applet/${APPLET}.pot
   mv $cat.new $cat
 done
 

@@ -46,8 +46,8 @@ public:
   bool notifyEnabled() const;
   void setNotifyEnabled(bool notify);
 
-  String iconHealthy() const;
-  String iconFailing() const;
+  QString iconHealthy() const;
+  QString iconFailing() const;
   void setIconHealthy(QString healthyIcon);
   void setIconFailing(QString failingIcon);
 
@@ -85,7 +85,6 @@ signals:
 
 public slots:
   void refresh();
-  void showSettings();
   void openApp(const QString& unitPath = QString());
 };
 

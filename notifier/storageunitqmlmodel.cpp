@@ -123,7 +123,7 @@ void StorageUnitQmlModel::setNotifyEnabled(bool notify) {
 /*
  * Get the iconHealthy value
  */
-String StorageUnitQmlModel::iconHealthy() const
+QString StorageUnitQmlModel::iconHealthy() const
 {
   return healthyIcon;
 }
@@ -133,7 +133,7 @@ String StorageUnitQmlModel::iconHealthy() const
 /*
  * Get the iconFailing value
  */
-String StorageUnitQmlModel::iconFailing() const
+QString StorageUnitQmlModel::iconFailing() const
 {
   return failingICon;
 }
@@ -358,12 +358,3 @@ void StorageUnitQmlModel::refresh()
   monitor();
 }
 
-
-
-/*
- * Show settings dialog
- */
-void StorageUnitQmlModel::showSettings()
-{
-  Settings::ConfigDialog::showDialog(NULL, true);
-}

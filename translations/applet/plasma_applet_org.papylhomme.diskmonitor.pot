@@ -1,0 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
+"POT-Creation-Date: 2015-02-24 22:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: notifier/applet/contents/config/config.qml:7
+msgid "Monitoring"
+msgstr ""
+
+#: notifier/applet/contents/config/config.qml:13
+msgid "Appearance"
+msgstr ""
+
+#: notifier/applet/contents/ui/ColorPickerButton.qml:10
+msgid "Please choose a color"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:42
+msgid "Layouts"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:53
+msgid "Use small device name"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:58
+msgid "Include drive id on small layouts"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:72
+msgid "Big"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:89
+msgid "Small"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:106
+msgid "Minimalist"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:128
+msgid "Icons"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:144
+msgid "Faces"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:162
+msgid "Dialogs"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:179
+msgid "Custom"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:201
+msgid "Colors"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:212
+msgid "Warning"
+msgstr ""
+
+#: notifier/applet/contents/ui/configAppearance.qml:222
+msgid "Error"
+msgstr ""
+
+#: notifier/applet/contents/ui/configMonitoring.qml:21
+msgid "General"
+msgstr ""
+
+#: notifier/applet/contents/ui/configMonitoring.qml:32
+msgid "Refresh timeout"
+msgstr ""
+
+#: notifier/applet/contents/ui/configMonitoring.qml:40
+msgid " min"
+msgstr ""
+
+#: notifier/applet/contents/ui/configMonitoring.qml:47
+msgid "Notify health status change"
+msgstr ""
+
+#: notifier/applet/contents/ui/main.qml:13
+msgid "DisKMonitor"
+msgstr ""
+
+#: notifier/applet/contents/ui/main.qml:14
+msgid "Everything look healthy"
+msgstr ""
+
+#: notifier/applet/contents/ui/main.qml:68
+msgid "Refresh"
+msgstr ""
+
+#: notifier/applet/contents/ui/main.qml:69
+msgid "Open application"
+msgstr ""
+
+#: notifier/storageunitqmlmodel.cpp:68
+msgid "Everything looks healthy."
+msgstr ""
+
+#: notifier/storageunitqmlmodel.cpp:75
+msgid "The following storage units are in failing state:"
+msgstr ""
+
+#: notifier/storageunitqmlmodel.cpp:282
+msgid "Storage units failing"
+msgstr ""
+
+#: notifier/storageunitqmlmodel.cpp:282
+msgid "Storage units are back to healthy status"
+msgstr ""

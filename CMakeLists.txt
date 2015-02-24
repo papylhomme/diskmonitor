@@ -41,7 +41,7 @@ add_subdirectory( libdiskmonitor )
 add_subdirectory( settings )
 add_subdirectory( app )
 add_subdirectory( notifier )
+add_subdirectory( translations )
 
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
-

@@ -5,7 +5,6 @@
 #include <QTimer>
 
 #include "storageunit.h"
-#include "iconprovider.h"
 
 
 
@@ -22,6 +21,8 @@ class StorageUnitQmlModel : public QAbstractListModel
   Q_PROPERTY(QString status READ status NOTIFY statusChanged)
   Q_PROPERTY(int refreshTimeout READ refreshTimeout WRITE setRefreshTimeout NOTIFY refreshTimeoutChanged)
   Q_PROPERTY(bool notifyEnabled READ notifyEnabled WRITE setNotifyEnabled)
+  Q_PROPERTY(QString iconHealthy READ iconHealthy WRITE setIconHealthy)
+  Q_PROPERTY(QString iconFailing READ iconFailing WRITE setIconFailing)
 
 public:
   enum AnimalRoles {
@@ -45,6 +46,11 @@ public:
   bool notifyEnabled() const;
   void setNotifyEnabled(bool notify);
 
+  String iconHealthy() const;
+  String iconFailing() const;
+  void setIconHealthy(QString healthyIcon);
+  void setIconFailing(QString failingIcon);
+
   virtual QHash<int, QByteArray> roleNames() const;
   int rowCount(const QModelIndex & parent = QModelIndex()) const;
   QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
@@ -60,7 +66,8 @@ private:
 
   bool notify = false;
 
-  Settings::IconProvider iconProvider;
+  QString healthyIcon;
+  QString failingICon;
 
 
   void processUnit(StorageUnit* unit);

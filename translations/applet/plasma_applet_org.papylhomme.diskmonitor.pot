@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-02-24 22:15+0000\n"
+"POT-Creation-Date: 2015-02-25 18:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgid "Refresh timeout"
 msgstr ""
 
 #: notifier/applet/contents/ui/configMonitoring.qml:40
-msgid " min"
+msgid " min."
 msgstr ""
 
 #: notifier/applet/contents/ui/configMonitoring.qml:47
@@ -101,8 +101,8 @@ msgstr ""
 msgid "DisKMonitor"
 msgstr ""
 
-#: notifier/applet/contents/ui/main.qml:14
-msgid "Everything look healthy"
+#: notifier/applet/contents/ui/main.qml:14 notifier/storageunitqmlmodel.cpp:68
+msgid "Everything looks healthy."
 msgstr ""
 
 #: notifier/applet/contents/ui/main.qml:68
@@ -111,10 +111,6 @@ msgstr ""
 
 #: notifier/applet/contents/ui/main.qml:69
 msgid "Open application"
-msgstr ""
-
-#: notifier/storageunitqmlmodel.cpp:68
-msgid "Everything looks healthy."
 msgstr ""
 
 #: notifier/storageunitqmlmodel.cpp:75

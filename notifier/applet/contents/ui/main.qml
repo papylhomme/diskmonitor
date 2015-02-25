@@ -11,7 +11,7 @@ Item {
   property int requireAttentionStatus: PlasmaCore.Types.RequireAttentionStatus
 
   Plasmoid.toolTipMainText: i18n("DisKMonitor")
-  Plasmoid.toolTipSubText: i18n("Everything look healthy")
+  Plasmoid.toolTipSubText: i18n("Everything looks healthy.")
   Plasmoid.icon: iconProvider.healthy
   Plasmoid.status: PlasmaCore.Types.PassiveStatus
 

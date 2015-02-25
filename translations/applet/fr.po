@@ -1,0 +1,131 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Michaël Lhomme <papylhomme@gmail.com>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
+"POT-Creation-Date: 2015-02-24 22:29+0000\n"
+"PO-Revision-Date: 2015-02-25 18:39+0000\n"
+"Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
+"Language-Team: French <>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: notifier/applet/contents/config/config.qml:7
+msgid "Monitoring"
+msgstr "Surveillance"
+
+#: notifier/applet/contents/config/config.qml:13
+msgid "Appearance"
+msgstr "Apparence"
+
+#: notifier/applet/contents/ui/ColorPickerButton.qml:10
+msgid "Please choose a color"
+msgstr "Choisissez une couleur"
+
+#: notifier/applet/contents/ui/configAppearance.qml:42
+msgid "Layouts"
+msgstr "Dispositions"
+
+#: notifier/applet/contents/ui/configAppearance.qml:53
+msgid "Use small device name"
+msgstr "Utiliser des noms de périphériques courts"
+
+#: notifier/applet/contents/ui/configAppearance.qml:58
+msgid "Include drive id on small layouts"
+msgstr "Inclure l'identifiant de disque dans les petites dispositions"
+
+#: notifier/applet/contents/ui/configAppearance.qml:72
+msgid "Big"
+msgstr "Gros"
+
+#: notifier/applet/contents/ui/configAppearance.qml:89
+msgid "Small"
+msgstr "Petit"
+
+#: notifier/applet/contents/ui/configAppearance.qml:106
+msgid "Minimalist"
+msgstr "Minimaliste"
+
+#: notifier/applet/contents/ui/configAppearance.qml:128
+msgid "Icons"
+msgstr "Icônes"
+
+#: notifier/applet/contents/ui/configAppearance.qml:144
+msgid "Faces"
+msgstr "Emoticônes"
+
+#: notifier/applet/contents/ui/configAppearance.qml:162
+msgid "Dialogs"
+msgstr "Dialogues"
+
+#: notifier/applet/contents/ui/configAppearance.qml:179
+msgid "Custom"
+msgstr "Personnalisé"
+
+#: notifier/applet/contents/ui/configAppearance.qml:201
+msgid "Colors"
+msgstr "Couleurs"
+
+#: notifier/applet/contents/ui/configAppearance.qml:212
+msgid "Warning"
+msgstr "Avertissement"
+
+#: notifier/applet/contents/ui/configAppearance.qml:222
+msgid "Error"
+msgstr "Erreur"
+
+#: notifier/applet/contents/ui/configMonitoring.qml:21
+msgid "General"
+msgstr "Général"
+
+#: notifier/applet/contents/ui/configMonitoring.qml:32
+msgid "Refresh timeout"
+msgstr "Délai de rafraîchissement"
+
+#: notifier/applet/contents/ui/configMonitoring.qml:40
+msgid " min"
+msgstr " min."
+
+#: notifier/applet/contents/ui/configMonitoring.qml:47
+msgid "Notify health status change"
+msgstr "Notifier les changements d'état de santé"
+
+#: notifier/applet/contents/ui/main.qml:13
+msgid "DisKMonitor"
+msgstr "DisKMonitor"
+
+#: notifier/applet/contents/ui/main.qml:14
+msgid "Everything look healthy"
+msgstr "Tout à l'air sain"
+
+#: notifier/applet/contents/ui/main.qml:68
+msgid "Refresh"
+msgstr "Rafraîchir"
+
+#: notifier/applet/contents/ui/main.qml:69
+msgid "Open application"
+msgstr "Ouvrir l'application"
+
+#: notifier/storageunitqmlmodel.cpp:68
+msgid "Everything looks healthy."
+msgstr "Tout à l'air sain."
+
+#: notifier/storageunitqmlmodel.cpp:75
+msgid "The following storage units are in failing state:"
+msgstr "Les unités de stockage suivantes sont en échec :"
+
+#: notifier/storageunitqmlmodel.cpp:282
+msgid "Storage units failing"
+msgstr "Unités de stockage en échec"
+
+#: notifier/storageunitqmlmodel.cpp:282
+msgid "Storage units are back to healthy status"
+msgstr "Les unités de stockage sont revenues à un état sain"
+

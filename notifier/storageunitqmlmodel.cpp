@@ -1,15 +1,12 @@
 #include "storageunitqmlmodel.h"
 
 #include <KNotification>
+#include <KLocalizedString>
 #include <QProcess>
 #include <QDebug>
 
 
 #include "udisks2wrapper.h"
-#include "configdialog.h"
-#include "appearance.h"
-#include "smart.h"
-#include "applet.h"
 
 
 
@@ -116,6 +113,46 @@ bool StorageUnitQmlModel::notifyEnabled() const
  */
 void StorageUnitQmlModel::setNotifyEnabled(bool notify) {
   this -> notify = notify;
+}
+
+
+
+/*
+ * Get the iconHealthy value
+ */
+QString StorageUnitQmlModel::iconHealthy() const
+{
+  return healthyIcon;
+}
+
+
+
+/*
+ * Get the iconFailing value
+ */
+QString StorageUnitQmlModel::iconFailing() const
+{
+  return failingICon;
+}
+
+
+
+/*
+ * Set the iconHealthy value
+ */
+void StorageUnitQmlModel::setIconHealthy(QString healthyIcon)
+{
+  this -> healthyIcon = healthyIcon;
+}
+
+
+
+/*
+ * Set the iconFailing value
+ */
+void StorageUnitQmlModel::setIconFailing(QString failingIcon)
+{
+  this -> failingICon = failingIcon;
 }
 
 
@@ -281,7 +318,7 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
       KNotification::event(hasFailing ? "failing" : "healthy",
                            hasFailing ? i18n("Storage units failing") : i18n("Storage units are back to healthy status"),
                            status(),
-                           hasFailing ? iconProvider.failing() : iconProvider.healthy(),
+                           hasFailing ? iconFailing() : iconHealthy(),
                            NULL,
                            KNotification::Persistent,
                            "diskmonitor"
@@ -318,12 +355,3 @@ void StorageUnitQmlModel::refresh()
   monitor();
 }
 
-
-
-/*
- * Show settings dialog
- */
-void StorageUnitQmlModel::showSettings()
-{
-  Settings::ConfigDialog::showDialog(NULL, true);
-}

@@ -25,6 +25,10 @@ Item {
     id: myStorageModel
     refreshTimeout: plasmoid.configuration.refreshTimeout
     notifyEnabled: plasmoid.configuration.notifyEnabled
+
+    iconHealthy: iconProvider.healthy;
+    iconFailing: iconProvider.failing;
+
     onStatusChanged: { updateTray(); }
   }
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-02-25 18:47+0000\n"
+"POT-Creation-Date: 2015-02-25 18:58+0000\n"
 "PO-Revision-Date: 2015-02-25 18:46+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
@@ -101,26 +101,26 @@ msgstr "Notifier les changements d'état de santé"
 msgid "DisKMonitor"
 msgstr "DisKMonitor"
 
-#: notifier/applet/contents/ui/main.qml:14 notifier/storageunitqmlmodel.cpp:68
+#: notifier/applet/contents/ui/main.qml:14 notifier/storageunitqmlmodel.cpp:65
 msgid "Everything looks healthy."
 msgstr "Tout à l'air sain."
 
-#: notifier/applet/contents/ui/main.qml:68
+#: notifier/applet/contents/ui/main.qml:72
 msgid "Refresh"
 msgstr "Rafraîchir"
 
-#: notifier/applet/contents/ui/main.qml:69
+#: notifier/applet/contents/ui/main.qml:73
 msgid "Open application"
 msgstr "Ouvrir l'application"
 
-#: notifier/storageunitqmlmodel.cpp:75
+#: notifier/storageunitqmlmodel.cpp:72
 msgid "The following storage units are in failing state:"
 msgstr "Les unités de stockage suivantes sont en échec :"
 
-#: notifier/storageunitqmlmodel.cpp:282
+#: notifier/storageunitqmlmodel.cpp:319
 msgid "Storage units failing"
 msgstr "Unités de stockage en échec"
 
-#: notifier/storageunitqmlmodel.cpp:282
+#: notifier/storageunitqmlmodel.cpp:319
 msgid "Storage units are back to healthy status"
 msgstr "Les unités de stockage sont revenues à un état sain"

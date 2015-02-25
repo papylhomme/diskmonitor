@@ -1,59 +1,61 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Michaël Lhomme <papylhomme@gmail.com>, 2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
 "POT-Creation-Date: 2015-02-25 18:58+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2015-02-25 19:01+0000\n"
+"Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
+"Language-Team: French <>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #. i18n: file: app/mainwindow.ui:14
 #. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
 #: app/main.cpp:11 rc.cpp:24
 msgid "DisKMonitor"
-msgstr ""
+msgstr "DisKMonitor"
 
 #: app/main.cpp:12
 msgid "KDE tools to monitor SMART devices and MDRaid health status"
 msgstr ""
+"Outils KDE pour surveiller l'état de santé des périphériques SMART et des "
+"raid MD"
 
 #: app/main.cpp:14
 msgid "Copyright (C) 2015 Michaël Lhomme"
-msgstr ""
+msgstr "Copyright (C) 2015 Michaël Lhomme"
 
 #: app/main.cpp:20
 msgid "Maintainer & Developer"
-msgstr ""
+msgstr "Mainteneur & développeur"
 
 #: app/main.cpp:22 app/main.cpp:23
 msgid "Please report bugs directly to "
-msgstr ""
+msgstr "Merci de reporter les bugs directement à "
 
 #: settings/configdialog.cpp:47
 msgid "Appearance"
-msgstr ""
+msgstr "Apparence"
 
 #: settings/configdialog.cpp:47
 msgid "Appearance options"
-msgstr ""
+msgstr "Options d'apparence"
 
 #: settings/configdialog.cpp:48
 msgid "S.M.A.R.T"
-msgstr ""
+msgstr "S.M.A.R.T"
 
 #: settings/configdialog.cpp:48
 msgid "S.M.A.R.T options"
-msgstr ""
+msgstr "Options S.M.A.R.T"
 
 #. i18n: file: app/drivepanel.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, DrivePanel)
@@ -65,31 +67,32 @@ msgstr ""
 #. i18n: ectx: property (windowTitle), widget (QWidget, SMART)
 #: rc.cpp:3 rc.cpp:57 rc.cpp:63 rc.cpp:123
 msgid "Form"
-msgstr ""
+msgstr "Formulaire"
 
 #. i18n: file: app/drivepanel.ui:39
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:6
 msgid "Unable to detect SMART support for this drive"
-msgstr ""
+msgstr "Impossible de détecter un support SMART pour ce disque"
 
 #. i18n: file: app/drivepanel.ui:81
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: rc.cpp:9
 msgid "SMART isn't activated for this drive"
-msgstr ""
+msgstr "SMART n'est pas actif sur ce disque"
 
 #. i18n: file: app/drivepanel.ui:88
 #. i18n: ectx: property (text), widget (QPushButton, enableSmartButton)
 #: rc.cpp:12
 msgid "Activate"
-msgstr ""
+msgstr "Activer"
 
 #. i18n: file: app/drivepanel.ui:116
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:15
+#, fuzzy
 msgid "SelfTest status:"
-msgstr ""
+msgstr "Etat du selftext"
 
 #. i18n: file: app/drivepanel.ui:123
 #. i18n: ectx: property (text), widget (QLabel, selfTestStatusLabel)
@@ -97,19 +100,20 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, statusLabel)
 #: rc.cpp:18 rc.cpp:36
 msgid "unknown"
-msgstr ""
+msgstr "inconnu"
 
 #. i18n: file: app/drivepanel.ui:173
 #. i18n: ectx: property (text), widget (QPushButton, startSelfTestButton)
 #: rc.cpp:21
+#, fuzzy
 msgid "Start SelfTest"
-msgstr ""
+msgstr "Démarrer un selftest"
 
 #. i18n: file: app/mainwindow.ui:39
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:27
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 #. i18n: file: app/mainwindow.ui:50
 #. i18n: ectx: property (text), widget (QToolButton, refreshDetailsButton)
@@ -126,165 +130,172 @@ msgstr ""
 #. i18n: file: settings/appearance.ui:210
 #. i18n: ectx: property (text), widget (QToolButton, toolButton_6)
 #: rc.cpp:30 rc.cpp:81 rc.cpp:84 rc.cpp:87 rc.cpp:93 rc.cpp:96 rc.cpp:99
+#, fuzzy
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #. i18n: file: app/mainwindow.ui:62
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:33
 msgid "General status is:"
-msgstr ""
+msgstr "Etat général :"
 
 #. i18n: file: app/mainwindow.ui:114
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:39
 msgid "Please select a storage unit to display informations"
 msgstr ""
+"Merci de sélectionner une unité de stockage pour afficher les informations"
 
 #. i18n: file: app/mainwindow.ui:139
 #. i18n: ectx: property (title), widget (QMenu, menuFile)
 #: rc.cpp:42
+#, fuzzy
 msgid "Fi&le"
-msgstr ""
+msgstr "Fichier"
 
 #. i18n: file: app/mainwindow.ui:151
 #. i18n: ectx: property (text), widget (QStatusBar, statusbar)
 #: rc.cpp:45
+#, fuzzy
 msgid "&Quit"
-msgstr ""
+msgstr "Quitter"
 
 #. i18n: file: app/mainwindow.ui:154
 #. i18n: ectx: property (shortcut), widget (QStatusBar, statusbar)
 #: rc.cpp:48
 msgid "Ctrl+Q"
-msgstr ""
+msgstr "Ctrl+Q"
 
 #. i18n: file: app/mainwindow.ui:159
 #. i18n: ectx: property (text), widget (QStatusBar, statusbar)
 #: rc.cpp:51
+#, fuzzy
 msgid "&Refresh"
-msgstr ""
+msgstr "Rafraichir"
 
 #. i18n: file: app/mainwindow.ui:164
 #. i18n: ectx: property (text), widget (QStatusBar, statusbar)
 #: rc.cpp:54
 msgid "Settings"
-msgstr ""
+msgstr "Configuration"
 
 #. i18n: file: app/mdraidpanel.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, startScrubButton)
 #: rc.cpp:60
+#, fuzzy
 msgid "Start scrubbing"
-msgstr ""
+msgstr "Démarrer un scrubbing"
 
 #. i18n: file: settings/appearance.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:66
 msgid "Colors"
-msgstr ""
+msgstr "Couleurs"
 
 #. i18n: file: settings/appearance.ui:26
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:69
 msgid "Warning color:"
-msgstr ""
+msgstr "Couleur d'avertissement :"
 
 #. i18n: file: settings/appearance.ui:33
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:72
 msgid "Error color:"
-msgstr ""
+msgstr "Couleur d'erreur :"
 
 #. i18n: file: settings/appearance.ui:49
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:75
 msgid "Icons"
-msgstr ""
+msgstr "Icônes"
 
 #. i18n: file: settings/appearance.ui:55
 #. i18n: ectx: property (text), widget (QRadioButton, emotesIconModeRadioButton)
 #: rc.cpp:78
 msgid "Emo&tes"
-msgstr ""
+msgstr "Emoticônes"
 
 #. i18n: file: settings/appearance.ui:141
 #. i18n: ectx: property (text), widget (QRadioButton, dialogsIconModeRadioButton)
 #: rc.cpp:90
 msgid "Dialo&gs"
-msgstr ""
+msgstr "Dialogues"
 
 #. i18n: file: settings/appearance.ui:224
 #. i18n: ectx: property (text), widget (QRadioButton, customIconModeRadioButton)
 #: rc.cpp:102
 msgid "Custom"
-msgstr ""
+msgstr "Personnalisé"
 
 #. i18n: file: settings/diskmonitor.kcfg:9
 #. i18n: ectx: label, entry (ErrorColor), group (Appearance)
 #: rc.cpp:105
 msgid "Defines the color used for errors."
-msgstr ""
+msgstr "Défini la couleur utilisé pour les erreurs."
 
 #. i18n: file: settings/diskmonitor.kcfg:13
 #. i18n: ectx: label, entry (WarningColor), group (Appearance)
 #: rc.cpp:108
 msgid "Defines the color used for warnings."
-msgstr ""
+msgstr "Défini la couleur utilisé  pour les avertissements."
 
 #. i18n: file: settings/diskmonitor.kcfg:25
 #. i18n: ectx: label, entry (HealthyIcon), group (Appearance)
 #: rc.cpp:111
 msgid "Defines the icon used for healthy unit."
-msgstr ""
+msgstr "Défini l'icône utilisé pour une unité saine."
 
 #. i18n: file: settings/diskmonitor.kcfg:29
 #. i18n: ectx: label, entry (FailingIcon), group (Appearance)
 #: rc.cpp:114
 msgid "Defines the icon used for failing unit."
-msgstr ""
+msgstr "Défini l'icône utilisé pour une unité en échec."
 
 #. i18n: file: settings/diskmonitor.kcfg:33
 #. i18n: ectx: label, entry (UnknownIcon), group (Appearance)
 #: rc.cpp:117
 msgid "Defines the icon used when health status is unknown."
-msgstr ""
+msgstr "Défini l'icône utilisé quand l'état de santé d'une unité est inconnu."
 
 #. i18n: file: settings/diskmonitor.kcfg:39
 #. i18n: ectx: label, entry (SensitiveAttributes), group (SMART)
 #: rc.cpp:120
 msgid "Defines the attributes considered sensitive."
-msgstr ""
+msgstr "Défini les attributs considérés sensibles."
 
 #. i18n: file: settings/smart.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:126
 msgid "Sensitive Attributes"
-msgstr ""
+msgstr "Attributs sensibles"
 
 #. i18n: file: settings/smart.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
 #: rc.cpp:129
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #. i18n: file: settings/smart.ui:51
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: rc.cpp:132
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #. i18n: file: settings/smart.ui:58
 #. i18n: ectx: property (text), widget (QPushButton, clearButton)
 #: rc.cpp:135
 msgid "Clear"
-msgstr ""
+msgstr "Vider"
 
 #: rc.cpp:136
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Vos noms"
 
 #: rc.cpp:137
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "Vos emails"
+

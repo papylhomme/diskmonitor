@@ -2,6 +2,8 @@
 
 #include "diskmonitor_settings.h"
 
+#include <KLocalizedString>
+
 #include <QFont>
 #include <QColor>
 #include <QBrush>
@@ -12,7 +14,10 @@
  */
 MDRaidMembersModel::MDRaidMembersModel()
 {
-  headerLabels << "Block device" << "Slot" << "State" << "Read errors";
+  headerLabels << i18n("Block device")
+               << i18n("Slot")
+               << i18n("State")
+               << i18n("Read errors");
 }
 
 

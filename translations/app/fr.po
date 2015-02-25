@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-02-25 18:58+0000\n"
-"PO-Revision-Date: 2015-02-25 19:01+0000\n"
+"POT-Creation-Date: 2015-02-25 21:21+0000\n"
+"PO-Revision-Date: 2015-02-25 21:23+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -16,6 +16,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 1.5\n"
+
+#: app/drivepanel.cpp:29
+msgid "Short test"
+msgstr "Test court"
+
+#: app/drivepanel.cpp:31
+msgid "Extended test"
+msgstr "Test étendu"
+
+#. i18n: file: app/drivepanel.ui:123
+#. i18n: ectx: property (text), widget (QLabel, selfTestStatusLabel)
+#. i18n: file: app/mainwindow.ui:75
+#. i18n: ectx: property (text), widget (QLabel, statusLabel)
+#: app/drivepanel.cpp:108 app/drivepropertiesmodel.cpp:156 rc.cpp:18 rc.cpp:36
+msgid "unknown"
+msgstr "inconnu"
+
+#: app/drivepropertiesmodel.cpp:21
+msgid "Id"
+msgstr "Id"
+
+#: app/drivepropertiesmodel.cpp:22
+msgid "Name"
+msgstr "Nom"
+
+#: app/drivepropertiesmodel.cpp:23
+msgid "Flags"
+msgstr "Drapeaux"
+
+#: app/drivepropertiesmodel.cpp:24
+msgid "Worst"
+msgstr ""
+
+#: app/drivepropertiesmodel.cpp:25
+msgid "Threshold"
+msgstr ""
+
+#: app/drivepropertiesmodel.cpp:26
+msgid "Normalized value"
+msgstr "Valeur normalisée"
+
+#: app/drivepropertiesmodel.cpp:27
+msgid "Value"
+msgstr "Valeur"
+
+#: app/drivepropertiesmodel.cpp:143 app/mdraidpropertiesmodel.cpp:90
+#: app/mdraidpropertiesmodel.cpp:91 app/mdraidpropertiesmodel.cpp:92
+msgid "Raw value:"
+msgstr ""
+
+#: app/drivepropertiesmodel.cpp:159
+msgid "sectors"
+msgstr "secteurs"
 
 #. i18n: file: app/mainwindow.ui:14
 #. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
@@ -40,6 +93,76 @@ msgstr "Mainteneur & développeur"
 #: app/main.cpp:22 app/main.cpp:23
 msgid "Please report bugs directly to "
 msgstr "Merci de reporter les bugs directement à "
+
+#. i18n: file: app/mainwindow.ui:39
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: app/mainwindow.cpp:118 rc.cpp:27
+msgid "Details"
+msgstr "Détails"
+
+#: app/mainwindow.cpp:149
+msgid "Drive"
+msgstr "Disque"
+
+#: app/mainwindow.cpp:154
+msgid "MDRaid"
+msgstr "Raid MD"
+
+#: app/mainwindow.cpp:189
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: app/mainwindow.cpp:194
+msgid "Failing"
+msgstr "Echec"
+
+#: app/mainwindow.cpp:198
+msgid "Healthy"
+msgstr "Sain"
+
+#: app/mdraidmembersmodel.cpp:17
+msgid "Block device"
+msgstr "Périphérique bloc"
+
+#: app/mdraidmembersmodel.cpp:18
+msgid "Slot"
+msgstr ""
+
+#: app/mdraidmembersmodel.cpp:19
+msgid "State"
+msgstr "Etat"
+
+#: app/mdraidmembersmodel.cpp:20
+msgid "Read errors"
+msgstr ""
+
+#: app/mdraidpropertiesmodel.cpp:15
+msgid "UUID"
+msgstr ""
+
+#: app/mdraidpropertiesmodel.cpp:16
+msgid "Level"
+msgstr ""
+
+#: app/mdraidpropertiesmodel.cpp:17
+msgid "Devices"
+msgstr "Périphériques"
+
+#: app/mdraidpropertiesmodel.cpp:18
+msgid "Size"
+msgstr "Taille"
+
+#: app/mdraidpropertiesmodel.cpp:19
+msgid "Sync action"
+msgstr ""
+
+#: app/mdraidpropertiesmodel.cpp:20
+msgid "Sync remaining time"
+msgstr ""
+
+#: app/mdraidpropertiesmodel.cpp:21
+msgid "Sync completed"
+msgstr ""
 
 #: settings/configdialog.cpp:47
 msgid "Appearance"
@@ -90,30 +213,14 @@ msgstr "Activer"
 #. i18n: file: app/drivepanel.ui:116
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:15
-#, fuzzy
 msgid "SelfTest status:"
-msgstr "Etat du selftext"
-
-#. i18n: file: app/drivepanel.ui:123
-#. i18n: ectx: property (text), widget (QLabel, selfTestStatusLabel)
-#. i18n: file: app/mainwindow.ui:75
-#. i18n: ectx: property (text), widget (QLabel, statusLabel)
-#: rc.cpp:18 rc.cpp:36
-msgid "unknown"
-msgstr "inconnu"
+msgstr "Etat du test :"
 
 #. i18n: file: app/drivepanel.ui:173
 #. i18n: ectx: property (text), widget (QPushButton, startSelfTestButton)
 #: rc.cpp:21
-#, fuzzy
 msgid "Start SelfTest"
-msgstr "Démarrer un selftest"
-
-#. i18n: file: app/mainwindow.ui:39
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:27
-msgid "Details"
-msgstr "Détails"
+msgstr "Démarrer un test"
 
 #. i18n: file: app/mainwindow.ui:50
 #. i18n: ectx: property (text), widget (QToolButton, refreshDetailsButton)
@@ -130,7 +237,6 @@ msgstr "Détails"
 #. i18n: file: settings/appearance.ui:210
 #. i18n: ectx: property (text), widget (QToolButton, toolButton_6)
 #: rc.cpp:30 rc.cpp:81 rc.cpp:84 rc.cpp:87 rc.cpp:93 rc.cpp:96 rc.cpp:99
-#, fuzzy
 msgid "..."
 msgstr "..."
 
@@ -150,16 +256,14 @@ msgstr ""
 #. i18n: file: app/mainwindow.ui:139
 #. i18n: ectx: property (title), widget (QMenu, menuFile)
 #: rc.cpp:42
-#, fuzzy
 msgid "Fi&le"
-msgstr "Fichier"
+msgstr "&Fichier"
 
 #. i18n: file: app/mainwindow.ui:151
 #. i18n: ectx: property (text), widget (QStatusBar, statusbar)
 #: rc.cpp:45
-#, fuzzy
 msgid "&Quit"
-msgstr "Quitter"
+msgstr "&Quitter"
 
 #. i18n: file: app/mainwindow.ui:154
 #. i18n: ectx: property (shortcut), widget (QStatusBar, statusbar)
@@ -170,22 +274,20 @@ msgstr "Ctrl+Q"
 #. i18n: file: app/mainwindow.ui:159
 #. i18n: ectx: property (text), widget (QStatusBar, statusbar)
 #: rc.cpp:51
-#, fuzzy
 msgid "&Refresh"
-msgstr "Rafraichir"
+msgstr "&Rafraichir"
 
 #. i18n: file: app/mainwindow.ui:164
 #. i18n: ectx: property (text), widget (QStatusBar, statusbar)
 #: rc.cpp:54
-msgid "Settings"
-msgstr "Configuration"
+msgid "&Settings"
+msgstr "&Configuration"
 
 #. i18n: file: app/mdraidpanel.ui:55
 #. i18n: ectx: property (text), widget (QPushButton, startScrubButton)
 #: rc.cpp:60
-#, fuzzy
 msgid "Start scrubbing"
-msgstr "Démarrer un scrubbing"
+msgstr "Démarrer un nettoyage"
 
 #. i18n: file: settings/appearance.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)

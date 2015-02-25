@@ -26,9 +26,9 @@ DrivePanel::DrivePanel(QWidget *parent) :
 
   QAction* action;
   QMenu * menu = new QMenu();
-  action = menu -> addAction(tr("Short test"));
+  action = menu -> addAction(i18n("Short test"));
   connect(action, SIGNAL(triggered()), this, SLOT(startShortSelfTest()));
-  action = menu -> addAction(tr("Extended test"));
+  action = menu -> addAction(i18n("Extended test"));
   connect(action, SIGNAL(triggered()), this, SLOT(startExtendedSelfTest()));
   ui -> startSelfTestButton -> setMenu(menu);
 }
@@ -105,7 +105,7 @@ void DrivePanel::updateUI()
     }
 
   } else {
-    ui -> selfTestStatusLabel -> setText(tr("unknown"));
+    ui -> selfTestStatusLabel -> setText(i18n("unknown"));
     ui -> progressBar -> setValue(0);
   }
 }

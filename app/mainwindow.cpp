@@ -115,7 +115,7 @@ void MainWindow::setSelectedUnit(const QString& path)
 void MainWindow::unitSelected(const QModelIndex& index)
 {
   int widgetIndex = 0;
-  QString boxTitle = tr("Details");
+  QString boxTitle = i18n("Details");
 
   //disconnect the old selected unit if needed
   if(currentUnit != NULL)
@@ -146,12 +146,12 @@ void MainWindow::unitSelected(const QModelIndex& index)
   if(currentUnit -> isDrive()) {
     widgetIndex = 1;
     panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
-    boxTitle = tr("Drive") % " " % u -> getName() % " (" % u-> getDevice() % ")";
+    boxTitle = i18n("Drive") % " " % u -> getName() % " (" % u-> getDevice() % ")";
 
   } else if(u -> isMDRaid()) {
     widgetIndex = 2;
     panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
-    boxTitle = tr("MDRaid") % " " % u -> getName() % " (" % u -> getDevice() % ")";
+    boxTitle = i18n("MDRaid") % " " % u -> getName() % " (" % u -> getDevice() % ")";
   }
 
   panel -> setStorageUnit(currentUnit);
@@ -186,16 +186,16 @@ void MainWindow::updateHealthStatus(StorageUnit* unit)
 
   if(!unit -> isFailingStatusKnown()) {
     style = "QLabel { color: " + DiskMonitorSettings::warningColor().name() + "; }";
-    text = tr("Unknown");
+    text = i18n("Unknown");
     icon = QIcon::fromTheme(iconProvider.unknown()).pixmap(QSize(16,16));
 
   } else if(unit -> isFailing()) {
     style = "QLabel { color: " + DiskMonitorSettings::errorColor().name() + "; }";
-    text = tr("Failing");
+    text = i18n("Failing");
     icon = QIcon::fromTheme(iconProvider.failing()).pixmap(QSize(16,16));
 
   } else {
-    text = tr("Healthy");
+    text = i18n("Healthy");
     icon = QIcon::fromTheme(iconProvider.healthy()).pixmap(QSize(16,16));
   }
 

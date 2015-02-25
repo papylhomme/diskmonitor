@@ -1,5 +1,7 @@
 #include "mdraidpropertiesmodel.h"
 
+#include <KLocalizedString>
+
 #include <QFont>
 
 #include "humanize.h"
@@ -10,9 +12,13 @@
  */
 MDRaidPropertiesModel::MDRaidPropertiesModel()
 {
-  headerLabels << "UUID" << "Level" << "Devices" <<
-           "Size" << "Sync action" <<  "Sync remaining time" <<
-           "Sync completed";
+  headerLabels << i18n("UUID")
+               << i18n("Level")
+               << i18n("Devices")
+               << i18n("Size")
+               << i18n("Sync action")
+               << i18n("Sync remaining time")
+               << i18n("Sync completed");
 }
 
 
@@ -81,9 +87,9 @@ QVariant MDRaidPropertiesModel::data(const QModelIndex& index, int role) const
 
   } else if(role == Qt::ToolTipRole) {
     switch(index.column()) {
-      case 3: return QVariant(tr("Raw value:") + " " + QString::number(mdraid -> getSize())); break;
-      case 5: return QVariant(tr("Raw value:") + " " + QString::number(mdraid -> getSyncRemainingTime())); break;
-      case 6: return QVariant(tr("Raw value:") + " " + QString::number(mdraid -> getSyncCompleted())); break;
+      case 3: return QVariant(i18n("Raw value:") + " " + QString::number(mdraid -> getSize())); break;
+      case 5: return QVariant(i18n("Raw value:") + " " + QString::number(mdraid -> getSyncRemainingTime())); break;
+      case 6: return QVariant(i18n("Raw value:") + " " + QString::number(mdraid -> getSyncCompleted())); break;
       default: return QVariant(); break;
     }
   }

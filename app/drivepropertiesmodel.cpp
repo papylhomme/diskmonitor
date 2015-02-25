@@ -2,6 +2,8 @@
 
 #include "diskmonitor_settings.h"
 
+#include <KLocalizedString>
+
 #include <QFont>
 #include <QBrush>
 #include <QColor>
@@ -16,7 +18,13 @@
 DrivePropertiesModel::DrivePropertiesModel()
 {
   sensitiveAttributes = DiskMonitorSettings::sensitiveAttributes();
-  headerLabels << "Id" << "Name" << "Flags" << "Worst" << "Threshold" << "Normalized value" << "Value";
+  headerLabels << i18n("Id")
+               << i18n("Name")
+               << i18n("Flags")
+               << i18n("Worst")
+               << i18n("Threshold")
+               << i18n("Normalized value")
+               << i18n("Value");
 }
 
 
@@ -132,7 +140,7 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 
   // Handle tooltips
   } else if(index.column() == 6 && role == Qt::ToolTipRole)
-    return QVariant(tr("Raw value:") + " " + QString::number(attr.pretty));
+    return QVariant(i18n("Raw value:") + " " + QString::number(attr.pretty));
 
   return QVariant();
 }
@@ -145,10 +153,10 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 QVariant DrivePropertiesModel::humanizeSmartAttribute(const SmartAttribute& attr) const
 {
   switch(attr.pretty_unit) {
-    case 0: return QVariant(tr("unknown")); break;
+    case 0: return QVariant(i18n("unknown")); break;
     case 1: return QVariant(attr.pretty); break;
     case 2: return QVariant(Humanize::duration(attr.pretty, "ms")); break;
-    case 3: return QVariant(QString::number(attr.pretty) + " " + tr("sectors")); break;
+    case 3: return QVariant(QString::number(attr.pretty) + " " + i18n("sectors")); break;
     case 4: return QVariant(Humanize::temperature(attr.pretty)); break;
     default: return QVariant();
   }

@@ -8,7 +8,10 @@
 
 
 int main(int argc, char *argv[]) {
-  KAboutData about("diskmonitor-gui", i18n("DisKMonitor"), "0.1",
+  KLocalizedString::setApplicationDomain("diskmonitor");
+  QApplication app(argc, argv);
+
+  KAboutData about("diskmonitor", i18n("DisKMonitor"), "0.1",
     i18n("KDE tools to monitor SMART devices and MDRaid health status"),
     KAboutLicense::GPL_V2,
     i18n("Copyright (C) 2015 Michaël Lhomme"),
@@ -23,9 +26,6 @@ int main(int argc, char *argv[]) {
     i18n("Please report bugs directly to ") + "<a href='https://github.com/papylhomme/diskmonitor/issues'>GitHub</a>");
 
   KAboutData::setApplicationData(about);
-
-  QApplication app(argc, argv);
-  app.setWindowIcon(QIcon(":/images/icon.svg"));
 
   UDisks2Wrapper::instance();
   MainWindow* w = new MainWindow();

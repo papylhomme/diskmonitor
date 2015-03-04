@@ -67,12 +67,12 @@ protected:
   bool failing = false;
   bool failingStatusKnown = false;
 
-  QVariant getProperty(QDBusInterface*, const char*) const;
-  bool getBoolProperty(QDBusInterface*, const char*) const;
-  int getIntProperty(QDBusInterface*, const char*) const;
-  qulonglong getULongLongProperty(QDBusInterface*, const char*) const;
-  double getDoubleProperty(QDBusInterface*, const char*) const;
-  QString getStringProperty(QDBusInterface*, const char*) const;
+  static QVariant getProperty(QDBusInterface*, const char*);
+  static bool getBoolProperty(QDBusInterface*, const char*);
+  static int getIntProperty(QDBusInterface*, const char*);
+  static qulonglong getULongLongProperty(QDBusInterface*, const char*);
+  static double getDoubleProperty(QDBusInterface*, const char*);
+  static QString getStringProperty(QDBusInterface*, const char*);
 
 signals:
   void updated(StorageUnit* unit);

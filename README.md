@@ -38,6 +38,10 @@ KDE tools to monitor SMART devices and MDRaid health status. Features a full app
 
 ![Applet - Tray](https://github.com/papylhomme/diskmonitor/blob/gh-pages/screenshots/applet2.png)
 
+# Getting involved
+
+If you like this software, contribution is welcome! You can submit new features or bugfixes using github pull request. You can also help translating DisKMonitor in your language using Transifex at https://www.transifex.com/projects/p/diskmonitor
+
 # Test health status change
 
 The easiest way to test the monitoring is by using a "fake" raid array. The idea is to create a small array

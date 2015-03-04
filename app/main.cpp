@@ -5,13 +5,14 @@
 #include <KAboutData>
 
 #include "udisks2wrapper.h"
+#include "config.h"
 
 
 int main(int argc, char *argv[]) {
   KLocalizedString::setApplicationDomain("diskmonitor");
   QApplication app(argc, argv);
 
-  KAboutData about("diskmonitor", i18n("DisKMonitor"), "0.1",
+  KAboutData about("diskmonitor", i18n("DisKMonitor"), DISKMONITOR_VERSION,
     i18n("KDE tools to monitor SMART devices and MDRaid health status"),
     KAboutLicense::GPL_V2,
     i18n("Copyright (C) 2015 Michaël Lhomme"),

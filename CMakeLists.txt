@@ -1,4 +1,9 @@
 project(diskmonitor)
+set(DISKMONITOR_VERSION_MAJOR "0")
+set(DISKMONITOR_VERSION_MINOR "2")
+set(DISKMONITOR_VERSION "${DISKMONITOR_VERSION_MAJOR}.${DISKMONITOR_VERSION_MINOR}")
+
+
 
 cmake_minimum_required(VERSION 2.8.12)
 set (QT_MIN_VERSION "5.2.0")
@@ -36,6 +41,8 @@ kde_enable_exceptions()
 
 
 include_directories( ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/libdiskmonitor )
+
+configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 add_subdirectory( libdiskmonitor )
 add_subdirectory( settings )

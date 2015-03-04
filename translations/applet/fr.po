@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-04 01:10+0000\n"
-"PO-Revision-Date: 2015-03-04 01:12+0000\n"
+"POT-Creation-Date: 2015-03-04 10:43+0000\n"
+"PO-Revision-Date: 2015-03-04 10:31+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -123,8 +123,8 @@ msgid "Open application"
 msgstr "Ouvrir l'application"
 
 #: notifier/storageunitqmlmodel.cpp:72
-msgid "The following storage units are in failing state:"
-msgstr "Les unités de stockage suivantes sont en échec :"
+msgid "The following storage units are in failing state:<br/>%1"
+msgstr "Les unités de stockage suivantes sont en échec :<br/>%1"
 
 #: notifier/storageunitqmlmodel.cpp:319
 msgid "Storage units failing"

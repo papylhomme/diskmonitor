@@ -28,6 +28,8 @@ protected:
 private:
   Ui::DrivePanel *ui;
 
+  QString localizeSelfTestStatus(QString status) const;
+
 public slots:
   void enableSmart();
   void startShortSelfTest();

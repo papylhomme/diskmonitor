@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-04 01:02+0000\n"
+"POT-Creation-Date: 2015-03-04 10:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,36 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, statusLabel)
 #: app/drivepanel.cpp:108 rc.cpp:18 rc.cpp:33
 msgid "unknown"
+msgstr ""
+
+#: app/drivepanel.cpp:183
+msgctxt "SelfTest status"
+msgid "In progress"
+msgstr ""
+
+#: app/drivepanel.cpp:185
+msgctxt "SelfTest status"
+msgid "Success"
+msgstr ""
+
+#: app/drivepanel.cpp:187
+msgctxt "SelfTest status"
+msgid "Aborted"
+msgstr ""
+
+#: app/drivepanel.cpp:189
+msgctxt "SelfTest status"
+msgid "Interrupted"
+msgstr ""
+
+#: app/drivepanel.cpp:191
+msgctxt "SelfTest status"
+msgid "Fatal"
+msgstr ""
+
+#: app/drivepanel.cpp:193
+msgctxt "SelfTest status"
+msgid "Error (%1)"
 msgstr ""
 
 #: app/drivepropertiesmodel.cpp:21
@@ -70,7 +100,7 @@ msgstr ""
 
 #: app/drivepropertiesmodel.cpp:143 app/mdraidpropertiesmodel.cpp:90
 #: app/mdraidpropertiesmodel.cpp:91 app/mdraidpropertiesmodel.cpp:92
-msgid "Raw value:"
+msgid "Raw value: %1"
 msgstr ""
 
 #: app/drivepropertiesmodel.cpp:156
@@ -79,7 +109,7 @@ msgid "unknown"
 msgstr ""
 
 #: app/drivepropertiesmodel.cpp:159
-msgid "sectors"
+msgid "%1 sectors"
 msgstr ""
 
 #. i18n: file: app/mainwindow.ui:14
@@ -97,11 +127,15 @@ msgid "Copyright (C) 2015 Michaël Lhomme"
 msgstr ""
 
 #: app/main.cpp:23
+msgid "Michaël Lhomme"
+msgstr ""
+
+#: app/main.cpp:23
 msgid "Maintainer & Developer"
 msgstr ""
 
 #: app/main.cpp:25 app/main.cpp:26
-msgid "Please report bugs directly to "
+msgid "Please report bugs directly to %1"
 msgstr ""
 
 #. i18n: file: app/mainwindow.ui:39
@@ -111,11 +145,11 @@ msgid "Details"
 msgstr ""
 
 #: app/mainwindow.cpp:149
-msgid "Drive"
+msgid "Drive %1 (%2)"
 msgstr ""
 
 #: app/mainwindow.cpp:154
-msgid "MDRaid"
+msgid "MDRaid %1 (%2)"
 msgstr ""
 
 #: app/mainwindow.cpp:189

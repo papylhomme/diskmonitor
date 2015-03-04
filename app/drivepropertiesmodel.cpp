@@ -140,7 +140,7 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 
   // Handle tooltips
   } else if(index.column() == 6 && role == Qt::ToolTipRole)
-    return QVariant(i18n("Raw value:") + " " + QString::number(attr.pretty));
+    return QVariant(i18n("Raw value: %1", QString::number(attr.pretty)));
 
   return QVariant();
 }
@@ -156,7 +156,7 @@ QVariant DrivePropertiesModel::humanizeSmartAttribute(const SmartAttribute& attr
     case 0: return QVariant(i18nc("value type is unknown", "unknown")); break;
     case 1: return QVariant(attr.pretty); break;
     case 2: return QVariant(Humanize::duration(attr.pretty, "ms")); break;
-    case 3: return QVariant(QString::number(attr.pretty) + " " + i18n("sectors")); break;
+    case 3: return QVariant(i18n("%1 sectors", QString::number(attr.pretty))); break;
     case 4: return QVariant(Humanize::temperature(attr.pretty)); break;
     default: return QVariant();
   }

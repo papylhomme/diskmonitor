@@ -69,7 +69,7 @@ QString StorageUnitQmlModel::status() const
     foreach(StorageUnit* unit, failingUnits)
       details = "<br/><i>" + unit -> getName() + " (" + unit -> getDevice() + ")</i>";
 
-    return i18n("The following storage units are in failing state:") + details;
+    return i18n("The following storage units are in failing state:<br/>%1", details);
   }
 }
 

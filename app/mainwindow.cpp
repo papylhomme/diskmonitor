@@ -146,12 +146,12 @@ void MainWindow::unitSelected(const QModelIndex& index)
   if(currentUnit -> isDrive()) {
     widgetIndex = 1;
     panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
-    boxTitle = i18n("Drive") % " " % u -> getName() % " (" % u-> getDevice() % ")";
+    boxTitle = i18n("Drive %1 (%2)", u -> getName(), u -> getDevice());
 
   } else if(u -> isMDRaid()) {
     widgetIndex = 2;
     panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
-    boxTitle = i18n("MDRaid") % " " % u -> getName() % " (" % u -> getDevice() % ")";
+    boxTitle = i18n("MDRaid %1 (%2)", u -> getName(), u -> getDevice());
   }
 
   panel -> setStorageUnit(currentUnit);

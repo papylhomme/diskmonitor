@@ -91,7 +91,7 @@ void DrivePanel::updateUI()
     int percent = drive -> getSelfTestPercentRemaining();
     QString status = drive -> getSelfTestStatus();
 
-    ui -> selfTestStatusLabel -> setText(status);
+    ui -> selfTestStatusLabel -> setText(localizeSelfTestStatus(status));
 
     if(status == "inprogress") {
       ui -> startSelfTestButton -> setEnabled(false);
@@ -168,4 +168,29 @@ void DrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
     //delay the refresh as UDisks2 may take some time to update the status
     QTimer::singleShot(2000, this, SLOT(refresh()));
   }
+}
+
+
+
+/*
+ * Get a localized version of the self test status
+ *
+ * @see Drive::getSelfTestStatus()
+ */
+QString DrivePanel::localizeSelfTestStatus(QString status) const
+{
+  if(status == "inprogress")
+    return i18nc("SelfTest status", "In progress");
+  else if(status == "success")
+    return i18nc("SelfTest status", "Success");
+  else if(status == "aborted")
+    return i18nc("SelfTest status", "Aborted");
+  else if(status == "interrupted")
+    return i18nc("SelfTest status", "Interrupted");
+  else if(status == "fatal")
+    return i18nc("SelfTest status", "Fatal");
+  else if(status.startsWith("error_"))
+    return i18nc("SelfTest status", "Error (%1)", status);
+  else
+    return status;
 }

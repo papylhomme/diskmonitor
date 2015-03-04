@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-04 01:02+0000\n"
-"PO-Revision-Date: 2015-03-04 01:02+0000\n"
+"POT-Creation-Date: 2015-03-04 10:43+0000\n"
+"PO-Revision-Date: 2015-03-04 10:43+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -32,6 +32,36 @@ msgstr "Test étendu"
 #: app/drivepanel.cpp:108 rc.cpp:18 rc.cpp:33
 msgid "unknown"
 msgstr "inconnu"
+
+#: app/drivepanel.cpp:183
+msgctxt "SelfTest status"
+msgid "In progress"
+msgstr "En cours"
+
+#: app/drivepanel.cpp:185
+msgctxt "SelfTest status"
+msgid "Success"
+msgstr "Succès"
+
+#: app/drivepanel.cpp:187
+msgctxt "SelfTest status"
+msgid "Aborted"
+msgstr "Annulé"
+
+#: app/drivepanel.cpp:189
+msgctxt "SelfTest status"
+msgid "Interrupted"
+msgstr "Interrompu"
+
+#: app/drivepanel.cpp:191
+msgctxt "SelfTest status"
+msgid "Fatal"
+msgstr "Fatal"
+
+#: app/drivepanel.cpp:193
+msgctxt "SelfTest status"
+msgid "Error (%1)"
+msgstr "Erreur (%1)"
 
 #: app/drivepropertiesmodel.cpp:21
 msgctxt "Attribute's id"
@@ -70,8 +100,8 @@ msgstr "Valeur"
 
 #: app/drivepropertiesmodel.cpp:143 app/mdraidpropertiesmodel.cpp:90
 #: app/mdraidpropertiesmodel.cpp:91 app/mdraidpropertiesmodel.cpp:92
-msgid "Raw value:"
-msgstr "Valeur brute : "
+msgid "Raw value: %1"
+msgstr "Valeur brute : %1"
 
 #: app/drivepropertiesmodel.cpp:156
 msgctxt "value type is unknown"
@@ -79,8 +109,8 @@ msgid "unknown"
 msgstr "inconnu"
 
 #: app/drivepropertiesmodel.cpp:159
-msgid "sectors"
-msgstr "secteurs"
+msgid "%1 sectors"
+msgstr "%1 secteurs"
 
 #. i18n: file: app/mainwindow.ui:14
 #. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
@@ -99,12 +129,16 @@ msgid "Copyright (C) 2015 Michaël Lhomme"
 msgstr "Copyright (C) 2015 Michaël Lhomme"
 
 #: app/main.cpp:23
+msgid "Michaël Lhomme"
+msgstr "Michaël Lhomme"
+
+#: app/main.cpp:23
 msgid "Maintainer & Developer"
 msgstr "Mainteneur & développeur"
 
 #: app/main.cpp:25 app/main.cpp:26
-msgid "Please report bugs directly to "
-msgstr "Merci de reporter les bugs directement à "
+msgid "Please report bugs directly to %1"
+msgstr "Merci de reporter les bugs directement à %1"
 
 #. i18n: file: app/mainwindow.ui:39
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
@@ -113,12 +147,12 @@ msgid "Details"
 msgstr "Détails"
 
 #: app/mainwindow.cpp:149
-msgid "Drive"
-msgstr "Disque"
+msgid "Drive %1 (%2)"
+msgstr "Disque %1 (%2)"
 
 #: app/mainwindow.cpp:154
-msgid "MDRaid"
-msgstr "Raid MD"
+msgid "MDRaid %1 (%2)"
+msgstr "Raid MD %1 (%2)"
 
 #: app/mainwindow.cpp:189
 msgctxt "Unknown health status"
@@ -412,3 +446,5 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Vos emails"
 
+#~ msgid "Drive"
+#~ msgstr "Disque"

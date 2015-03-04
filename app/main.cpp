@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include <KAboutData>
 #include <KLocalizedString>
+#include <KAboutData>
 
 #include "udisks2wrapper.h"
 
@@ -20,10 +20,11 @@ int main(int argc, char *argv[]) {
     QString()
   );
 
-  about.addAuthor("Michaël Lhomme", i18n("Maintainer & Developer"), "papylhomme@gmail.com", QString(), QString());
+  about.addAuthor(i18n("Michaël Lhomme"), i18n("Maintainer & Developer"), "papylhomme@gmail.com", QString(), QString());
   about.setCustomAuthorText(
-    i18n("Please report bugs directly to ") + "https://github.com/papylhomme/diskmonitor/issues",
-    i18n("Please report bugs directly to ") + "<a href='https://github.com/papylhomme/diskmonitor/issues'>GitHub</a>");
+    i18n("Please report bugs directly to %1", QString("https://github.com/papylhomme/diskmonitor/issues")),
+    i18n("Please report bugs directly to %1", QString("<a href='https://github.com/papylhomme/diskmonitor/issues'>GitHub</a>"))
+  );
 
   KAboutData::setApplicationData(about);
 

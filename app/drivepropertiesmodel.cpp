@@ -18,13 +18,13 @@
 DrivePropertiesModel::DrivePropertiesModel()
 {
   sensitiveAttributes = DiskMonitorSettings::sensitiveAttributes();
-  headerLabels << i18n("Id")
-               << i18n("Name")
-               << i18n("Flags")
-               << i18n("Worst")
-               << i18n("Threshold")
-               << i18n("Normalized value")
-               << i18n("Value");
+  headerLabels << i18nc("Attribute's id", "Id")
+               << i18nc("Attribute's name", "Name")
+               << i18nc("Attribute's flags", "Flags")
+               << i18nc("Worst known value for this attribute", "Worst")
+               << i18nc("Threshold value for this attribute", "Threshold")
+               << i18nc("Normalized value for this attribute", "Normalized value")
+               << i18nc("Human friendly value for this attribute", "Value");
 }
 
 
@@ -153,7 +153,7 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 QVariant DrivePropertiesModel::humanizeSmartAttribute(const SmartAttribute& attr) const
 {
   switch(attr.pretty_unit) {
-    case 0: return QVariant(i18n("unknown")); break;
+    case 0: return QVariant(i18nc("value type is unknown", "unknown")); break;
     case 1: return QVariant(attr.pretty); break;
     case 2: return QVariant(Humanize::duration(attr.pretty, "ms")); break;
     case 3: return QVariant(QString::number(attr.pretty) + " " + i18n("sectors")); break;

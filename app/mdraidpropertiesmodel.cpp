@@ -12,13 +12,13 @@
  */
 MDRaidPropertiesModel::MDRaidPropertiesModel()
 {
-  headerLabels << i18n("UUID")
-               << i18n("Level")
-               << i18n("Devices")
-               << i18n("Size")
-               << i18n("Action")
-               << i18n("Remaining time")
-               << i18n("Completed");
+  headerLabels << i18nc("RAID property UUID", "UUID")
+               << i18nc("RAID level", "Level")
+               << i18nc("RAID device's count", "Devices")
+               << i18nc("RAID size", "Size")
+               << i18nc("RAID current action", "Action")
+               << i18nc("RAID current action remaining time", "Remaining time")
+               << i18nc("RAID current action % completed", "Completed");
 }
 
 

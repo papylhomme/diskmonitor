@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-04 00:35+0000\n"
-"PO-Revision-Date: 2015-03-04 00:37+0000\n"
+"POT-Creation-Date: 2015-03-04 01:02+0000\n"
+"PO-Revision-Date: 2015-03-04 01:02+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -29,35 +29,42 @@ msgstr "Test étendu"
 #. i18n: ectx: property (text), widget (QLabel, selfTestStatusLabel)
 #. i18n: file: app/mainwindow.ui:72
 #. i18n: ectx: property (text), widget (QLabel, statusLabel)
-#: app/drivepanel.cpp:108 app/drivepropertiesmodel.cpp:156 rc.cpp:18 rc.cpp:33
+#: app/drivepanel.cpp:108 rc.cpp:18 rc.cpp:33
 msgid "unknown"
 msgstr "inconnu"
 
 #: app/drivepropertiesmodel.cpp:21
+msgctxt "Attribute's id"
 msgid "Id"
 msgstr "Id"
 
 #: app/drivepropertiesmodel.cpp:22
+msgctxt "Attribute's name"
 msgid "Name"
 msgstr "Nom"
 
 #: app/drivepropertiesmodel.cpp:23
+msgctxt "Attribute's flags"
 msgid "Flags"
 msgstr "Drapeaux"
 
 #: app/drivepropertiesmodel.cpp:24
+msgctxt "Worst known value for this attribute"
 msgid "Worst"
 msgstr "Pire"
 
 #: app/drivepropertiesmodel.cpp:25
+msgctxt "Threshold value for this attribute"
 msgid "Threshold"
 msgstr "Seuil"
 
 #: app/drivepropertiesmodel.cpp:26
+msgctxt "Normalized value for this attribute"
 msgid "Normalized value"
 msgstr "Valeur normalisée"
 
 #: app/drivepropertiesmodel.cpp:27
+msgctxt "Human friendly value for this attribute"
 msgid "Value"
 msgstr "Valeur"
 
@@ -65,6 +72,11 @@ msgstr "Valeur"
 #: app/mdraidpropertiesmodel.cpp:91 app/mdraidpropertiesmodel.cpp:92
 msgid "Raw value:"
 msgstr "Valeur brute : "
+
+#: app/drivepropertiesmodel.cpp:156
+msgctxt "value type is unknown"
+msgid "unknown"
+msgstr "inconnu"
 
 #: app/drivepropertiesmodel.cpp:159
 msgid "sectors"
@@ -109,58 +121,72 @@ msgid "MDRaid"
 msgstr "Raid MD"
 
 #: app/mainwindow.cpp:189
+msgctxt "Unknown health status"
 msgid "Unknown"
 msgstr "Inconnu"
 
 #: app/mainwindow.cpp:194
+msgctxt "Failing health status"
 msgid "Failing"
 msgstr "Echec"
 
 #: app/mainwindow.cpp:198
+msgctxt "Healthy health status"
 msgid "Healthy"
 msgstr "Sain"
 
 #: app/mdraidmembersmodel.cpp:17
+msgctxt "RAID member device"
 msgid "Block device"
 msgstr "Périphérique bloc"
 
 #: app/mdraidmembersmodel.cpp:18
+msgctxt "RAID member slot"
 msgid "Slot"
 msgstr "Emplacement"
 
 #: app/mdraidmembersmodel.cpp:19
+msgctxt "RAID member state"
 msgid "State"
 msgstr "Etat"
 
 #: app/mdraidmembersmodel.cpp:20
+msgctxt "RAID member read errors count"
 msgid "Read errors"
 msgstr "Erreurs de lecture"
 
 #: app/mdraidpropertiesmodel.cpp:15
+msgctxt "RAID property UUID"
 msgid "UUID"
 msgstr "UUID"
 
 #: app/mdraidpropertiesmodel.cpp:16
+msgctxt "RAID level"
 msgid "Level"
 msgstr "Niveau"
 
 #: app/mdraidpropertiesmodel.cpp:17
+msgctxt "RAID device's count"
 msgid "Devices"
 msgstr "Périphériques"
 
 #: app/mdraidpropertiesmodel.cpp:18
+msgctxt "RAID size"
 msgid "Size"
 msgstr "Taille"
 
 #: app/mdraidpropertiesmodel.cpp:19
+msgctxt "RAID current action"
 msgid "Action"
 msgstr "Action"
 
 #: app/mdraidpropertiesmodel.cpp:20
+msgctxt "RAID current action remaining time"
 msgid "Remaining time"
 msgstr "Temps restant"
 
 #: app/mdraidpropertiesmodel.cpp:21
+msgctxt "RAID current action % completed"
 msgid "Completed"
 msgstr "Complété"
 
@@ -298,18 +324,21 @@ msgstr "Icônes"
 #. i18n: file: settings/appearance.ui:61
 #. i18n: ectx: property (text), widget (QRadioButton, emotesIconModeRadioButton)
 #: rc.cpp:75
+msgctxt "Emote icons"
 msgid "Emo&tes"
 msgstr "Emoticônes"
 
 #. i18n: file: settings/appearance.ui:138
 #. i18n: ectx: property (text), widget (QRadioButton, dialogsIconModeRadioButton)
 #: rc.cpp:78
+msgctxt "Dialog icons"
 msgid "Dialo&gs"
 msgstr "Dialogues"
 
 #. i18n: file: settings/appearance.ui:212
 #. i18n: ectx: property (text), widget (QRadioButton, customIconModeRadioButton)
 #: rc.cpp:81
+msgctxt "Custom icons"
 msgid "Custom"
 msgstr "Personnalisé"
 

@@ -58,7 +58,7 @@
       <item row="0" column="0">
        <widget class="QRadioButton" name="emotesIconModeRadioButton">
         <property name="text">
-         <string>Emo&amp;tes</string>
+         <string comment="Emote icons">Emo&amp;tes</string>
         </property>
        </widget>
       </item>
@@ -135,7 +135,7 @@
       <item row="1" column="0">
        <widget class="QRadioButton" name="dialogsIconModeRadioButton">
         <property name="text">
-         <string>Dialo&amp;gs</string>
+         <string comment="Dialog icons">Dialo&amp;gs</string>
         </property>
        </widget>
       </item>
@@ -209,7 +209,7 @@
       <item row="2" column="0">
        <widget class="QRadioButton" name="customIconModeRadioButton">
         <property name="text">
-         <string>Custom</string>
+         <string comment="Custom icons">Custom</string>
         </property>
        </widget>
       </item>

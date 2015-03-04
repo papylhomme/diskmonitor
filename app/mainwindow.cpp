@@ -186,16 +186,16 @@ void MainWindow::updateHealthStatus(StorageUnit* unit)
 
   if(!unit -> isFailingStatusKnown()) {
     style = "QLabel { color: " + DiskMonitorSettings::warningColor().name() + "; }";
-    text = i18n("Unknown");
+    text = i18nc("Unknown health status", "Unknown");
     icon = QIcon::fromTheme(iconProvider.unknown()).pixmap(QSize(16,16));
 
   } else if(unit -> isFailing()) {
     style = "QLabel { color: " + DiskMonitorSettings::errorColor().name() + "; }";
-    text = i18n("Failing");
+    text = i18nc("Failing health status", "Failing");
     icon = QIcon::fromTheme(iconProvider.failing()).pixmap(QSize(16,16));
 
   } else {
-    text = i18n("Healthy");
+    text = i18nc("Healthy health status", "Healthy");
     icon = QIcon::fromTheme(iconProvider.healthy()).pixmap(QSize(16,16));
   }
 

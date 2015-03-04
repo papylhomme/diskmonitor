@@ -14,10 +14,10 @@
  */
 MDRaidMembersModel::MDRaidMembersModel()
 {
-  headerLabels << i18n("Block device")
-               << i18n("Slot")
-               << i18n("State")
-               << i18n("Read errors");
+  headerLabels << i18nc("RAID member device", "Block device")
+               << i18nc("RAID member slot", "Slot")
+               << i18nc("RAID member state", "State")
+               << i18nc("RAID member read errors count", "Read errors");
 }
 
 

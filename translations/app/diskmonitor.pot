@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-03 23:36+0000\n"
+"POT-Creation-Date: 2015-03-04 00:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,23 +72,23 @@ msgstr ""
 
 #. i18n: file: app/mainwindow.ui:14
 #. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
-#: app/main.cpp:11 rc.cpp:24
+#: app/main.cpp:14 rc.cpp:24
 msgid "DisKMonitor"
 msgstr ""
 
-#: app/main.cpp:12
+#: app/main.cpp:15
 msgid "KDE tools to monitor SMART devices and MDRaid health status"
 msgstr ""
 
-#: app/main.cpp:14
+#: app/main.cpp:17
 msgid "Copyright (C) 2015 Michaël Lhomme"
 msgstr ""
 
-#: app/main.cpp:20
+#: app/main.cpp:23
 msgid "Maintainer & Developer"
 msgstr ""
 
-#: app/main.cpp:22 app/main.cpp:23
+#: app/main.cpp:25 app/main.cpp:26
 msgid "Please report bugs directly to "
 msgstr ""
 
@@ -151,15 +151,15 @@ msgid "Size"
 msgstr ""
 
 #: app/mdraidpropertiesmodel.cpp:19
-msgid "Sync action"
+msgid "Action"
 msgstr ""
 
 #: app/mdraidpropertiesmodel.cpp:20
-msgid "Sync remaining time"
+msgid "Remaining time"
 msgstr ""
 
 #: app/mdraidpropertiesmodel.cpp:21
-msgid "Sync completed"
+msgid "Completed"
 msgstr ""
 
 #: settings/configdialog.cpp:47
@@ -274,37 +274,37 @@ msgstr ""
 msgid "Colors"
 msgstr ""
 
-#. i18n: file: settings/appearance.ui:26
+#. i18n: file: settings/appearance.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:66
 msgid "Warning color:"
 msgstr ""
 
-#. i18n: file: settings/appearance.ui:33
+#. i18n: file: settings/appearance.ui:36
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:69
 msgid "Error color:"
 msgstr ""
 
-#. i18n: file: settings/appearance.ui:49
+#. i18n: file: settings/appearance.ui:52
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:72
 msgid "Icons"
 msgstr ""
 
-#. i18n: file: settings/appearance.ui:55
+#. i18n: file: settings/appearance.ui:61
 #. i18n: ectx: property (text), widget (QRadioButton, emotesIconModeRadioButton)
 #: rc.cpp:75
 msgid "Emo&tes"
 msgstr ""
 
-#. i18n: file: settings/appearance.ui:132
+#. i18n: file: settings/appearance.ui:138
 #. i18n: ectx: property (text), widget (QRadioButton, dialogsIconModeRadioButton)
 #: rc.cpp:78
 msgid "Dialo&gs"
 msgstr ""
 
-#. i18n: file: settings/appearance.ui:206
+#. i18n: file: settings/appearance.ui:212
 #. i18n: ectx: property (text), widget (QRadioButton, customIconModeRadioButton)
 #: rc.cpp:81
 msgid "Custom"

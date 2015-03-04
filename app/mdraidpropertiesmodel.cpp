@@ -16,9 +16,9 @@ MDRaidPropertiesModel::MDRaidPropertiesModel()
                << i18n("Level")
                << i18n("Devices")
                << i18n("Size")
-               << i18n("Sync action")
-               << i18n("Sync remaining time")
-               << i18n("Sync completed");
+               << i18n("Action")
+               << i18n("Remaining time")
+               << i18n("Completed");
 }
 
 

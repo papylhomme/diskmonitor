@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-03 23:36+0000\n"
-"PO-Revision-Date: 2015-02-25 21:23+0000\n"
+"POT-Creation-Date: 2015-03-04 00:35+0000\n"
+"PO-Revision-Date: 2015-03-04 00:37+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -47,11 +47,11 @@ msgstr "Drapeaux"
 
 #: app/drivepropertiesmodel.cpp:24
 msgid "Worst"
-msgstr ""
+msgstr "Pire"
 
 #: app/drivepropertiesmodel.cpp:25
 msgid "Threshold"
-msgstr ""
+msgstr "Seuil"
 
 #: app/drivepropertiesmodel.cpp:26
 msgid "Normalized value"
@@ -64,7 +64,7 @@ msgstr "Valeur"
 #: app/drivepropertiesmodel.cpp:143 app/mdraidpropertiesmodel.cpp:90
 #: app/mdraidpropertiesmodel.cpp:91 app/mdraidpropertiesmodel.cpp:92
 msgid "Raw value:"
-msgstr ""
+msgstr "Valeur brute : "
 
 #: app/drivepropertiesmodel.cpp:159
 msgid "sectors"
@@ -72,25 +72,25 @@ msgstr "secteurs"
 
 #. i18n: file: app/mainwindow.ui:14
 #. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
-#: app/main.cpp:11 rc.cpp:24
+#: app/main.cpp:14 rc.cpp:24
 msgid "DisKMonitor"
 msgstr "DisKMonitor"
 
-#: app/main.cpp:12
+#: app/main.cpp:15
 msgid "KDE tools to monitor SMART devices and MDRaid health status"
 msgstr ""
 "Outils KDE pour surveiller l'état de santé des périphériques SMART et des "
 "raid MD"
 
-#: app/main.cpp:14
+#: app/main.cpp:17
 msgid "Copyright (C) 2015 Michaël Lhomme"
 msgstr "Copyright (C) 2015 Michaël Lhomme"
 
-#: app/main.cpp:20
+#: app/main.cpp:23
 msgid "Maintainer & Developer"
 msgstr "Mainteneur & développeur"
 
-#: app/main.cpp:22 app/main.cpp:23
+#: app/main.cpp:25 app/main.cpp:26
 msgid "Please report bugs directly to "
 msgstr "Merci de reporter les bugs directement à "
 
@@ -126,7 +126,7 @@ msgstr "Périphérique bloc"
 
 #: app/mdraidmembersmodel.cpp:18
 msgid "Slot"
-msgstr ""
+msgstr "Emplacement"
 
 #: app/mdraidmembersmodel.cpp:19
 msgid "State"
@@ -134,15 +134,15 @@ msgstr "Etat"
 
 #: app/mdraidmembersmodel.cpp:20
 msgid "Read errors"
-msgstr ""
+msgstr "Erreurs de lecture"
 
 #: app/mdraidpropertiesmodel.cpp:15
 msgid "UUID"
-msgstr ""
+msgstr "UUID"
 
 #: app/mdraidpropertiesmodel.cpp:16
 msgid "Level"
-msgstr ""
+msgstr "Niveau"
 
 #: app/mdraidpropertiesmodel.cpp:17
 msgid "Devices"
@@ -153,16 +153,16 @@ msgid "Size"
 msgstr "Taille"
 
 #: app/mdraidpropertiesmodel.cpp:19
-msgid "Sync action"
-msgstr ""
+msgid "Action"
+msgstr "Action"
 
 #: app/mdraidpropertiesmodel.cpp:20
-msgid "Sync remaining time"
-msgstr ""
+msgid "Remaining time"
+msgstr "Temps restant"
 
 #: app/mdraidpropertiesmodel.cpp:21
-msgid "Sync completed"
-msgstr ""
+msgid "Completed"
+msgstr "Complété"
 
 #: settings/configdialog.cpp:47
 msgid "Appearance"
@@ -277,37 +277,37 @@ msgstr "Démarrer un nettoyage"
 msgid "Colors"
 msgstr "Couleurs"
 
-#. i18n: file: settings/appearance.ui:26
+#. i18n: file: settings/appearance.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:66
 msgid "Warning color:"
 msgstr "Couleur d'avertissement :"
 
-#. i18n: file: settings/appearance.ui:33
+#. i18n: file: settings/appearance.ui:36
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:69
 msgid "Error color:"
 msgstr "Couleur d'erreur :"
 
-#. i18n: file: settings/appearance.ui:49
+#. i18n: file: settings/appearance.ui:52
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:72
 msgid "Icons"
 msgstr "Icônes"
 
-#. i18n: file: settings/appearance.ui:55
+#. i18n: file: settings/appearance.ui:61
 #. i18n: ectx: property (text), widget (QRadioButton, emotesIconModeRadioButton)
 #: rc.cpp:75
 msgid "Emo&tes"
 msgstr "Emoticônes"
 
-#. i18n: file: settings/appearance.ui:132
+#. i18n: file: settings/appearance.ui:138
 #. i18n: ectx: property (text), widget (QRadioButton, dialogsIconModeRadioButton)
 #: rc.cpp:78
 msgid "Dialo&gs"
 msgstr "Dialogues"
 
-#. i18n: file: settings/appearance.ui:206
+#. i18n: file: settings/appearance.ui:212
 #. i18n: ectx: property (text), widget (QRadioButton, customIconModeRadioButton)
 #: rc.cpp:81
 msgid "Custom"
@@ -382,3 +382,4 @@ msgstr "Vos noms"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Vos emails"
+

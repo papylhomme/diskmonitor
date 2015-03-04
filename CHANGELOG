@@ -1,3 +1,9 @@
+Version 0.3:
++ Applet : move configuration to plasma config (context menu)
++ Applet : add customization via layouts and other options
++ Add localization support
++ Add french language
+
 Version 0.2:
 + Add settings to configure appearance
 + Add settings to configure SMART sensitive attributes

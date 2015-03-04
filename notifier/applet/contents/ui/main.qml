@@ -36,52 +36,50 @@ Item {
   Plasmoid.status: PlasmaCore.Types.PassiveStatus
 
 
-
   IconProvider {
     id: iconProvider
   }
 
-  DiskMonitor.StorageUnitQmlModel {
-    id: myStorageModel
+  DiskMonitor.StorageUnitMonitor {
+    id: monitor
     refreshTimeout: plasmoid.configuration.refreshTimeout
     notifyEnabled: plasmoid.configuration.notifyEnabled
+    onStatusChanged: { updateTray(); }
 
     iconHealthy: iconProvider.healthy;
     iconFailing: iconProvider.failing;
-
-    onStatusChanged: { updateTray(); }
   }
+
 
   Plasmoid.compactRepresentation: CompactRepresentation { }
   Plasmoid.fullRepresentation: PopupDialog {
     id: dialogItem
-
-    storageModel: myStorageModel
-
-    anchors.fill: parent
     focus: true
+    anchors.fill: parent
+
+    storageModel: monitor.model
   }
 
 
   function action_refresh() {
-    myStorageModel.refresh();
+    monitor.monitor();
   }
 
 
   function action_openapp() {
-    myStorageModel.openApp();
+    monitor.openApp();
   }
 
 
   function updateTray() {
-    if(myStorageModel.failing) {
+    if(monitor.failing) {
       mainWindow.Plasmoid.status = needsAttentionStatus;
       mainWindow.Plasmoid.icon = iconProvider.failing;
-      mainWindow.Plasmoid.toolTipSubText = myStorageModel.status;
+      mainWindow.Plasmoid.toolTipSubText = monitor.status;
     } else {
       mainWindow.Plasmoid.status = passiveStatus;
       mainWindow.Plasmoid.icon = iconProvider.healthy;
-      mainWindow.Plasmoid.toolTipSubText = myStorageModel.status;
+      mainWindow.Plasmoid.toolTipSubText = monitor.status;
     }
   }
 

@@ -58,7 +58,7 @@ PlasmaComponents.ListItem {
 
 
   onClicked: {
-    myStorageModel.openApp(path);
+    monitor.openApp(path);
   }
 
 }

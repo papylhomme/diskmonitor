@@ -18,53 +18,80 @@
  ****************************************************************************/
 
 
-#ifndef STORAGEUNITQMLMODEL_H
-#define STORAGEUNITQMLMODEL_H
+#ifndef STORAGEUNITMONITOR_H
+#define STORAGEUNITMONITOR_H
 
-#include <QAbstractListModel>
+#include <QList>
+#include <QTimer>
+
+#include "storageunitqmlmodel.h"
 
 #include "storageunit.h"
+#include "drive.h"
+#include "mdraid.h"
 
 
 
 /*
- * Model class for the plasma applet
- *
- * Provide a Qt Model to display the Storage units, and
- * global health status
+ * Main component for DiskMonitor notifier
  */
-class StorageUnitQmlModel : public QAbstractListModel
+class StorageUnitMonitor : public QObject
 {
   Q_OBJECT
 
+  Q_PROPERTY(bool failing READ failing)
+  Q_PROPERTY(bool notifyEnabled READ notifyEnabled WRITE setNotifyEnabled)
+  Q_PROPERTY(int refreshTimeout READ refreshTimeout WRITE setRefreshTimeout)
+  Q_PROPERTY(QString status READ status NOTIFY statusChanged)
+  Q_PROPERTY(QString iconHealthy READ iconHealthy WRITE setIconHealthy)
+  Q_PROPERTY(QString iconFailing READ iconFailing WRITE setIconFailing)
+  Q_PROPERTY(StorageUnitQmlModel* model READ model)
+
 public:
-  enum ModelRoles {
-    NameRole = Qt::UserRole + 1,
-    DeviceRole,
-    FailingRole,
-    FailingKnownRole,
-    PathRole,
-    IconRole
-  };
+  StorageUnitMonitor();
+  ~StorageUnitMonitor();
 
-  StorageUnitQmlModel();
-  ~StorageUnitQmlModel();
+  int refreshTimeout() const;
+  void setRefreshTimeout(int timeout);
 
-  virtual QHash<int, QByteArray> roleNames() const;
-  int rowCount(const QModelIndex & parent = QModelIndex()) const;
-  QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+  bool notifyEnabled() const;
+  void setNotifyEnabled(bool notify);
+
+  bool failing() const;
+  QString status() const;
+
+  QString iconHealthy() const;
+  QString iconFailing() const;
+  void setIconHealthy(QString healthyIcon);
+  void setIconFailing(QString failingIcon);
+
+  StorageUnitQmlModel* model();
 
 private:
-  QList<StorageUnit*> storageUnits;
+  bool notify = false;
+  bool hasFailing = false;
 
-  QString getIconForUnit(StorageUnit* unit) const;
+  QString healthyIcon;
+  QString failingIcon;
+
+  QList<StorageUnit*> failingUnits;
+  StorageUnitQmlModel storageUnitQmlModel;
+
+  int timeout = 5;
+  QTimer* timer;
+
+  void processUnits();
+
+public slots:
+  void monitor();
+  void openApp(const QString& unitPath = QString());
 
 private slots:
   void storageUnitAdded(StorageUnit* unit);
   void storageUnitRemoved(StorageUnit* unit);
 
-public slots:
-  void refresh();
+signals:
+  void statusChanged();
 };
 
-#endif // STORAGEUNITQMLMODEL_H
+#endif // STORAGEUNITMONITOR_H

@@ -20,12 +20,6 @@
 
 #include "storageunitqmlmodel.h"
 
-#include <KNotification>
-#include <KLocalizedString>
-#include <QProcess>
-#include <QDebug>
-
-
 #include "udisks2wrapper.h"
 
 
@@ -41,14 +35,6 @@ StorageUnitQmlModel::StorageUnitQmlModel()
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 
   storageUnits = udisks2 -> listStorageUnits();
-
-  timer = new QTimer();
-  connect(timer, SIGNAL(timeout()), this, SLOT(monitor()));
-  timer -> start(timeout * 60 * 1000);
-
-  //delay the fist monitor in order to let the applet
-  //configure its value (mainly notifyEnabled)
-  QTimer::singleShot(2000, this, SLOT(monitor()));
 }
 
 
@@ -58,121 +44,6 @@ StorageUnitQmlModel::StorageUnitQmlModel()
  */
 StorageUnitQmlModel::~StorageUnitQmlModel()
 {
-  timer -> stop();
-  delete timer;
-
-  qDebug() << "StorageUnitQmlModel destructed !";
-}
-
-
-
-/*
- * Test if there is failing units
- */
-bool StorageUnitQmlModel::failing() const
-{
-  return hasFailing;
-}
-
-
-
-/*
- * Get a message describing the current status
- */
-QString StorageUnitQmlModel::status() const
-{
-  if(!hasFailing)
-    return i18n("Everything looks healthy.");
-  else {
-    QString details;
-
-    foreach(StorageUnit* unit, failingUnits)
-      details = "<br/><i>" + unit -> getName() + " (" + unit -> getDevice() + ")</i>";
-
-    return i18n("The following storage units are in failing state:<br/>%1", details);
-  }
-}
-
-
-
-/*
- * Get the refresh timeout value
- */
-int StorageUnitQmlModel::refreshTimeout() const
-{
-  return timeout;
-}
-
-
-
-/*
- * Set the refresh timeout value. Calling this method
- * will emit refreshTimeoutChanged(newTimeout)
- */
-void StorageUnitQmlModel::setRefreshTimeout(int timeout) {
-  this -> timeout = timeout;
-  this -> timer -> stop();
-  this -> timer -> start(timeout * 60 * 1000);
-  emit refreshTimeoutChanged(timeout);
-}
-
-
-
-/*
- * Get the notifyEnabled value
- */
-bool StorageUnitQmlModel::notifyEnabled() const
-{
-  return notify;
-}
-
-
-
-/*
- * Set the notifyEnabled value
- */
-void StorageUnitQmlModel::setNotifyEnabled(bool notify) {
-  this -> notify = notify;
-}
-
-
-
-/*
- * Get the iconHealthy value
- */
-QString StorageUnitQmlModel::iconHealthy() const
-{
-  return healthyIcon;
-}
-
-
-
-/*
- * Get the iconFailing value
- */
-QString StorageUnitQmlModel::iconFailing() const
-{
-  return failingICon;
-}
-
-
-
-/*
- * Set the iconHealthy value
- */
-void StorageUnitQmlModel::setIconHealthy(QString healthyIcon)
-{
-  this -> healthyIcon = healthyIcon;
-}
-
-
-
-/*
- * Set the iconFailing value
- */
-void StorageUnitQmlModel::setIconFailing(QString failingIcon)
-{
-  this -> failingICon = failingIcon;
 }
 
 
@@ -257,9 +128,6 @@ void StorageUnitQmlModel::storageUnitAdded(StorageUnit* unit)
   beginInsertRows(QModelIndex(), idx, idx);
   storageUnits.append(unit);
   endInsertRows();
-
-  //refresh the status with the new unit
-  processUnit(unit);
 }
 
 
@@ -274,95 +142,6 @@ void StorageUnitQmlModel::storageUnitRemoved(StorageUnit* unit)
   beginRemoveRows(QModelIndex(), idx, idx);
   storageUnits.removeAt(idx);
   endRemoveRows();
-
-  //refresh status for the remaining units
-  processUnits(storageUnits);
-}
-
-
-
-/*
- * Monitor entry point ; list available StorageUnits and test them
- * for problems
- */
-void StorageUnitQmlModel::monitor() {
-  qDebug() << "StorageUnitQmlModel::monitor (" << UDisks2Wrapper::instance() << ")";
-
-  beginResetModel();
-  foreach(StorageUnit* unit, storageUnits) {
-    unit -> update();
-  }
-  endResetModel();
-
-  processUnits(storageUnits);
-}
-
-
-
-/*
- * Convenience wrapper around StorageUnitQmlModel::processUnits()
- */
-void StorageUnitQmlModel::processUnit(StorageUnit* unit)
-{
-  QList<StorageUnit*> units;
-  units << unit;
-  processUnits(units);
-}
-
-
-
-/*
- * Update the current general health status with the given storage units
- */
-void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
-{
-  bool localFailing = false;
-  failingUnits.clear();
-
-  //test each unit
-  foreach(StorageUnit* unit, units) {
-    if(unit -> isFailing()) {
-      localFailing = true;
-      failingUnits << unit;
-    }
-  }
-
-
-  //Status changed, notify the user
-  if(hasFailing != localFailing) {
-    qDebug() << "StorageMonitor: Changing failing status to " << localFailing;
-    hasFailing = localFailing;
-    emit statusChanged();
-
-    if(notifyEnabled())
-      KNotification::event(hasFailing ? "failing" : "healthy",
-                           hasFailing ? i18n("Storage units failing") : i18n("Storage units are back to healthy status"),
-                           status(),
-                           hasFailing ? iconFailing() : iconHealthy(),
-                           NULL,
-                           KNotification::Persistent,
-                           "diskmonitor"
-                           );
-  }
-}
-
-
-
-/*
- * Slot to open the main DisKMonitor application
- *
- * @param unitPath The DBus path to the unit to display
- */
-void StorageUnitQmlModel::openApp(const QString& unitPath)
-{
-  if(unitPath.isEmpty())
-    QProcess::startDetached("diskmonitor");
-
-  else {
-    QStringList params;
-    params << unitPath;
-    QProcess::startDetached("diskmonitor", params);
-  }
 }
 
 
@@ -372,6 +151,10 @@ void StorageUnitQmlModel::openApp(const QString& unitPath)
  */
 void StorageUnitQmlModel::refresh()
 {
-  monitor();
+  beginResetModel();
+  foreach(StorageUnit* unit, storageUnits) {
+    unit -> update();
+  }
+  endResetModel();
 }
 

@@ -1,5 +1,6 @@
 set(NOTIFIER_SRCS
   storageunitqmlmodel.cpp
+  storageunitmonitor.cpp
   qmlplugins.cpp
 )
 

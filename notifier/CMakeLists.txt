@@ -3,6 +3,8 @@ set(NOTIFIER_SRCS
   qmlplugins.cpp
 )
 
+add_definitions(-DTRANSLATION_DOMAIN="plasma_applet_org.papylhomme.diskmonitor")
+
 add_library(diskmonitor_qmlplugins SHARED ${NOTIFIER_SRCS})
 
 target_link_libraries(diskmonitor_qmlplugins

@@ -45,6 +45,8 @@ DrivePropertiesModel::DrivePropertiesModel()
                << i18nc("Threshold value for this attribute", "Threshold")
                << i18nc("Normalized value for this attribute", "Normalized value")
                << i18nc("Human friendly value for this attribute", "Value");
+
+  connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(configChanged()));
 }
 
 
@@ -184,7 +186,6 @@ QVariant DrivePropertiesModel::humanizeSmartAttribute(const SmartAttribute& attr
 
 
 
-
 /*
  * Handle the headers of the model
  */
@@ -205,3 +206,12 @@ QVariant DrivePropertiesModel::headerData(int section, Qt::Orientation orientati
   return QVariant();
 }
 
+
+
+/*
+ * Handle config change
+ */
+void DrivePropertiesModel::configChanged()
+{
+  sensitiveAttributes = DiskMonitorSettings::sensitiveAttributes();
+}

@@ -52,6 +52,9 @@ private:
   QStringList headerLabels;
   QList<int> sensitiveAttributes;
   SmartAttributesList attributes;
+
+public slots:
+  void configChanged();
 };
 
 #endif // DRIVEPROPERTIESMODEL_H

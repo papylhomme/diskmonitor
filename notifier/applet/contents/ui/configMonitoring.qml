@@ -37,7 +37,7 @@ Item {
             id: refreshTimeout
             minimumValue: 1
             maximumValue: 240
-            suffix: i18n(" min.")
+            suffix: i18nc("abbreviation for minutes", " min.")
             horizontalAlignment: Qt.AlignRight
           }
         }

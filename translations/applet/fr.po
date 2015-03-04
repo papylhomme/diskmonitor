@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-02-25 18:58+0000\n"
-"PO-Revision-Date: 2015-02-25 18:46+0000\n"
+"POT-Creation-Date: 2015-03-04 01:10+0000\n"
+"PO-Revision-Date: 2015-03-04 01:12+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -42,14 +42,17 @@ msgid "Include drive id on small layouts"
 msgstr "Inclure l'identifiant de disque dans les petites dispositions"
 
 #: notifier/applet/contents/ui/configAppearance.qml:72
+msgctxt "Big layout"
 msgid "Big"
 msgstr "Gros"
 
 #: notifier/applet/contents/ui/configAppearance.qml:89
+msgctxt "Small layout"
 msgid "Small"
 msgstr "Petit"
 
 #: notifier/applet/contents/ui/configAppearance.qml:106
+msgctxt "Minimalist layout"
 msgid "Minimalist"
 msgstr "Minimaliste"
 
@@ -58,14 +61,17 @@ msgid "Icons"
 msgstr "Icônes"
 
 #: notifier/applet/contents/ui/configAppearance.qml:144
-msgid "Faces"
+msgctxt "Emote icons"
+msgid "Emotes"
 msgstr "Emoticônes"
 
 #: notifier/applet/contents/ui/configAppearance.qml:162
+msgctxt "Dialog icons"
 msgid "Dialogs"
 msgstr "Dialogues"
 
 #: notifier/applet/contents/ui/configAppearance.qml:179
+msgctxt "Custom icons"
 msgid "Custom"
 msgstr "Personnalisé"
 
@@ -74,10 +80,12 @@ msgid "Colors"
 msgstr "Couleurs"
 
 #: notifier/applet/contents/ui/configAppearance.qml:212
+msgctxt "Warning color"
 msgid "Warning"
 msgstr "Avertissement"
 
 #: notifier/applet/contents/ui/configAppearance.qml:222
+msgctxt "Error color"
 msgid "Error"
 msgstr "Erreur"
 
@@ -90,6 +98,7 @@ msgid "Refresh timeout"
 msgstr "Délai de rafraîchissement"
 
 #: notifier/applet/contents/ui/configMonitoring.qml:40
+msgctxt "abbreviation for minutes"
 msgid " min."
 msgstr " min."
 

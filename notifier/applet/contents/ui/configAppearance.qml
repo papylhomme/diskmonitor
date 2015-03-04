@@ -69,7 +69,7 @@ Item {
           //big layout
           QtControls.RadioButton {
             id: layoutBig
-            text: i18n("Big")
+            text: i18nc("Big layout", "Big")
             exclusiveGroup: layoutType
           }
   
@@ -86,7 +86,7 @@ Item {
           //small layout
           QtControls.RadioButton {
             id: layoutSmall
-            text: i18n("Small")
+            text: i18nc("Small layout", "Small")
             exclusiveGroup: layoutType
           }
 
@@ -103,7 +103,7 @@ Item {
           //minimalist layout 
           QtControls.RadioButton {
             id: layoutMinimalist
-            text: i18n("Minimalist")
+            text: i18nc("Minimalist layout", "Minimalist")
             exclusiveGroup: layoutType
           }
 
@@ -141,7 +141,7 @@ Item {
         //faces icons
         QtControls.RadioButton {
           id: iconsFaces
-          text: i18n("Faces")
+          text: i18nc("Emote icons", "Emotes")
           exclusiveGroup: iconType
         }
 
@@ -159,7 +159,7 @@ Item {
         //dialog icons
         QtControls.RadioButton {
           id: iconsDialog
-          text: i18n("Dialogs")
+          text: i18nc("Dialog icons", "Dialogs")
           exclusiveGroup: iconType
         }
 
@@ -176,7 +176,7 @@ Item {
         //custom icons
         QtControls.RadioButton {
           id: iconsCustom
-          text: i18n("Custom")
+          text: i18nc("Custom icons", "Custom")
           exclusiveGroup: iconType
         }
 
@@ -209,7 +209,7 @@ Item {
 
         //warning color
         PlasmaComponents.Label {
-          text: i18n("Warning")
+          text: i18nc("Warning color", "Warning")
         }
 
         ColorPickerButton {
@@ -219,7 +219,7 @@ Item {
 
         //error color
         PlasmaComponents.Label {
-          text: i18n("Error")
+          text: i18nc("Error color", "Error")
         }
 
         ColorPickerButton {

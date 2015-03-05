@@ -148,6 +148,16 @@ bool StorageUnit::isFailingStatusKnown() const
 
 
 /*
+ * Test if this unit has warnings
+ */
+bool StorageUnit::hasWarnings() const
+{
+  return warnings;
+}
+
+
+
+/*
  * Retrieve a property on the UDisks2 node identified by name
  *
  * @param iface The DBus interface containing the property

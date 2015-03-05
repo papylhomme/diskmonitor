@@ -18,38 +18,40 @@
  ****************************************************************************/
 
 
-import QtQuick 2.3
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import QtQuick.Layouts 1.1
-import org.papylhomme.diskmonitor 0.1 as DiskMonitor
-import "StorageUnit.js" as StorageUnit
-
-
-PlasmaComponents.ListItem {
-  id: storageUnitItem
-  enabled: true
-
-
-  RowLayout {
-    id: layout
-    anchors.left: parent.left
-    anchors.right: parent.right
-
-  
-    PlasmaComponents.Label {
-      id: unitLabel
-      Layout.fillWidth: true
-      width: parent.width
-      elide: Text.ElideRight
-      color: { StorageUnit.getTextColor(); }
-      text: { StorageUnit.getStorageUnitText(); }
-    }
-  }
-
-
-  onClicked: {
-    monitor.openApp(path);
-  }
-
+function getTextColor() {
+  if(failing & failingKnown)
+    return plasmoid.configuration.errorColor;
+  else if(hasWarnings)
+    return plasmoid.configuration.warningColor;
+  else
+    return theme.textColor; 
 }
+
+
+function getStatusIcon() {
+  if(!failingKnown)
+    return iconProvider.unknown;
+  else if(failing)
+    return iconProvider.failing;
+  else if(hasWarnings)
+    return iconProvider.warning;
+  else
+    return iconProvider.healthy;
+}
+
+
+function getDeviceString() {
+  if(plasmoid.configuration.smallDeviceName)
+    return device.split("/").pop();
+  else
+    return device;
+}
+
+
+function getStorageUnitText() {
+  if(plasmoid.configuration.includeDriveId)
+    return getDeviceString() + " (" + name + ")"
+  else
+    return getDeviceString();
+}
+

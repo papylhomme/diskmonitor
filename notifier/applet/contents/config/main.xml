@@ -31,9 +31,12 @@
       <default>false</default>
     </entry>
     <entry name="iconHealthy" type="String">
-      <default>orange</default>
+      <default></default>
     </entry>
     <entry name="iconFailing" type="String">
+      <default></default>
+    </entry>
+    <entry name="iconWarning" type="String">
       <default></default>
     </entry>
     <entry name="iconUnknown" type="String">

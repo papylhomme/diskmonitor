@@ -59,6 +59,7 @@ QHash<int, QByteArray> StorageUnitQmlModel::roleNames() const
   roles[DeviceRole] = "device";
   roles[FailingRole] = "failing";
   roles[FailingKnownRole] = "failingKnown";
+  roles[HasWarningsRole] = "hasWarnings";
   roles[PathRole] = "path";
   return roles;
 }
@@ -92,6 +93,7 @@ QVariant StorageUnitQmlModel::data(const QModelIndex& index, int role) const
     case PathRole: return QVariant(unit -> getPath()); break;
     case FailingRole: return QVariant(unit -> isFailing()); break;
     case FailingKnownRole: return QVariant(unit -> isFailingStatusKnown()); break;
+    case HasWarningsRole: return QVariant(unit -> hasWarnings()); break;
     default: return QVariant(); break;
   }
 

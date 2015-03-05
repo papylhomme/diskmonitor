@@ -22,6 +22,7 @@
 #include "ui_drivepanel.h"
 
 #include "udisks2wrapper.h"
+#include "diskmonitor_settings.h"
 
 #include <QMenu>
 
@@ -108,12 +109,21 @@ void DrivePanel::updateUI()
 
 
   if(smartOK) {
-    int percent = drive -> getSelfTestPercentRemaining();
     QString status = drive -> getSelfTestStatus();
 
-    ui -> selfTestStatusLabel -> setText(localizeSelfTestStatus(status));
+    //update selftest status
+    QString style;
+    if(!drive -> isSelfTestStatusHealthy())
+      style = "QLabel { color: " + DiskMonitorSettings::warningColor().name() + "; }";
 
+    ui -> selfTestStatusLabel -> setText(localizeSelfTestStatus(status));
+    ui -> selfTestStatusLabel -> setStyleSheet(style);
+
+
+    //update progress
     if(status == "inprogress") {
+      int percent = drive -> getSelfTestPercentRemaining();
+
       ui -> startSelfTestButton -> setEnabled(false);
       ui -> progressBar -> setEnabled(true);
       if(percent >= 0) ui -> progressBar -> setValue(100 - percent);

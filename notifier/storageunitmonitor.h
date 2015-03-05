@@ -45,7 +45,8 @@ class StorageUnitMonitor : public QObject
   Q_PROPERTY(QString status READ status NOTIFY statusChanged)
   Q_PROPERTY(QString iconHealthy READ iconHealthy WRITE setIconHealthy)
   Q_PROPERTY(QString iconFailing READ iconFailing WRITE setIconFailing)
-  Q_PROPERTY(StorageUnitQmlModel* model READ model)
+  Q_PROPERTY(QString iconWarning READ iconWarning WRITE setIconWarning)
+  Q_PROPERTY(StorageUnitQmlModel* model READ model NOTIFY modelChanged)
 
 public:
   StorageUnitMonitor();
@@ -62,8 +63,10 @@ public:
 
   QString iconHealthy() const;
   QString iconFailing() const;
+  QString iconWarning() const;
   void setIconHealthy(QString healthyIcon);
   void setIconFailing(QString failingIcon);
+  void setIconWarning(QString warningIcon);
 
   StorageUnitQmlModel* model();
 
@@ -73,6 +76,7 @@ private:
 
   QString healthyIcon;
   QString failingIcon;
+  QString warningIcon;
 
   QList<StorageUnit*> failingUnits;
   StorageUnitQmlModel storageUnitQmlModel;
@@ -92,6 +96,7 @@ private slots:
 
 signals:
   void statusChanged();
+  void modelChanged();
 };
 
 #endif // STORAGEUNITMONITOR_H

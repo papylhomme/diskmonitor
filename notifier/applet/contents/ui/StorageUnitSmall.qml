@@ -23,6 +23,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import QtQuick.Layouts 1.1
 import org.papylhomme.diskmonitor 0.1 as DiskMonitor
+import "StorageUnit.js" as StorageUnit
 
 
 PlasmaComponents.ListItem {
@@ -50,25 +51,15 @@ PlasmaComponents.ListItem {
       Layout.fillWidth: true
       width: parent.width
       elide: Text.ElideRight
-      color: { (failing & failingKnown) ? "red": PlasmaCore.ColorScope.textColor; }
-      text: {
-        if(plasmoid.configuration.smallDeviceName)
-          var dev = device.split("/").pop();
-        else
-          var dev = device;
-
-        if(plasmoid.configuration.includeDriveId)
-          return dev + " (" + name + ")"
-        else
-          return dev;
-        }
+      color: { StorageUnit.getTextColor(); }
+      text: { StorageUnit.getStorageUnitText(); }
     }
 
 
     PlasmaCore.IconItem {
       Layout.maximumWidth: 16
       Layout.maximumHeight: 16
-      source: { failingKnown ? (failing? iconProvider.failing : iconProvider.healthy) : iconProvider.unknown; }
+      source: { StorageUnit.getStatusIcon(); }
     }
   }
 

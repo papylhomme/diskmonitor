@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-04 10:43+0000\n"
-"PO-Revision-Date: 2015-03-04 10:43+0000\n"
+"POT-Creation-Date: 2015-03-05 10:41+0000\n"
+"PO-Revision-Date: 2015-03-05 10:42+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: app/drivepanel.cpp:29
+#: app/drivepanel.cpp:50
 msgid "Short test"
 msgstr "Test court"
 
-#: app/drivepanel.cpp:31
+#: app/drivepanel.cpp:52
 msgid "Extended test"
 msgstr "Test étendu"
 
@@ -29,214 +29,237 @@ msgstr "Test étendu"
 #. i18n: ectx: property (text), widget (QLabel, selfTestStatusLabel)
 #. i18n: file: app/mainwindow.ui:72
 #. i18n: ectx: property (text), widget (QLabel, statusLabel)
-#: app/drivepanel.cpp:108 rc.cpp:18 rc.cpp:33
+#: app/drivepanel.cpp:138 rc.cpp:18 rc.cpp:33
 msgid "unknown"
 msgstr "inconnu"
 
-#: app/drivepanel.cpp:183
+#: app/drivepanel.cpp:213
 msgctxt "SelfTest status"
 msgid "In progress"
 msgstr "En cours"
 
-#: app/drivepanel.cpp:185
+#: app/drivepanel.cpp:215
 msgctxt "SelfTest status"
 msgid "Success"
 msgstr "Succès"
 
-#: app/drivepanel.cpp:187
+#: app/drivepanel.cpp:217
 msgctxt "SelfTest status"
 msgid "Aborted"
 msgstr "Annulé"
 
-#: app/drivepanel.cpp:189
+#: app/drivepanel.cpp:219
 msgctxt "SelfTest status"
 msgid "Interrupted"
 msgstr "Interrompu"
 
-#: app/drivepanel.cpp:191
+#: app/drivepanel.cpp:221
 msgctxt "SelfTest status"
 msgid "Fatal"
 msgstr "Fatal"
 
-#: app/drivepanel.cpp:193
+#: app/drivepanel.cpp:223
 msgctxt "SelfTest status"
 msgid "Error (%1)"
 msgstr "Erreur (%1)"
 
-#: app/drivepropertiesmodel.cpp:21
+#: app/drivepropertiesmodel.cpp:41
 msgctxt "Attribute's id"
 msgid "Id"
 msgstr "Id"
 
-#: app/drivepropertiesmodel.cpp:22
+#: app/drivepropertiesmodel.cpp:42
 msgctxt "Attribute's name"
 msgid "Name"
 msgstr "Nom"
 
-#: app/drivepropertiesmodel.cpp:23
+#: app/drivepropertiesmodel.cpp:43
 msgctxt "Attribute's flags"
 msgid "Flags"
 msgstr "Drapeaux"
 
-#: app/drivepropertiesmodel.cpp:24
+#: app/drivepropertiesmodel.cpp:44
 msgctxt "Worst known value for this attribute"
 msgid "Worst"
 msgstr "Pire"
 
-#: app/drivepropertiesmodel.cpp:25
+#: app/drivepropertiesmodel.cpp:45
 msgctxt "Threshold value for this attribute"
 msgid "Threshold"
 msgstr "Seuil"
 
-#: app/drivepropertiesmodel.cpp:26
+#: app/drivepropertiesmodel.cpp:46
 msgctxt "Normalized value for this attribute"
 msgid "Normalized value"
 msgstr "Valeur normalisée"
 
-#: app/drivepropertiesmodel.cpp:27
+#: app/drivepropertiesmodel.cpp:47
 msgctxt "Human friendly value for this attribute"
 msgid "Value"
 msgstr "Valeur"
 
-#: app/drivepropertiesmodel.cpp:143 app/mdraidpropertiesmodel.cpp:90
-#: app/mdraidpropertiesmodel.cpp:91 app/mdraidpropertiesmodel.cpp:92
+#: app/drivepropertiesmodel.cpp:165 app/mdraidpropertiesmodel.cpp:110
+#: app/mdraidpropertiesmodel.cpp:111 app/mdraidpropertiesmodel.cpp:112
 msgid "Raw value: %1"
 msgstr "Valeur brute : %1"
 
-#: app/drivepropertiesmodel.cpp:156
+#: app/drivepropertiesmodel.cpp:178
 msgctxt "value type is unknown"
 msgid "unknown"
 msgstr "inconnu"
 
-#: app/drivepropertiesmodel.cpp:159
+#: app/drivepropertiesmodel.cpp:181
 msgid "%1 sectors"
 msgstr "%1 secteurs"
 
 #. i18n: file: app/mainwindow.ui:14
 #. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
-#: app/main.cpp:14 rc.cpp:24
+#: app/main.cpp:35 rc.cpp:24
 msgid "DisKMonitor"
 msgstr "DisKMonitor"
 
-#: app/main.cpp:15
+#: app/main.cpp:36
 msgid "KDE tools to monitor SMART devices and MDRaid health status"
 msgstr ""
 "Outils KDE pour surveiller l'état de santé des périphériques SMART et des "
 "raid MD"
 
-#: app/main.cpp:17
+#: app/main.cpp:38
 msgid "Copyright (C) 2015 Michaël Lhomme"
 msgstr "Copyright (C) 2015 Michaël Lhomme"
 
-#: app/main.cpp:23
+#: app/main.cpp:44
 msgid "Michaël Lhomme"
 msgstr "Michaël Lhomme"
 
-#: app/main.cpp:23
+#: app/main.cpp:44
 msgid "Maintainer & Developer"
 msgstr "Mainteneur & développeur"
 
-#: app/main.cpp:25 app/main.cpp:26
+#: app/main.cpp:46 app/main.cpp:47
 msgid "Please report bugs directly to %1"
 msgstr "Merci de reporter les bugs directement à %1"
 
 #. i18n: file: app/mainwindow.ui:39
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: app/mainwindow.cpp:118 rc.cpp:27
+#: app/mainwindow.cpp:138 rc.cpp:27
 msgid "Details"
 msgstr "Détails"
 
-#: app/mainwindow.cpp:149
+#: app/mainwindow.cpp:169
 msgid "Drive %1 (%2)"
 msgstr "Disque %1 (%2)"
 
-#: app/mainwindow.cpp:154
+#: app/mainwindow.cpp:174
 msgid "MDRaid %1 (%2)"
 msgstr "Raid MD %1 (%2)"
 
-#: app/mainwindow.cpp:189
+#. i18n: file: settings/appearance.ui:148
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton)
+#. i18n: file: settings/appearance.ui:246
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_6)
+#. i18n: file: settings/appearance.ui:368
+#. i18n: ectx: property (toolTip), widget (KIconButton, kcfg_UnknownIcon)
+#: app/mainwindow.cpp:208 rc.cpp:87 rc.cpp:102 rc.cpp:117
 msgctxt "Unknown health status"
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: app/mainwindow.cpp:194
+#. i18n: file: settings/appearance.ui:106
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_2)
+#. i18n: file: settings/appearance.ui:207
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_5)
+#. i18n: file: settings/appearance.ui:306
+#. i18n: ectx: property (toolTip), widget (KIconButton, kcfg_FailingIcon)
+#: app/mainwindow.cpp:213 rc.cpp:81 rc.cpp:96 rc.cpp:111
 msgctxt "Failing health status"
 msgid "Failing"
 msgstr "Echec"
 
-#: app/mainwindow.cpp:198
+#: app/mainwindow.cpp:218
+msgctxt "Warning health status"
+msgid "Warning"
+msgstr "Danger"
+
+#. i18n: file: settings/appearance.ui:82
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_3)
+#. i18n: file: settings/appearance.ui:183
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_4)
+#. i18n: file: settings/appearance.ui:281
+#. i18n: ectx: property (toolTip), widget (KIconButton, kcfg_HealthyIcon)
+#: app/mainwindow.cpp:222 rc.cpp:78 rc.cpp:93 rc.cpp:108
 msgctxt "Healthy health status"
 msgid "Healthy"
 msgstr "Sain"
 
-#: app/mdraidmembersmodel.cpp:17
+#: app/mdraidmembersmodel.cpp:37
 msgctxt "RAID member device"
 msgid "Block device"
 msgstr "Périphérique bloc"
 
-#: app/mdraidmembersmodel.cpp:18
+#: app/mdraidmembersmodel.cpp:38
 msgctxt "RAID member slot"
 msgid "Slot"
 msgstr "Emplacement"
 
-#: app/mdraidmembersmodel.cpp:19
+#: app/mdraidmembersmodel.cpp:39
 msgctxt "RAID member state"
 msgid "State"
 msgstr "Etat"
 
-#: app/mdraidmembersmodel.cpp:20
+#: app/mdraidmembersmodel.cpp:40
 msgctxt "RAID member read errors count"
 msgid "Read errors"
 msgstr "Erreurs de lecture"
 
-#: app/mdraidpropertiesmodel.cpp:15
+#: app/mdraidpropertiesmodel.cpp:35
 msgctxt "RAID property UUID"
 msgid "UUID"
 msgstr "UUID"
 
-#: app/mdraidpropertiesmodel.cpp:16
+#: app/mdraidpropertiesmodel.cpp:36
 msgctxt "RAID level"
 msgid "Level"
 msgstr "Niveau"
 
-#: app/mdraidpropertiesmodel.cpp:17
+#: app/mdraidpropertiesmodel.cpp:37
 msgctxt "RAID device's count"
 msgid "Devices"
 msgstr "Périphériques"
 
-#: app/mdraidpropertiesmodel.cpp:18
+#: app/mdraidpropertiesmodel.cpp:38
 msgctxt "RAID size"
 msgid "Size"
 msgstr "Taille"
 
-#: app/mdraidpropertiesmodel.cpp:19
+#: app/mdraidpropertiesmodel.cpp:39
 msgctxt "RAID current action"
 msgid "Action"
 msgstr "Action"
 
-#: app/mdraidpropertiesmodel.cpp:20
+#: app/mdraidpropertiesmodel.cpp:40
 msgctxt "RAID current action remaining time"
 msgid "Remaining time"
 msgstr "Temps restant"
 
-#: app/mdraidpropertiesmodel.cpp:21
+#: app/mdraidpropertiesmodel.cpp:41
 msgctxt "RAID current action % completed"
 msgid "Completed"
 msgstr "Complété"
 
-#: settings/configdialog.cpp:47
+#: settings/configdialog.cpp:67
 msgid "Appearance"
 msgstr "Apparence"
 
-#: settings/configdialog.cpp:47
+#: settings/configdialog.cpp:67
 msgid "Appearance options"
 msgstr "Options d'apparence"
 
-#: settings/configdialog.cpp:48
+#: settings/configdialog.cpp:68
 msgid "S.M.A.R.T"
 msgstr "S.M.A.R.T"
 
-#: settings/configdialog.cpp:48
+#: settings/configdialog.cpp:68
 msgid "S.M.A.R.T options"
 msgstr "Options S.M.A.R.T"
 
@@ -248,7 +271,7 @@ msgstr "Options S.M.A.R.T"
 #. i18n: ectx: property (windowTitle), widget (QWidget, Appearance)
 #. i18n: file: settings/smart.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, SMART)
-#: rc.cpp:3 rc.cpp:54 rc.cpp:60 rc.cpp:102
+#: rc.cpp:3 rc.cpp:54 rc.cpp:60 rc.cpp:141
 msgid "Form"
 msgstr "Formulaire"
 
@@ -362,86 +385,103 @@ msgctxt "Emote icons"
 msgid "Emo&tes"
 msgstr "Emoticônes"
 
-#. i18n: file: settings/appearance.ui:138
+#. i18n: file: settings/appearance.ui:118
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_7)
+#. i18n: file: settings/appearance.ui:219
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_8)
+#. i18n: file: settings/appearance.ui:337
+#. i18n: ectx: property (toolTip), widget (KIconButton, kcfg_WarningIcon)
+#: rc.cpp:84 rc.cpp:99 rc.cpp:114
+msgctxt "Warning health status"
+msgid "Warnings"
+msgstr "Avertissements"
+
+#. i18n: file: settings/appearance.ui:162
 #. i18n: ectx: property (text), widget (QRadioButton, dialogsIconModeRadioButton)
-#: rc.cpp:78
+#: rc.cpp:90
 msgctxt "Dialog icons"
 msgid "Dialo&gs"
 msgstr "Dialogues"
 
-#. i18n: file: settings/appearance.ui:212
+#. i18n: file: settings/appearance.ui:260
 #. i18n: ectx: property (text), widget (QRadioButton, customIconModeRadioButton)
-#: rc.cpp:81
+#: rc.cpp:105
 msgctxt "Custom icons"
 msgid "Custom"
 msgstr "Personnalisé"
 
 #. i18n: file: settings/diskmonitor.kcfg:9
 #. i18n: ectx: label, entry (ErrorColor), group (Appearance)
-#: rc.cpp:84
+#: rc.cpp:120
 msgid "Defines the color used for errors."
 msgstr "Défini la couleur utilisé pour les erreurs."
 
 #. i18n: file: settings/diskmonitor.kcfg:13
 #. i18n: ectx: label, entry (WarningColor), group (Appearance)
-#: rc.cpp:87
+#: rc.cpp:123
 msgid "Defines the color used for warnings."
 msgstr "Défini la couleur utilisé  pour les avertissements."
 
 #. i18n: file: settings/diskmonitor.kcfg:25
 #. i18n: ectx: label, entry (HealthyIcon), group (Appearance)
-#: rc.cpp:90
+#: rc.cpp:126
 msgid "Defines the icon used for healthy unit."
 msgstr "Défini l'icône utilisé pour une unité saine."
 
 #. i18n: file: settings/diskmonitor.kcfg:29
 #. i18n: ectx: label, entry (FailingIcon), group (Appearance)
-#: rc.cpp:93
+#: rc.cpp:129
 msgid "Defines the icon used for failing unit."
 msgstr "Défini l'icône utilisé pour une unité en échec."
 
 #. i18n: file: settings/diskmonitor.kcfg:33
+#. i18n: ectx: label, entry (WarningIcon), group (Appearance)
+#: rc.cpp:132
+msgid "Defines the icon used for unit having warnings."
+msgstr "Défini l'icône utilisé pour une unité avec des avertissements."
+
+#. i18n: file: settings/diskmonitor.kcfg:37
 #. i18n: ectx: label, entry (UnknownIcon), group (Appearance)
-#: rc.cpp:96
+#: rc.cpp:135
 msgid "Defines the icon used when health status is unknown."
 msgstr "Défini l'icône utilisé quand l'état de santé d'une unité est inconnu."
 
-#. i18n: file: settings/diskmonitor.kcfg:39
+#. i18n: file: settings/diskmonitor.kcfg:43
 #. i18n: ectx: label, entry (SensitiveAttributes), group (SMART)
-#: rc.cpp:99
+#: rc.cpp:138
 msgid "Defines the attributes considered sensitive."
 msgstr "Défini les attributs considérés sensibles."
 
 #. i18n: file: settings/smart.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:105
+#: rc.cpp:144
 msgid "Sensitive Attributes"
 msgstr "Attributs sensibles"
 
 #. i18n: file: settings/smart.ui:44
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
-#: rc.cpp:108
+#: rc.cpp:147
 msgid "Add"
 msgstr "Ajouter"
 
 #. i18n: file: settings/smart.ui:51
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
-#: rc.cpp:111
+#: rc.cpp:150
 msgid "Remove"
 msgstr "Supprimer"
 
 #. i18n: file: settings/smart.ui:58
 #. i18n: ectx: property (text), widget (QPushButton, clearButton)
-#: rc.cpp:114
+#: rc.cpp:153
 msgid "Clear"
 msgstr "Vider"
 
-#: rc.cpp:115
+#: rc.cpp:154
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Vos noms"
 
-#: rc.cpp:116
+#: rc.cpp:155
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Vos emails"

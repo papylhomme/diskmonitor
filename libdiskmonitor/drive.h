@@ -45,6 +45,7 @@ public:
   int getSelfTestPercentRemaining() const;
 
   const QString& getSelfTestStatus() const;
+  bool isSelfTestStatusHealthy() const;
 
   const SmartAttributesList& getSMARTAttributes() const;
 

@@ -24,6 +24,8 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 import QtQuick.Controls 1.0 as QtControls
 import QtQuick.Layouts 1.1
 
+import "StorageUnit.js" as StorageUnit
+
 Item {
   id: appearancePage
   anchors.fill: parent
@@ -39,6 +41,7 @@ Item {
   property alias cfg_iconsCustom: iconsCustom.checked
   property alias cfg_iconHealthy: iconHealthy.icon
   property alias cfg_iconFailing: iconFailing.icon
+  property alias cfg_iconWarning: iconWarning.icon
   property alias cfg_iconUnknown: iconUnknown.icon
 
   property alias cfg_warningColor: warningColor.color
@@ -98,6 +101,7 @@ Item {
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
+            property bool hasWarnings: false
             property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
@@ -115,6 +119,7 @@ Item {
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
+            property bool hasWarnings: false
             property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
@@ -132,6 +137,7 @@ Item {
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
+            property bool hasWarnings: false
             property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
@@ -151,7 +157,7 @@ Item {
       QtControls.ExclusiveGroup { id: iconType }
 
       GridLayout {
-        columns: 4
+        columns: 5
         columnSpacing: 10
         rowSpacing: 10
         anchors.top: parent.top
@@ -172,6 +178,9 @@ Item {
           source: "face-sick"
         }
         PlasmaCore.IconItem {
+          source: "face-angry"
+        }
+        PlasmaCore.IconItem {
           source: "face-confused"
         }
 
@@ -190,6 +199,9 @@ Item {
           source: "dialog-error"
         }
         PlasmaCore.IconItem {
+          source: "dialog-warning"
+        }
+        PlasmaCore.IconItem {
           source: "unknown"
         }
 
@@ -205,6 +217,9 @@ Item {
         }
         IconPickerButton {
           id: iconFailing
+        }
+        IconPickerButton {
+          id: iconWarning
         }
         IconPickerButton {
           id: iconUnknown
@@ -263,6 +278,7 @@ Item {
 
     iconHealthy.icon = plasmoid.configuration.iconHealthy;
     iconFailing.icon = plasmoid.configuration.iconFailing;
+    iconWarning.icon = plasmoid.configuration.iconWarning;
     iconUnknown.icon = plasmoid.configuration.iconUnknown;
 
     if(plasmoid.configuration.layoutBig) {

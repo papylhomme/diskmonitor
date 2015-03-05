@@ -40,6 +40,15 @@ Item {
       return plasmoid.configuration.iconFailing; 
   }
 
+  property string warning: {
+    if(plasmoid.configuration.iconsFaces)
+      return "face-angry";
+    else if(plasmoid.configuration.iconsDialog)
+      return "dialog-warning";
+    else
+      return plasmoid.configuration.iconWarning; 
+  }
+
   property string unknown: {
     if(plasmoid.configuration.iconsFaces)
       return "face-confused";

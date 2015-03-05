@@ -26,10 +26,6 @@ import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 Item {
   id: mainWindow
 
-  property int passiveStatus: PlasmaCore.Types.PassiveStatus
-  property int needsAttentionStatus: PlasmaCore.Types.NeedsAttentionStatus
-  property int requireAttentionStatus: PlasmaCore.Types.RequireAttentionStatus
-
   Plasmoid.toolTipMainText: i18n("DisKMonitor")
   Plasmoid.toolTipSubText: i18n("Everything looks healthy.")
   Plasmoid.icon: iconProvider.healthy
@@ -48,6 +44,7 @@ Item {
 
     iconHealthy: iconProvider.healthy;
     iconFailing: iconProvider.failing;
+    iconWarning: iconProvider.warning;
   }
 
 
@@ -73,11 +70,11 @@ Item {
 
   function updateTray() {
     if(monitor.failing) {
-      mainWindow.Plasmoid.status = needsAttentionStatus;
+      mainWindow.Plasmoid.status = PlasmaCore.Types.NeedsAttentionStatus;
       mainWindow.Plasmoid.icon = iconProvider.failing;
       mainWindow.Plasmoid.toolTipSubText = monitor.status;
     } else {
-      mainWindow.Plasmoid.status = passiveStatus;
+      mainWindow.Plasmoid.status = PlasmaCore.Types.PassiveStatus;
       mainWindow.Plasmoid.icon = iconProvider.healthy;
       mainWindow.Plasmoid.toolTipSubText = monitor.status;
     }

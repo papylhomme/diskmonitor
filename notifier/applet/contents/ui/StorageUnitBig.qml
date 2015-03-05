@@ -23,6 +23,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import QtQuick.Layouts 1.1
 import org.papylhomme.diskmonitor 0.1 as DiskMonitor
+import "StorageUnit.js" as StorageUnit
 
 
 PlasmaComponents.ListItem {
@@ -55,23 +56,23 @@ PlasmaComponents.ListItem {
         width: parent.width
         elide: Text.ElideRight
         font.weight: Font.Bold
-        color: { (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor; }
+        color: { StorageUnit.getTextColor(); }
       }
     
       PlasmaComponents.Label {
         id: deviceLabel
-        text: { plasmoid.configuration.smallDeviceName ? device.split("/").pop() : device; }
+        text: { StorageUnit.getDeviceString(); }
         height: paintedHeight
         width: parent.width
         elide: Text.ElideRight
-        color: { (failing & failingKnown) ? plasmoid.configuration.errorColor : PlasmaCore.ColorScope.textColor; }
+        color: { StorageUnit.getTextColor(); }
       }
     }
 
 
     PlasmaCore.IconItem {
       height: col.height
-      source: { failingKnown ? (failing? iconProvider.failing : iconProvider.healthy) : iconProvider.unknown; }
+      source: { StorageUnit.getStatusIcon(); }
     }
   }
 

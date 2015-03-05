@@ -54,6 +54,8 @@ MDRaid::~MDRaid()
  */
 void MDRaid::update()
 {
+  warnings = false;
+
   /*
    * Retrieve raid properties
    */
@@ -97,6 +99,9 @@ void MDRaid::update()
     MDRaidMember m;
     arg >> m;
     members << m;
+
+    if(m.numReadErrors != 0 || m.state.contains("faulty"))
+      warnings = true;
   }
 
   delete propIface;
@@ -205,7 +210,7 @@ const QString& MDRaid::getSyncAction() const
 /*
  * Get a list of the raid array members;
  */
-const MDRaidMemberList&MDRaid::getMembers() const
+const MDRaidMemberList& MDRaid::getMembers() const
 {
   return this -> members;
 }

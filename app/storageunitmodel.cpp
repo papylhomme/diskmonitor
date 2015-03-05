@@ -127,6 +127,8 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
       overlays.append(iconProvider.unknown());
     else if(u -> isFailing())
       overlays.append(iconProvider.failing());
+    else if(u -> hasWarnings())
+      overlays.append(iconProvider.warning());
     else
       overlays.append(iconProvider.healthy());
 

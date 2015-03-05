@@ -43,6 +43,7 @@ public:
     DeviceRole,
     FailingRole,
     FailingKnownRole,
+    HasWarningsRole,
     PathRole,
     IconRole
   };

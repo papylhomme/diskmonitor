@@ -46,6 +46,7 @@ public:
 
   bool isFailing() const;
   bool isFailingStatusKnown() const;
+  bool hasWarnings() const;
 
 
   //QMETA_TYPE require a public empty constructor, we can't
@@ -66,6 +67,7 @@ protected:
 
   bool failing = false;
   bool failingStatusKnown = false;
+  bool warnings = false;
 
   static QVariant getProperty(QDBusInterface*, const char*);
   static bool getBoolProperty(QDBusInterface*, const char*);

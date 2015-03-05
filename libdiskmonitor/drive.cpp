@@ -126,6 +126,16 @@ const QString& Drive::getSelfTestStatus() const
 
 
 /*
+ * Test if the current SelfTest status is healthy
+ */
+bool Drive::isSelfTestStatusHealthy() const
+{
+  return !(selfTestStatus == "fatal" || selfTestStatus.startsWith("error_"));
+}
+
+
+
+/*
  * Get the cached list of SMART attributes for the drive
  *
  * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartGetAttributes
@@ -142,6 +152,7 @@ const SmartAttributesList& Drive::getSMARTAttributes() const
  */
 void Drive::update()
 {
+  warnings = false;
   attributes.clear();
 
 
@@ -180,6 +191,9 @@ void Drive::update()
 
     this -> selfTestStatus = getStringProperty(ataIface, "SmartSelftestStatus");
     this -> selfTestPercentRemaining = getIntProperty(ataIface, "SmartSelftestPercentRemaining");
+
+    if(!isSelfTestStatusHealthy())
+      warnings = true;
 
   } else {
     this -> failingStatusKnown = false;

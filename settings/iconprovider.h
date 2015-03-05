@@ -42,11 +42,13 @@ namespace Settings {
 
     QString healthy() const;
     QString failing() const;
+    QString warning() const;
     QString unknown() const;
 
   signals:
     void healthyChanged();
     void failingChanged();
+    void warningChanged();
     void unknownChanged();
 
   public slots:

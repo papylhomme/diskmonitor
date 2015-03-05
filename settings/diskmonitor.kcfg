@@ -29,6 +29,10 @@
       <label>Defines the icon used for failing unit.</label>
       <default>face-sick</default>
     </entry>
+    <entry name="WarningIcon" type="String">
+      <label>Defines the icon used for unit having warnings.</label>
+      <default>face-angry</default>
+    </entry>
     <entry name="UnknownIcon" type="String">
       <label>Defines the icon used when health status is unknown.</label>
       <default>face-confused</default>

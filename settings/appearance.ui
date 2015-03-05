@@ -78,6 +78,9 @@
             <height>32</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string comment="Healthy health status">Healthy</string>
+          </property>
           <property name="icon">
            <iconset theme="face-cool">
             <normaloff/>
@@ -99,8 +102,26 @@
             <height>32</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string comment="Failing health status">Failing</string>
+          </property>
           <property name="icon">
            <iconset theme="face-sick">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_7">
+          <property name="toolTip">
+           <string comment="Warning health status">Warnings</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset theme="face-angry">
             <normaloff/>
            </iconset>
           </property>
@@ -122,6 +143,9 @@
             <width>32</width>
             <height>32</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string comment="Unknown health status">Unknown</string>
           </property>
           <property name="icon">
            <iconset theme="face-confused">
@@ -155,6 +179,9 @@
             <height>32</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string comment="Healthy health status">Healthy</string>
+          </property>
           <property name="icon">
            <iconset theme="dialog-ok">
             <normaloff/>
@@ -176,8 +203,26 @@
             <height>32</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string comment="Failing health status">Failing</string>
+          </property>
           <property name="icon">
            <iconset theme="dialog-error">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_8">
+          <property name="toolTip">
+           <string comment="Warning health status">Warnings</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset theme="dialog-warning">
             <normaloff/>
            </iconset>
           </property>
@@ -196,6 +241,9 @@
             <width>32</width>
             <height>32</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string comment="Unknown health status">Unknown</string>
           </property>
           <property name="icon">
            <iconset theme="unknown">
@@ -229,6 +277,9 @@
             <height>32</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string comment="Healthy health status">Healthy</string>
+          </property>
           <property name="iconSize">
            <number>16</number>
           </property>
@@ -251,11 +302,42 @@
             <height>32</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string comment="Failing health status">Failing</string>
+          </property>
           <property name="iconSize">
            <number>16</number>
           </property>
           <property name="strictIconSize">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="KIconButton" name="kcfg_WarningIcon">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string comment="Warning health status">Warnings</string>
+          </property>
+          <property name="iconSize">
+           <number>16</number>
           </property>
          </widget>
         </item>
@@ -281,6 +363,9 @@
             <width>32</width>
             <height>32</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string comment="Unknown health status">Unknown</string>
           </property>
           <property name="icon">
            <string/>

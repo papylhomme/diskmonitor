@@ -152,6 +152,17 @@ QString StorageUnitMonitor::iconFailing() const
 
 
 /*
+ * Get the iconWarning value
+ */
+QString StorageUnitMonitor::iconWarning() const
+{
+  return warningIcon;
+}
+
+
+
+
+/*
  * Set the iconHealthy value
  */
 void StorageUnitMonitor::setIconHealthy(QString healthyIcon)
@@ -168,6 +179,17 @@ void StorageUnitMonitor::setIconFailing(QString failingIcon)
 {
   this -> failingIcon = failingIcon;
 }
+
+
+
+/*
+ * Set the iconWarning value
+ */
+void StorageUnitMonitor::setIconWarning(QString warningIcon)
+{
+  this -> warningIcon = warningIcon;
+}
+
 
 
 

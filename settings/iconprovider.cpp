@@ -77,6 +77,21 @@ QString IconProvider::failing() const
 
 
 /*
+ * Get the warning status icon name
+ */
+QString IconProvider::warning() const
+{
+  switch(DiskMonitorSettings::iconMode()) {
+    case DiskMonitor::IconMode::Emotes: return "face-angry";
+    case DiskMonitor::IconMode::Dialogs: return "dialog-warning";
+    case DiskMonitor::IconMode::Custom: return DiskMonitorSettings::warningIcon();
+    default: return "face-angry";
+  }
+}
+
+
+
+/*
  * Get the unknown status icon name
  */
 QString IconProvider::unknown() const

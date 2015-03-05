@@ -182,18 +182,33 @@ void Drive::update()
     this -> failing = getBoolProperty(ataIface, "SmartFailing");
     this -> failingStatusKnown = true;
 
-
-    QDBusReply<SmartAttributesList> res = ataIface -> call("SmartGetAttributes", QVariantMap());
-    if(!res.isValid())
-      qCritical() << "Error calling SmartGetAttributes for drive '" << getPath() << "':" << res.error();
-    else
-      attributes = res.value();
-
     this -> selfTestStatus = getStringProperty(ataIface, "SmartSelftestStatus");
     this -> selfTestPercentRemaining = getIntProperty(ataIface, "SmartSelftestPercentRemaining");
 
     if(!isSelfTestStatusHealthy())
       warnings = true;
+
+
+    QDBusReply<SmartAttributesList> res = ataIface -> call("SmartGetAttributes", QVariantMap());
+    if(!res.isValid())
+      qCritical() << "Error calling SmartGetAttributes for drive '" << getPath() << "':" << res.error();
+    else {
+      const QList<int>& monitor = UDisks2Wrapper::instance() -> getSMARTAttributeMonitor(getPath());
+      attributes = res.value();
+
+      for(SmartAttribute& attr : attributes) {
+        if(attr.value <= attr.threshold) {
+          attr.failing = true;
+          warnings = true;
+        }
+
+        if(monitor.contains(attr.id) && attr.pretty != 0) {
+          attr.warning = true;
+          warnings = true;
+        }
+      }
+    }
+
 
   } else {
     this -> failingStatusKnown = false;

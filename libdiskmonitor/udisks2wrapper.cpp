@@ -281,6 +281,32 @@ QDBusInterface*UDisks2Wrapper::mdraidIface(QDBusObjectPath objectPath) const
 
 
 /*
+ * Add a new SMART attributes monitor for the given path
+ */
+void UDisks2Wrapper::addSMARTAttributesMonitor(const QList<int>& list, const QString& path)
+{
+  this -> smartAttributesMonitor = QList<int>(list);
+
+  //refresh drive to take new monitor into account
+  foreach(StorageUnit* unit, units.values()) {
+    if(unit -> isDrive() && (path.isEmpty() || path == unit -> getPath()))
+      unit -> update();
+  }
+}
+
+
+
+/*
+ * Get a SMART attributes monitor for the given path
+ */
+const QList<int>& UDisks2Wrapper::getSMARTAttributeMonitor(const QString& /*path*/)
+{
+  return smartAttributesMonitor;
+}
+
+
+
+/*
  * Start a scrubbing operation on the given raid array (sync action = 'check')
  *
  * @param mdraid The raid array to test
@@ -391,7 +417,6 @@ void UDisks2Wrapper::interfacesRemoved(const QDBusObjectPath& objectPath, const 
  *
  * here we select block devices (and not directly raid or drive nodes) in order to
  * retrieve the associated Linux device name (/dev/sdX, /dev/mdX)
- * TODO: for raid we wan retrieve the associated drives too
  */
 StorageUnit* UDisks2Wrapper::createNewUnitFromBlockDevice(const InterfaceList& interfaces) const
 {

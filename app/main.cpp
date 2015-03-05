@@ -25,6 +25,7 @@
 #include <KAboutData>
 
 #include "udisks2wrapper.h"
+#include "diskmonitor_settings.h"
 #include "config.h"
 
 
@@ -49,7 +50,8 @@ int main(int argc, char *argv[]) {
 
   KAboutData::setApplicationData(about);
 
-  UDisks2Wrapper::instance();
+  UDisks2Wrapper::instance() -> addSMARTAttributesMonitor(DiskMonitorSettings::sensitiveAttributes());
+
   MainWindow* w = new MainWindow();
   w -> show();
 

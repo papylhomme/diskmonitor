@@ -86,6 +86,9 @@ public:
   QDBusInterface* ataIface(QDBusObjectPath) const;
   QDBusInterface* mdraidIface(QDBusObjectPath) const;
 
+  void addSMARTAttributesMonitor(const QList<int>& list, const QString& path = QString());
+  const QList<int>& getSMARTAttributeMonitor(const QString& path);
+
 
 private:
   void initialize();
@@ -94,6 +97,8 @@ private:
 
   bool initialized = false;
   QMap<QDBusObjectPath, StorageUnit*> units;
+
+  QList<int> smartAttributesMonitor;
 
 private slots:
   void interfacesAdded(const QDBusObjectPath&, const InterfaceList&);

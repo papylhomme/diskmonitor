@@ -98,10 +98,16 @@ void MDRaid::update()
   while(!arg.atEnd()) {
     MDRaidMember m;
     arg >> m;
-    members << m;
 
-    if(m.numReadErrors != 0 || m.state.contains("faulty"))
+    if(m.state.contains("faulty")) {
+      m.failing = true;
       warnings = true;
+    } else if(m.numReadErrors != 0) {
+      m.warning = true;
+      warnings = true;
+    }
+
+    members << m;
   }
 
   delete propIface;

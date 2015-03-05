@@ -121,13 +121,13 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
     if(attr.value == -1)
       return QVariant(QBrush());
 
-    //set the row background to 'error' if value < threshold
-    if(attr.value <= attr.threshold) {
+    //set the row background to 'error' if attr has failing flag
+    if(attr.failing) {
       QBrush brush(DiskMonitorSettings::errorColor());
       return QVariant(brush);
 
-    //set the row background to 'warning' if value is non 0 for sensitive attributes
-    } else if(attr.pretty != 0 && sensitiveAttributes.contains(attr.id)) {
+    //set the row background to 'warning' if attr has warning flag
+    } else if(attr.warning) {
       QBrush brush(DiskMonitorSettings::warningColor());
       return QVariant(brush);
 

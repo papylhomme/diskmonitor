@@ -54,6 +54,10 @@ struct SmartAttribute {
   qint64 pretty;
   qint32 pretty_unit;
   QVariantMap expansion;
+
+  //internal type, do not belong to UDisks2
+  bool failing = false;
+  bool warning = false;
 };
 Q_DECLARE_METATYPE(SmartAttribute)
 
@@ -75,11 +79,15 @@ extern const QDBusArgument &operator>>(const QDBusArgument &argument, SmartAttri
  * Structure mapping a MDRaid member in UDisks2
  */
 struct MDRaidMember {
-   QDBusObjectPath block;
-   qint32 slot;
-   QStringList state;
-   qint64 numReadErrors;
-   QVariantMap expansion;
+  QDBusObjectPath block;
+  qint32 slot;
+  QStringList state;
+  qint64 numReadErrors;
+  QVariantMap expansion;
+
+  //internal type, do not belong to UDisks2
+  bool failing = false;
+  bool warning = false;
 };
 Q_DECLARE_METATYPE(MDRaidMember)
 

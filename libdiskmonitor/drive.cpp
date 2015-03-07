@@ -152,7 +152,7 @@ const SmartAttributesList& Drive::getSMARTAttributes() const
  */
 void Drive::update()
 {
-  warnings = false;
+  healthStatus = HealthStatus::Unknown;
   attributes.clear();
 
 
@@ -166,7 +166,6 @@ void Drive::update()
 
   //Skip smart properties if ATA_IFACE is not present
   if(!hasATAIface) {
-    this -> failingStatusKnown = false;
     return;
   }
 
@@ -180,38 +179,42 @@ void Drive::update()
 
   if(this -> smartSupported && this -> smartEnabled) {
     this -> failing = getBoolProperty(ataIface, "SmartFailing");
-    this -> failingStatusKnown = true;
+
+    if(this -> failing)
+      healthStatus = HealthStatus::Failing;
+    else
+      healthStatus = HealthStatus::Healthy;
 
     this -> selfTestStatus = getStringProperty(ataIface, "SmartSelftestStatus");
     this -> selfTestPercentRemaining = getIntProperty(ataIface, "SmartSelftestPercentRemaining");
 
     if(!isSelfTestStatusHealthy())
-      warnings = true;
+      healthStatus.updateIfGreater(HealthStatus::Warning);
 
-
+    /*
+     * retrieve SMART properties from the ATA_IFACE
+     */
     QDBusReply<SmartAttributesList> res = ataIface -> call("SmartGetAttributes", QVariantMap());
     if(!res.isValid())
       qCritical() << "Error calling SmartGetAttributes for drive '" << getPath() << "':" << res.error();
     else {
-      const QList<int>& monitor = UDisks2Wrapper::instance() -> getSMARTAttributeMonitor(getPath());
       attributes = res.value();
-
-      for(SmartAttribute& attr : attributes) {
-        if(attr.value <= attr.threshold) {
-          attr.failing = true;
-          warnings = true;
-        }
-
-        if(monitor.contains(attr.id) && attr.pretty != 0) {
-          attr.warning = true;
-          warnings = true;
-        }
-      }
     }
+  }
 
 
-  } else {
-    this -> failingStatusKnown = false;
+  /*
+   * Update monitor
+   */
+  SMARTAttributesMonitor* monitor = UDisks2Wrapper::instance() -> getSMARTAttributeMonitor(getPath());
+  if(monitor != NULL) {
+    for(SmartAttribute& attr : attributes) {
+      HealthStatus::Status res = monitor -> process(attr);
+      attr.healthStatus = res;
+
+      if(attr.healthStatus >= HealthStatus::Warning)
+        healthStatus.updateIfGreater(HealthStatus::Warning);
+    }
   }
 
   delete ataIface;

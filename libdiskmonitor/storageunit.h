@@ -25,6 +25,8 @@
 #include <QDBusInterface>
 
 
+#include "types.h"
+
 /*
  * Base class for representing an unit of storage in UDisks2
  */
@@ -44,9 +46,7 @@ public:
   QString getName() const;
   QString getShortName() const;
 
-  bool isFailing() const;
-  bool isFailingStatusKnown() const;
-  bool hasWarnings() const;
+  HealthStatus::Status getHealthStatus() const;
 
 
   //QMETA_TYPE require a public empty constructor, we can't
@@ -65,6 +65,8 @@ protected:
   QString name;
   QString shortName;
 
+
+  HealthStatus healthStatus;
   bool failing = false;
   bool failingStatusKnown = false;
   bool warnings = false;

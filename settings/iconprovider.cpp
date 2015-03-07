@@ -90,7 +90,6 @@ QString IconProvider::warning() const
 }
 
 
-
 /*
  * Get the unknown status icon name
  */
@@ -101,6 +100,27 @@ QString IconProvider::unknown() const
     case DiskMonitor::IconMode::Dialogs: return "unknown";
     case DiskMonitor::IconMode::Custom: return DiskMonitorSettings::unknownIcon();
     default: return "face-confused";
+  }
+}
+
+
+
+/*
+ * Get the health icon for the given healthStatus
+ */
+QString IconProvider::iconForSatus(HealthStatus::Status healthStatus) const
+{
+  switch(healthStatus) {
+    case HealthStatus::Failing:
+      return failing();
+      break;
+    case HealthStatus::Warning:
+      return warning();
+      break;
+    case HealthStatus::Healthy:
+      return healthy();
+    default:
+      return unknown();
   }
 }
 

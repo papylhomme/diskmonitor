@@ -33,6 +33,7 @@
 #include "mdraid.h"
 #include "drive.h"
 
+#include "smartattributesmonitor.h"
 
 
 
@@ -86,8 +87,8 @@ public:
   QDBusInterface* ataIface(QDBusObjectPath) const;
   QDBusInterface* mdraidIface(QDBusObjectPath) const;
 
-  void addSMARTAttributesMonitor(const QList<int>& list, const QString& path = QString());
-  const QList<int>& getSMARTAttributeMonitor(const QString& path);
+  void addSMARTAttributesMonitor(SMARTAttributesMonitor* monitor, const QString& path = QString());
+  SMARTAttributesMonitor* getSMARTAttributeMonitor(const QString& path);
 
 
 private:
@@ -98,7 +99,7 @@ private:
   bool initialized = false;
   QMap<QDBusObjectPath, StorageUnit*> units;
 
-  QList<int> smartAttributesMonitor;
+  SMARTAttributesMonitor* smartAttributesMonitor = NULL;
 
 private slots:
   void interfacesAdded(const QDBusObjectPath&, const InterfaceList&);

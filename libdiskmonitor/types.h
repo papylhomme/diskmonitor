@@ -18,47 +18,47 @@
  ****************************************************************************/
 
 
-#ifndef ICONPROVIDER_H
-#define ICONPROVIDER_H
+
+#ifndef TYPES_H
+#define TYPES_H
 
 #include <QObject>
 
-#include "types.h"
 
+/*
+ * Class used to provide the HealthStatus enum
+ */
+class HealthStatus : public QObject {
+  Q_OBJECT
 
-namespace Settings {
-
+public:
   /*
-   * Component to provide icons depending on the configuration
+   * In order ! (use of comparison operator)
    */
-  class IconProvider : public QObject
-  {
-    Q_OBJECT
-    Q_PROPERTY(QString healthy READ healthy NOTIFY healthyChanged)
-    Q_PROPERTY(QString failing READ failing NOTIFY failingChanged)
-    Q_PROPERTY(QString unknown READ unknown NOTIFY unknownChanged)
-
-  public:
-    explicit IconProvider(QObject *parent = 0);
-    ~IconProvider();
-
-    QString healthy() const;
-    QString failing() const;
-    QString warning() const;
-    QString unknown() const;
-
-    QString iconForSatus(HealthStatus::Status healthStatus) const;
-
-  signals:
-    void healthyChanged();
-    void failingChanged();
-    void warningChanged();
-    void unknownChanged();
-
-  public slots:
-    void configChanged();
+  enum Status {
+    Unknown,
+    Healthy,
+    Warning,
+    Failing
   };
 
-}
+  Q_ENUMS(Status)
 
-#endif // ICONPROVIDER_H
+  HealthStatus();
+  ~HealthStatus();
+
+  Status getStatus() const;
+  bool updateIfGreater(Status newStatus);
+
+  static QString toString(Status);
+
+  HealthStatus& operator =(const HealthStatus::Status&);
+  bool operator <(const HealthStatus::Status&);
+
+private:
+  Status status = Unknown;
+};
+
+
+#endif // TYPES_H
+

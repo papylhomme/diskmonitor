@@ -63,7 +63,6 @@ void StorageUnitModel::init() {
 
   storageUnits.clear();
   QList<StorageUnit*> units = udisks2 -> listStorageUnits();
-
   foreach(StorageUnit* u, units) {
     u -> update();
     storageUnits.append(u);
@@ -123,14 +122,7 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
 
     //define health status overlay
     QStringList overlays;
-    if(!u -> isFailingStatusKnown())
-      overlays.append(iconProvider.unknown());
-    else if(u -> isFailing())
-      overlays.append(iconProvider.failing());
-    else if(u -> hasWarnings())
-      overlays.append(iconProvider.warning());
-    else
-      overlays.append(iconProvider.healthy());
+    overlays.append(iconProvider.iconForSatus(u -> getHealthStatus()));
 
     //define icon
     QString icon;
@@ -148,7 +140,6 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
     v.setValue(u);
     return v;
   }
-
 
   return QVariant();
 }

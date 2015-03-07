@@ -18,46 +18,86 @@
  ****************************************************************************/
 
 
-import QtQuick 2.0
 
-Item {
+#include "types.h"
 
-  property string healthy: {
-    if(plasmoid.configuration.iconsFaces)
-      return "face-cool";
-    else if(plasmoid.configuration.iconsDialog)
-      return "dialog-ok";
-    else
-      return plasmoid.configuration.iconHealthy; 
-  }
+#include <KLocalizedString>
 
-  property string failing: {
-    if(plasmoid.configuration.iconsFaces)
-      return "face-sick";
-    else if(plasmoid.configuration.iconsDialog)
-      return "dialog-error";
-    else
-      return plasmoid.configuration.iconFailing; 
-  }
 
-  property string warning: {
-    if(plasmoid.configuration.iconsFaces)
-      return "face-angry";
-    else if(plasmoid.configuration.iconsDialog)
-      return "dialog-warning";
-    else
-      return plasmoid.configuration.iconWarning; 
-  }
-
-  property string unknown: {
-    if(plasmoid.configuration.iconsFaces)
-      return "face-confused";
-    else if(plasmoid.configuration.iconsDialog)
-      return "unknown";
-    else
-      return plasmoid.configuration.iconUnknown; 
-  }
-
+/*
+ * Constructor
+ */
+HealthStatus::HealthStatus() : QObject()
+{
 
 }
 
+
+
+/*
+ * Destructor
+ */
+HealthStatus::~HealthStatus()
+{
+
+}
+
+
+
+/*
+ * Get the current health status value
+ */
+HealthStatus::Status HealthStatus::getStatus() const
+{
+  return status;
+}
+
+
+
+/*
+ * Update the status only if the new value is greater than the old one
+ */
+bool HealthStatus::updateIfGreater(HealthStatus::Status newStatus)
+{
+  if(newStatus > status) {
+    status = newStatus;
+    return true;
+  } else
+    return false;
+}
+
+
+
+/*
+ * Return a string representation of the given health status
+ */
+QString HealthStatus::toString(HealthStatus::Status status)
+{
+  switch(status) {
+    case Failing: return i18nc("Failing health status", "Failing"); break;
+    case Warning: return i18nc("Warning health status", "Warning"); break;
+    case Healthy: return i18nc("Healthy health status", "Healthy"); break;
+    default: return i18nc("Unknown health status", "Unknown"); break;
+  }
+}
+
+
+
+/*
+ *
+ */
+HealthStatus& HealthStatus::operator =(const HealthStatus::Status& newStatus)
+{
+  this -> status = newStatus;
+  return *this;
+}
+
+
+
+/*
+ *
+ */
+bool HealthStatus::operator <(const HealthStatus::Status& status)
+{
+  return this -> status < status;
+}

@@ -211,6 +211,8 @@ UDisks2Wrapper::~UDisks2Wrapper()
     delete unit;
 
   units.clear();
+
+  delete smartAttributesMonitor;
 }
 
 
@@ -283,9 +285,12 @@ QDBusInterface*UDisks2Wrapper::mdraidIface(QDBusObjectPath objectPath) const
 /*
  * Add a new SMART attributes monitor for the given path
  */
-void UDisks2Wrapper::addSMARTAttributesMonitor(const QList<int>& list, const QString& path)
+void UDisks2Wrapper::addSMARTAttributesMonitor(SMARTAttributesMonitor* monitor, const QString& path)
 {
-  this -> smartAttributesMonitor = QList<int>(list);
+  if(this -> smartAttributesMonitor != NULL)
+    delete this -> smartAttributesMonitor;
+
+  this -> smartAttributesMonitor = monitor;
 
   //refresh drive to take new monitor into account
   foreach(StorageUnit* unit, units.values()) {
@@ -299,7 +304,7 @@ void UDisks2Wrapper::addSMARTAttributesMonitor(const QList<int>& list, const QSt
 /*
  * Get a SMART attributes monitor for the given path
  */
-const QList<int>& UDisks2Wrapper::getSMARTAttributeMonitor(const QString& /*path*/)
+SMARTAttributesMonitor* UDisks2Wrapper::getSMARTAttributeMonitor(const QString& /*path*/)
 {
   return smartAttributesMonitor;
 }

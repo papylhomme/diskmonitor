@@ -41,9 +41,7 @@ public:
   enum ModelRoles {
     NameRole = Qt::UserRole + 1,
     DeviceRole,
-    FailingRole,
-    FailingKnownRole,
-    HasWarningsRole,
+    HealthStatusRole,
     PathRole,
     IconRole
   };

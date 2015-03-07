@@ -54,7 +54,7 @@ MDRaid::~MDRaid()
  */
 void MDRaid::update()
 {
-  warnings = false;
+  healthStatus = HealthStatus::Unknown;
 
   /*
    * Retrieve raid properties
@@ -62,8 +62,13 @@ void MDRaid::update()
   QDBusInterface* raidIface = UDisks2Wrapper::instance() -> mdraidIface(objectPath);
 
   this -> failing = getBoolProperty(raidIface, "Degraded");
-  //only set failingStatusKnown if DBus access hasn't failed
-  this -> failingStatusKnown = !raidIface -> lastError().isValid();
+
+  //only set StatusKnown if DBus access hasn't failed
+  if(!raidIface -> lastError().isValid())
+    healthStatus = HealthStatus::Healthy;
+
+  if(this -> failing)
+    healthStatus = HealthStatus::Failing;
 
   this -> name = getStringProperty(raidIface, "Name");
   this -> shortName = this -> device.split("/").last().toUpper();
@@ -100,11 +105,11 @@ void MDRaid::update()
     arg >> m;
 
     if(m.state.contains("faulty")) {
-      m.failing = true;
-      warnings = true;
+      m.healthStatus = HealthStatus::Failing;
+      healthStatus.updateIfGreater(HealthStatus::Warning);
     } else if(m.numReadErrors != 0) {
-      m.warning = true;
-      warnings = true;
+      m.healthStatus = HealthStatus::Warning;
+      healthStatus.updateIfGreater(HealthStatus::Warning);
     }
 
     members << m;

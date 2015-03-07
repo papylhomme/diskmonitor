@@ -23,8 +23,8 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import QtQuick.Controls 1.0 as QtControls
 import QtQuick.Layouts 1.1
+import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 
-import "StorageUnit.js" as StorageUnit
 
 Item {
   id: appearancePage
@@ -47,9 +47,8 @@ Item {
   property alias cfg_warningColor: warningColor.color
   property alias cfg_errorColor: errorColor.color
 
-
-  IconProvider {
-    id: iconProvider
+  IconsProvider {
+    id: iconsProvider
   }
 
 
@@ -63,7 +62,6 @@ Item {
     QtControls.GroupBox {
       Layout.fillWidth: true
       title: i18n("Layouts")
-      flat: true
 
       ColumnLayout {
         anchors.left: parent.left
@@ -97,11 +95,10 @@ Item {
           }
   
           StorageUnitBig {
+            id: unitBig
             Layout.fillWidth: true
             property string icon: "drive-harddisk"
-            property bool failing: false
-            property bool failingKnown: true
-            property bool hasWarnings: false
+            property var healthStatus: DiskMonitor.HealthStatus.Healthy
             property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
@@ -115,11 +112,10 @@ Item {
           }
 
           StorageUnitSmall {
+            id: unitSmall
             Layout.fillWidth: true
             property string icon: "drive-harddisk"
-            property bool failing: false
-            property bool failingKnown: true
-            property bool hasWarnings: false
+            property var healthStatus: DiskMonitor.HealthStatus.Healthy
             property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
@@ -133,11 +129,10 @@ Item {
           }
 
           StorageUnitMinimalist {
+            id: unitMinimalist
             Layout.fillWidth: true
             property string icon: "drive-harddisk"
-            property bool failing: false
-            property bool failingKnown: true
-            property bool hasWarnings: false
+            property var healthStatus: DiskMonitor.HealthStatus.Healthy
             property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
@@ -152,7 +147,6 @@ Item {
     QtControls.GroupBox {
       Layout.fillWidth: true
       title: i18n("Icons")
-      flat: true
 
       QtControls.ExclusiveGroup { id: iconType }
 
@@ -234,7 +228,6 @@ Item {
     QtControls.GroupBox {
       Layout.fillWidth: true
       title: i18n("Colors")
-      flat: true
 
       GridLayout {
         columns: 2
@@ -263,10 +256,6 @@ Item {
         }
       }
     }
-
-
-
-
   }
 
   Component.onCompleted: {
@@ -297,6 +286,9 @@ Item {
         iconsCustom.checked = true;
     }
 
+    unitBig.healthStatus = DiskMonitor.HealthStatus.Healthy;
+    unitSmall.healthStatus = DiskMonitor.HealthStatus.Healthy;
+    unitMinimalist.healthStatus = DiskMonitor.HealthStatus.Healthy;
   }
 
 }

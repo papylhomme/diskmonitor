@@ -24,6 +24,8 @@
 
 #include "storageunitqmlmodel.h"
 #include "storageunitmonitor.h"
+#include "types.h"
+#include "iconsprovider.h"
 
 
 /*
@@ -36,4 +38,10 @@ void QmlPlugins::registerTypes(const char* uri)
 
     // @uri org.papylhomme.diskmonitor.StorageUnitMonitor
     qmlRegisterType<StorageUnitMonitor>(uri, 0, 1, "StorageUnitMonitor");
+
+    // @uri org.papylhomme.diskmonitor.HealthStatus
+    qmlRegisterType<HealthStatus>(uri, 0, 1, "HealthStatus");
+
+    // @uri org.papylhomme.diskmonitor.IconProvider
+    qmlRegisterType<IconsProvider>(uri, 0, 1, "IconProvider");
 }

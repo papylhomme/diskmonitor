@@ -17,48 +17,34 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.              *
  ****************************************************************************/
 
+#ifndef SMARTATTRIBUTESMONITOR_H
+#define SMARTATTRIBUTESMONITOR_H
 
-#ifndef ICONPROVIDER_H
-#define ICONPROVIDER_H
 
 #include <QObject>
+#include <QList>
 
-#include "types.h"
+
+#include "drive.h"
 
 
-namespace Settings {
+/*
+ * A component used to monitor smart attributes
+ */
+class SMARTAttributesMonitor : QObject
+{
+  Q_OBJECT
 
-  /*
-   * Component to provide icons depending on the configuration
-   */
-  class IconProvider : public QObject
-  {
-    Q_OBJECT
-    Q_PROPERTY(QString healthy READ healthy NOTIFY healthyChanged)
-    Q_PROPERTY(QString failing READ failing NOTIFY failingChanged)
-    Q_PROPERTY(QString unknown READ unknown NOTIFY unknownChanged)
+public:
+  SMARTAttributesMonitor();
+  SMARTAttributesMonitor(const QList<int>& attrs);
+  ~SMARTAttributesMonitor();
 
-  public:
-    explicit IconProvider(QObject *parent = 0);
-    ~IconProvider();
+  HealthStatus::Status process(const SmartAttribute& attribute);
 
-    QString healthy() const;
-    QString failing() const;
-    QString warning() const;
-    QString unknown() const;
 
-    QString iconForSatus(HealthStatus::Status healthStatus) const;
+private:
+  QList<int> attributes;
+};
 
-  signals:
-    void healthyChanged();
-    void failingChanged();
-    void warningChanged();
-    void unknownChanged();
-
-  public slots:
-    void configChanged();
-  };
-
-}
-
-#endif // ICONPROVIDER_H
+#endif // SMARTATTRIBUTESMONITOR_H

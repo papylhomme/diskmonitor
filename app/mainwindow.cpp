@@ -204,23 +204,27 @@ void MainWindow::updateHealthStatus(StorageUnit* unit)
   QString text;
   QPixmap icon;
 
-  if(!unit -> isFailingStatusKnown()) {
-    text = i18nc("Unknown health status", "Unknown");
-    icon = QIcon::fromTheme(iconProvider.unknown()).pixmap(QSize(16,16));
+  switch(unit -> getHealthStatus()) {
+    case HealthStatus::Failing:
+      style = "QLabel { color: " + DiskMonitorSettings::errorColor().name() + "; }";
+      text = i18nc("Failing health status", "Failing");
+      icon = QIcon::fromTheme(iconProvider.failing()).pixmap(QSize(16,16));
+      break;
 
-  } else if(unit -> isFailing()) {
-    style = "QLabel { color: " + DiskMonitorSettings::errorColor().name() + "; }";
-    text = i18nc("Failing health status", "Failing");
-    icon = QIcon::fromTheme(iconProvider.failing()).pixmap(QSize(16,16));
+    case HealthStatus::Warning:
+      style = "QLabel { color: " + DiskMonitorSettings::warningColor().name() + "; }";
+      text = i18nc("Warning health status", "Warning");
+      icon = QIcon::fromTheme(iconProvider.warning()).pixmap(QSize(16,16));
+      break;
+    case HealthStatus::Healthy:
+      text = i18nc("Healthy health status", "Healthy");
+      icon = QIcon::fromTheme(iconProvider.healthy()).pixmap(QSize(16,16));
+      break;
 
-  } else if(unit -> hasWarnings()) {
-    style = "QLabel { color: " + DiskMonitorSettings::warningColor().name() + "; }";
-    text = i18nc("Warning health status", "Warning");
-    icon = QIcon::fromTheme(iconProvider.warning()).pixmap(QSize(16,16));
-
-  } else {
-    text = i18nc("Healthy health status", "Healthy");
-    icon = QIcon::fromTheme(iconProvider.healthy()).pixmap(QSize(16,16));
+    case HealthStatus::Unknown:
+      text = i18nc("Unknown health status", "Unknown");
+      icon = QIcon::fromTheme(iconProvider.unknown()).pixmap(QSize(16,16));
+      break;
   }
 
   ui -> iconLabel -> setPixmap(icon);
@@ -248,6 +252,6 @@ void MainWindow::configChanged()
   qDebug() << "DiskMonitor::MainWindow - Configuration changed, updating UI...";
 
   storageUnitModel -> refresh();
-  UDisks2Wrapper::instance() -> addSMARTAttributesMonitor(DiskMonitorSettings::sensitiveAttributes());
+  UDisks2Wrapper::instance() -> addSMARTAttributesMonitor(new SMARTAttributesMonitor(DiskMonitorSettings::sensitiveAttributes()));
 }
 

@@ -34,7 +34,15 @@
  */
 StorageUnitMonitor::StorageUnitMonitor() : QObject()
 {
+  defaultProvider = new IconsProvider();
+  provider = defaultProvider;
+
   UDisks2Wrapper* udisks2 = UDisks2Wrapper::instance();
+
+  QList<int> sensitiveAttributes;
+  sensitiveAttributes << 1 << 5 << 7 << 192 << 197 << 198 << 201 << 192;
+  udisks2 -> addSMARTAttributesMonitor(new SMARTAttributesMonitor(sensitiveAttributes));
+
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 
@@ -45,7 +53,6 @@ StorageUnitMonitor::StorageUnitMonitor() : QObject()
   //delay the fist monitor in order to let the applet
   //configure its value (mainly notifyEnabled)
   QTimer::singleShot(2000, this, SLOT(monitor()));
-
 }
 
 
@@ -57,6 +64,8 @@ StorageUnitMonitor::~StorageUnitMonitor()
 {
   timer -> stop();
   delete timer;
+
+  delete defaultProvider;
 
   qDebug() << "StorageUnitMonitor destructed !";
 }
@@ -116,98 +125,47 @@ bool StorageUnitMonitor::notifyEnabled() const
 void StorageUnitMonitor::setNotifyEnabled(bool notify)
 {
   this -> notify = notify;
-  qDebug() << "Notify enabled !!";
 }
 
 
 
 /*
- * Get the failing value
+ *
  */
-bool StorageUnitMonitor::failing() const
+HealthStatus::Status StorageUnitMonitor::globalHealthStatus() const
 {
-  return hasFailing;
+  return status;
 }
-
-
-
-/*
- * Get the iconHealthy value
- */
-QString StorageUnitMonitor::iconHealthy() const
-{
-  return healthyIcon;
-}
-
-
-
-/*
- * Get the iconFailing value
- */
-QString StorageUnitMonitor::iconFailing() const
-{
-  return failingIcon;
-}
-
-
-
-/*
- * Get the iconWarning value
- */
-QString StorageUnitMonitor::iconWarning() const
-{
-  return warningIcon;
-}
-
-
-
-
-/*
- * Set the iconHealthy value
- */
-void StorageUnitMonitor::setIconHealthy(QString healthyIcon)
-{
-  this -> healthyIcon = healthyIcon;
-}
-
-
-
-/*
- * Set the iconFailing value
- */
-void StorageUnitMonitor::setIconFailing(QString failingIcon)
-{
-  this -> failingIcon = failingIcon;
-}
-
-
-
-/*
- * Set the iconWarning value
- */
-void StorageUnitMonitor::setIconWarning(QString warningIcon)
-{
-  this -> warningIcon = warningIcon;
-}
-
 
 
 
 /*
  * Retrieve the current status as a formatted string
  */
-QString StorageUnitMonitor::status() const
+const QString& StorageUnitMonitor::statusText() const
 {
-  if(!hasFailing)
-    return i18n("Everything looks healthy.");
-  else {
-    QString details;
+  return statusMessage;
+}
 
-    foreach(StorageUnit* unit, failingUnits)
-      details = "<br/><i>" + unit -> getName() + " (" + unit -> getDevice() + ")</i>";
 
-    return i18n("The following storage units are in failing state:<br/>%1", details);
-  }
+
+/*
+ *
+ */
+void StorageUnitMonitor::setIconsProvider(IconsProvider* provider)
+{
+  this -> provider = provider;
+  emit iconsProviderChanged();
+}
+
+
+
+/*
+ *
+ */
+IconsProvider* StorageUnitMonitor::iconsProvider()
+{
+  return provider;
 }
 
 
@@ -249,31 +207,42 @@ StorageUnitQmlModel*StorageUnitMonitor::model()
  */
 void StorageUnitMonitor::processUnits()
 {
-  bool localFailing = false;
-  failingUnits.clear();
-
+  HealthStatus::Status newStatus = HealthStatus::Unknown;
   QList<StorageUnit*> units = UDisks2Wrapper::instance() -> listStorageUnits();
 
   //test each unit
+  QString details;
   foreach(StorageUnit* unit, units) {
-    if(unit -> isFailing()) {
-      localFailing = true;
-      failingUnits << unit;
+    if(unit -> getHealthStatus() > HealthStatus::Healthy)
+      details = "<br/><i>" + unit -> getName() + " (" + unit -> getDevice() + "): " + HealthStatus::toString(unit -> getHealthStatus()) + "</i>";
+
+    if(unit -> getHealthStatus() >= HealthStatus::Warning) {
+      newStatus = unit -> getHealthStatus();
     }
   }
 
+  if(status == HealthStatus::Unknown)
+    statusMessage = i18n("Global health status is unknown");
+  if(status == HealthStatus::Healthy)
+    statusMessage = i18n("Everything looks healthy.");
+  else {
+    statusMessage = i18n("The following storage units are not healthy:<br/>%1", details);
+  }
+
+  emit statusTextChanged(statusMessage);
+
 
   //General health status changed, notify the user
-  if(hasFailing != localFailing) {
-    qDebug() << "StorageMonitor: Changing failing status to " << localFailing;
-    hasFailing = localFailing;
-    emit statusChanged();
+  if(status != newStatus) {
+    qDebug() << "StorageMonitor: Changing failing status from " << status << " to " << newStatus;
+    status = newStatus;
+    emit globalHealthStatusChanged(status);
 
     if(notifyEnabled())
-      KNotification::event(hasFailing ? "failing" : "healthy",
-                           hasFailing ? i18n("Storage units failing") : i18n("Storage units are back to healthy status"),
-                           status(),
-                           hasFailing ? iconFailing() : iconHealthy(),
+      KNotification::event(status == HealthStatus::Failing ? "failing" : "healthy",
+                           status == HealthStatus::Failing ? i18n("Storage units failing") : i18n("Storage units are back to healthy status"),
+                           statusText(),
+                           iconsProvider() -> iconForStatus(status),
                            NULL,
                            KNotification::Persistent,
                            "diskmonitor"

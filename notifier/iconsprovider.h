@@ -18,47 +18,57 @@
  ****************************************************************************/
 
 
-#ifndef ICONPROVIDER_H
-#define ICONPROVIDER_H
+#ifndef ICONSPROVIDER_H
+#define ICONSPROVIDER_H
 
+#include <QString>
 #include <QObject>
+
 
 #include "types.h"
 
 
-namespace Settings {
 
-  /*
-   * Component to provide icons depending on the configuration
-   */
-  class IconProvider : public QObject
-  {
-    Q_OBJECT
-    Q_PROPERTY(QString healthy READ healthy NOTIFY healthyChanged)
-    Q_PROPERTY(QString failing READ failing NOTIFY failingChanged)
-    Q_PROPERTY(QString unknown READ unknown NOTIFY unknownChanged)
+/*
+ * Class to manage icons from the Qml world
+ */
+class IconsProvider: public QObject
+{
+  Q_OBJECT
 
-  public:
-    explicit IconProvider(QObject *parent = 0);
-    ~IconProvider();
+  Q_PROPERTY(QString iconUnknown READ iconUnknown WRITE setIconUnknown NOTIFY iconUnknownChanged())
+  Q_PROPERTY(QString iconHealthy READ iconHealthy WRITE setIconHealthy NOTIFY iconHealthyChanged())
+  Q_PROPERTY(QString iconWarning READ iconWarning WRITE setIconWarning NOTIFY iconWarningChanged())
+  Q_PROPERTY(QString iconFailing READ iconFailing WRITE setIconFailing NOTIFY iconFailingChanged())
 
-    QString healthy() const;
-    QString failing() const;
-    QString warning() const;
-    QString unknown() const;
+public:
+  IconsProvider();
+  ~IconsProvider();
 
-    QString iconForSatus(HealthStatus::Status healthStatus) const;
 
-  signals:
-    void healthyChanged();
-    void failingChanged();
-    void warningChanged();
-    void unknownChanged();
+  const QString& iconUnknown() const;
+  const QString& iconHealthy() const;
+  const QString& iconWarning() const;
+  const QString& iconFailing() const;
 
-  public slots:
-    void configChanged();
-  };
+  Q_INVOKABLE QString iconForStatus(int healthStatus) const;
 
-}
+  void setIconUnknown(const QString& unknownIcon);
+  void setIconHealthy(const QString& healthyIcon);
+  void setIconWarning(const QString& warningIcon);
+  void setIconFailing(const QString& failingIcon);
 
-#endif // ICONPROVIDER_H
+signals:
+  void iconUnknownChanged();
+  void iconHealthyChanged();
+  void iconWarningChanged();
+  void iconFailingChanged();
+
+private:
+  QString unknownIcon;
+  QString healthyIcon;
+  QString warningIcon;
+  QString failingIcon;
+};
+
+#endif // ICONSPROVIDER_H

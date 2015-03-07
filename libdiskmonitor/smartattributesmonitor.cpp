@@ -17,48 +17,50 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.              *
  ****************************************************************************/
 
-
-#ifndef ICONPROVIDER_H
-#define ICONPROVIDER_H
-
-#include <QObject>
-
-#include "types.h"
+#include "smartattributesmonitor.h"
 
 
-namespace Settings {
+/*
+ * Empty constructor
+ */
+SMARTAttributesMonitor::SMARTAttributesMonitor() : QObject()
+{
+}
 
-  /*
-   * Component to provide icons depending on the configuration
-   */
-  class IconProvider : public QObject
-  {
-    Q_OBJECT
-    Q_PROPERTY(QString healthy READ healthy NOTIFY healthyChanged)
-    Q_PROPERTY(QString failing READ failing NOTIFY failingChanged)
-    Q_PROPERTY(QString unknown READ unknown NOTIFY unknownChanged)
 
-  public:
-    explicit IconProvider(QObject *parent = 0);
-    ~IconProvider();
 
-    QString healthy() const;
-    QString failing() const;
-    QString warning() const;
-    QString unknown() const;
+/*
+ * Construct a new SMARTAttributesMonitor with a given list of sensitive attributes
+ */
+SMARTAttributesMonitor::SMARTAttributesMonitor(const QList<int>& attrs)
+{
+  this -> attributes = QList<int>(attrs);
+}
 
-    QString iconForSatus(HealthStatus::Status healthStatus) const;
 
-  signals:
-    void healthyChanged();
-    void failingChanged();
-    void warningChanged();
-    void unknownChanged();
 
-  public slots:
-    void configChanged();
-  };
+/*
+ * Destructor
+ */
+SMARTAttributesMonitor::~SMARTAttributesMonitor()
+{
 
 }
 
-#endif // ICONPROVIDER_H
+
+
+/*
+ * Process a SmartAttribute to extract his HealthStatus
+ */
+HealthStatus::Status SMARTAttributesMonitor::process(const SmartAttribute& attr)
+{
+  if(attr.value <= attr.threshold)
+    return HealthStatus::Failing;
+  else if(!attributes.contains(attr.id))
+    return HealthStatus::Unknown;
+  else if(attr.pretty != 0)
+    return HealthStatus::Warning;
+  else
+    return HealthStatus::Healthy;
+}
+

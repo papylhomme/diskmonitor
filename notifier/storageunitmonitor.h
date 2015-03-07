@@ -30,6 +30,7 @@
 #include "drive.h"
 #include "mdraid.h"
 
+#include "iconsprovider.h"
 
 
 /*
@@ -39,14 +40,14 @@ class StorageUnitMonitor : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(bool failing READ failing)
   Q_PROPERTY(bool notifyEnabled READ notifyEnabled WRITE setNotifyEnabled)
   Q_PROPERTY(int refreshTimeout READ refreshTimeout WRITE setRefreshTimeout)
-  Q_PROPERTY(QString status READ status NOTIFY statusChanged)
-  Q_PROPERTY(QString iconHealthy READ iconHealthy WRITE setIconHealthy)
-  Q_PROPERTY(QString iconFailing READ iconFailing WRITE setIconFailing)
-  Q_PROPERTY(QString iconWarning READ iconWarning WRITE setIconWarning)
+
+  Q_PROPERTY(HealthStatus::Status globalHealthStatus READ globalHealthStatus NOTIFY globalHealthStatusChanged)
+  Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
+
   Q_PROPERTY(StorageUnitQmlModel* model READ model NOTIFY modelChanged)
+  Q_PROPERTY(IconsProvider* iconsProvider READ iconsProvider WRITE setIconsProvider NOTIFY iconsProviderChanged)
 
 public:
   StorageUnitMonitor();
@@ -58,28 +59,24 @@ public:
   bool notifyEnabled() const;
   void setNotifyEnabled(bool notify);
 
-  bool failing() const;
-  QString status() const;
+  HealthStatus::Status globalHealthStatus() const;
+  const QString& statusText() const;
 
-  QString iconHealthy() const;
-  QString iconFailing() const;
-  QString iconWarning() const;
-  void setIconHealthy(QString healthyIcon);
-  void setIconFailing(QString failingIcon);
-  void setIconWarning(QString warningIcon);
+
+  IconsProvider* iconsProvider();
+  void setIconsProvider(IconsProvider* provider);
 
   StorageUnitQmlModel* model();
 
 private:
   bool notify = false;
-  bool hasFailing = false;
 
-  QString healthyIcon;
-  QString failingIcon;
-  QString warningIcon;
+  HealthStatus::Status status = HealthStatus::Unknown;
+  QString statusMessage;
 
-  QList<StorageUnit*> failingUnits;
   StorageUnitQmlModel storageUnitQmlModel;
+  IconsProvider* provider;
+  IconsProvider* defaultProvider;
 
   int timeout = 5;
   QTimer* timer;
@@ -95,8 +92,11 @@ private slots:
   void storageUnitRemoved(StorageUnit* unit);
 
 signals:
-  void statusChanged();
+  void globalHealthStatusChanged(HealthStatus::Status status);
+  void statusTextChanged(const QString& statusText);
+
   void modelChanged();
+  void iconsProviderChanged();
 };
 
 #endif // STORAGEUNITMONITOR_H

@@ -121,18 +121,20 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
     if(attr.value == -1)
       return QVariant(QBrush());
 
-    //set the row background to 'error' if attr has failing flag
-    if(attr.failing) {
-      QBrush brush(DiskMonitorSettings::errorColor());
-      return QVariant(brush);
+    switch(attr.healthStatus) {
+      //set the row background to 'error' if attr has failing flag
+      case HealthStatus::Failing:
+        return QVariant(QBrush(DiskMonitorSettings::errorColor()));
+        break;
 
-    //set the row background to 'warning' if attr has warning flag
-    } else if(attr.warning) {
-      QBrush brush(DiskMonitorSettings::warningColor());
-      return QVariant(brush);
+      //set the row background to 'warning' if attr has warning flag
+      case HealthStatus::Warning:
+        return QVariant(QBrush(DiskMonitorSettings::warningColor()));
+        break;
 
-    } else {
-      return QVariant();
+      default:
+        return QVariant();
+        break;
     }
 
 
@@ -140,8 +142,7 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
   } else if(role == Qt::ForegroundRole) {
 
     if(attr.value == -1) {
-      QPalette palette;
-      return QVariant(palette.brush(QPalette::Disabled, QPalette::Text));
+      return QVariant(QPalette().brush(QPalette::Disabled, QPalette::Text));
     } else
       return QVariant(QBrush());
 

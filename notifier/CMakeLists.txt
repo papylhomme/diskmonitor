@@ -1,4 +1,5 @@
 set(NOTIFIER_SRCS
+  iconsprovider.cpp
   storageunitqmlmodel.cpp
   storageunitmonitor.cpp
   qmlplugins.cpp

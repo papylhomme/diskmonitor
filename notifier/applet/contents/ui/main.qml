@@ -26,26 +26,21 @@ import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 Item {
   id: mainWindow
 
-  Plasmoid.toolTipMainText: i18n("DisKMonitor")
-  Plasmoid.toolTipSubText: i18n("Everything looks healthy.")
-  Plasmoid.icon: iconProvider.healthy
-  Plasmoid.status: PlasmaCore.Types.PassiveStatus
-
-
-  IconProvider {
-    id: iconProvider
+  IconsProvider {
+    id: iconsProvider
   }
 
   DiskMonitor.StorageUnitMonitor {
     id: monitor
     refreshTimeout: plasmoid.configuration.refreshTimeout
     notifyEnabled: plasmoid.configuration.notifyEnabled
-    onStatusChanged: { updateTray(); }
-
-    iconHealthy: iconProvider.healthy;
-    iconFailing: iconProvider.failing;
-    iconWarning: iconProvider.warning;
+    iconsProvider: iconsProvider
   }
+
+  Plasmoid.toolTipMainText: i18n("DisKMonitor")
+  Plasmoid.toolTipSubText: monitor.statusText
+  Plasmoid.icon: iconsProvider.iconForStatus(monitor.globalHealthStatus)
+  Plasmoid.status: monitor.globalHealthStatus >= DiskMonitor.HealthStatus.Failing ? PlasmaCore.Types.NeedsAttentionStatus : PlasmaCore.Types.PassiveStatus
 
 
   Plasmoid.compactRepresentation: CompactRepresentation { }
@@ -68,22 +63,7 @@ Item {
   }
 
 
-  function updateTray() {
-    if(monitor.failing) {
-      mainWindow.Plasmoid.status = PlasmaCore.Types.NeedsAttentionStatus;
-      mainWindow.Plasmoid.icon = iconProvider.failing;
-      mainWindow.Plasmoid.toolTipSubText = monitor.status;
-    } else {
-      mainWindow.Plasmoid.status = PlasmaCore.Types.PassiveStatus;
-      mainWindow.Plasmoid.icon = iconProvider.healthy;
-      mainWindow.Plasmoid.toolTipSubText = monitor.status;
-    }
-  }
-
-
-
   Component.onCompleted: {
-    updateTray();
     plasmoid.setAction("refresh", i18n("Refresh"));
     plasmoid.setAction("openapp", i18n("Open application"));
   }
@@ -92,7 +72,7 @@ Item {
   //handle this as config change isn't correctly propagated
   //to Plasmoid.icon 
   Plasmoid.onUserConfiguringChanged: {
-    updateTray();
+    monitor.monitor();
   }
 
 }

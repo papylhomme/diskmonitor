@@ -19,24 +19,19 @@
 
 
 function getTextColor() {
-  if(failing & failingKnown)
-    return plasmoid.configuration.errorColor;
-  else if(hasWarnings)
-    return plasmoid.configuration.warningColor;
-  else
-    return theme.textColor; 
+  switch(healthStatus) {
+    case DiskMonitor.HealthStatus.Failing:
+      return plasmoid.configuration.errorColor;
+    case DiskMonitor.HealthStatus.Warning:
+      return plasmoid.configuration.warningColor;
+    default:
+      return theme.textColor; 
+  }
 }
 
 
 function getStatusIcon() {
-  if(!failingKnown)
-    return iconProvider.unknown;
-  else if(failing)
-    return iconProvider.failing;
-  else if(hasWarnings)
-    return iconProvider.warning;
-  else
-    return iconProvider.healthy;
+  return iconsProvider.iconForStatus(healthStatus);
 }
 
 

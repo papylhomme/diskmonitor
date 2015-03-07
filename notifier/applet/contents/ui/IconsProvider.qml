@@ -18,47 +18,52 @@
  ****************************************************************************/
 
 
-#ifndef ICONPROVIDER_H
-#define ICONPROVIDER_H
+import QtQuick 2.3
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasmoid 2.0
+import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 
-#include <QObject>
+DiskMonitor.IconProvider {
+  id: iconsProvider
 
-#include "types.h"
+  iconUnknown: {
+    if(plasmoid.configuration.iconsFaces)
+      return "face-confused";
+    else if(plasmoid.configuration.iconsDialog)
+      return "unknown";
+    else
+      return plasmoid.configuration.iconUnknown; 
+  }
 
+  iconHealthy: {
+    if(plasmoid.configuration.iconsFaces)
+      return "face-cool";
+    else if(plasmoid.configuration.iconsDialog)
+      return "dialog-ok";
+    else
+      return plasmoid.configuration.iconHealthy; 
+  }
 
-namespace Settings {
+  iconWarning: {
+    if(plasmoid.configuration.iconsFaces)
+      return "face-angry";
+    else if(plasmoid.configuration.iconsDialog)
+      return "dialog-warning";
+    else
+      return plasmoid.configuration.iconWarning; 
+  }
 
-  /*
-   * Component to provide icons depending on the configuration
-   */
-  class IconProvider : public QObject
-  {
-    Q_OBJECT
-    Q_PROPERTY(QString healthy READ healthy NOTIFY healthyChanged)
-    Q_PROPERTY(QString failing READ failing NOTIFY failingChanged)
-    Q_PROPERTY(QString unknown READ unknown NOTIFY unknownChanged)
-
-  public:
-    explicit IconProvider(QObject *parent = 0);
-    ~IconProvider();
-
-    QString healthy() const;
-    QString failing() const;
-    QString warning() const;
-    QString unknown() const;
-
-    QString iconForSatus(HealthStatus::Status healthStatus) const;
-
-  signals:
-    void healthyChanged();
-    void failingChanged();
-    void warningChanged();
-    void unknownChanged();
-
-  public slots:
-    void configChanged();
-  };
+  iconFailing: {
+    if(plasmoid.configuration.iconsFaces)
+      return "face-sick";
+    else if(plasmoid.configuration.iconsDialog)
+      return "dialog-error";
+    else
+      return plasmoid.configuration.iconFailing; 
+  }
 
 }
 
-#endif // ICONPROVIDER_H
+
+
+

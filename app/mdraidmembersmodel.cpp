@@ -110,18 +110,20 @@ QVariant MDRaidMembersModel::data(const QModelIndex& index, int role) const
   // Handle background colors
   if(role == Qt::BackgroundRole) {
 
-    //set the row background to 'error' if member has failing flag
-    if(member.failing) {
-      QBrush brush(DiskMonitorSettings::errorColor());
-      return QVariant(brush);
+    switch(member.healthStatus) {
+      //set the row background to 'error' if member has failing flag
+      case HealthStatus::Failing:
+        return QVariant(QBrush(DiskMonitorSettings::errorColor()));
+        break;
 
-    //set the row background to 'warning' if member has warning flag
-    } else if(member.warning) {
-      QBrush brush(DiskMonitorSettings::warningColor());
-      return QVariant(brush);
+      //set the row background to 'warning' if member has warning flag
+      case HealthStatus::Warning:
+        return QVariant(QBrush(DiskMonitorSettings::warningColor()));
+        break;
 
-    } else {
-      return QVariant();
+      default:
+        return QVariant();
+        break;
     }
 
   } else if(role == Qt::DisplayRole) {

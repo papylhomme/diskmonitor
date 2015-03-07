@@ -25,6 +25,8 @@
 #include <QtDBus>
 
 
+#include "types.h"
+
 /*
  * A map of interface (key) with there properties (value)
  */
@@ -56,8 +58,7 @@ struct SmartAttribute {
   QVariantMap expansion;
 
   //internal type, do not belong to UDisks2
-  bool failing = false;
-  bool warning = false;
+  HealthStatus::Status healthStatus = HealthStatus::Unknown;
 };
 Q_DECLARE_METATYPE(SmartAttribute)
 
@@ -86,8 +87,7 @@ struct MDRaidMember {
   QVariantMap expansion;
 
   //internal type, do not belong to UDisks2
-  bool failing = false;
-  bool warning = false;
+  HealthStatus::Status healthStatus = HealthStatus::Unknown;
 };
 Q_DECLARE_METATYPE(MDRaidMember)
 

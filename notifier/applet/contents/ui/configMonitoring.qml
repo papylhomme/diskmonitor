@@ -39,7 +39,6 @@ Item {
       Layout.fillWidth: true
       Layout.fillHeight: true
       title: i18n("General")
-      flat: true
 
       ColumnLayout {
         spacing: 20

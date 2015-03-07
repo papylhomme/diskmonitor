@@ -128,31 +128,11 @@ QString StorageUnit::getShortName() const
 
 
 /*
- * Test if this unit is considered failing
+ * Get the unit's health status
  */
-bool StorageUnit::isFailing() const
+HealthStatus::Status StorageUnit::getHealthStatus() const
 {
-  return this -> failing;
-}
-
-
-
-/*
- * Test if the failing status of the unit is known
- */
-bool StorageUnit::isFailingStatusKnown() const
-{
-  return this -> failingStatusKnown;
-}
-
-
-
-/*
- * Test if this unit has warnings
- */
-bool StorageUnit::hasWarnings() const
-{
-  return warnings;
+  return healthStatus.getStatus();
 }
 
 

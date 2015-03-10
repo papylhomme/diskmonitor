@@ -19,47 +19,39 @@
 
 
 import QtQuick 2.3
-import QtQuick.Layouts 1.1
-import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import QtQuick.Layouts 1.1
 import org.papylhomme.diskmonitor 0.1 as DiskMonitor
- 
- 
-FocusScope {
 
-  property var storageModel
 
-  PlasmaExtras.ScrollArea {
-    id: scrollView
+PlasmaComponents.ListItem {
+  id: storageUnitItem
+  enabled: true
 
-    anchors.fill: parent
 
-    ListView {
-      id: storageUnitView
+  PlasmaCore.IconItem {
+    id: unitIcon
+    height: 16
+    width: 16
+    source: icon
 
-      anchors.fill: parent
-      clip: true
-      model: storageModel
-      currentIndex: -1
-      boundsBehavior: Flickable.StopAtBounds
-      delegate: Component {
-        id: delegateComponent
-
-        Loader {
-          anchors.left: parent.left
-          anchors.right: parent.right
-          source: {
-            if(plasmoid.configuration.layoutSmall)
-              return "StorageUnitSmall.qml";
-            else if(plasmoid.configuration.layoutMinimalist)
-              return "StorageUnitMinimalist.qml";
-            else if(plasmoid.configuration.layoutIconsOnly)
-              return "StorageUnitIcons.qml";
-            else
-              return "StorageUnitBig.qml";
-          }
-        }
-      }
-    }
+    anchors.left: parent.left
   }
+
+  PlasmaCore.IconItem {
+    id: healthIcon
+    height: 16
+    width: 16
+    source: { failingKnown ? (failing? iconProvider.failing : iconProvider.healthy) : iconProvider.unknown; }
+
+    anchors.left: unitIcon.right
+    anchors.leftMargin: width / 2
+  }
+
+
+  onClicked: {
+    myStorageModel.openApp(path);
+  }
+
 }

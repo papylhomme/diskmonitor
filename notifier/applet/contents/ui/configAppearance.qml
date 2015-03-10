@@ -30,8 +30,10 @@ Item {
 
   property alias cfg_includeDriveId: includeDriveId.checked
   property alias cfg_smallDeviceName: smallDeviceName.checked
+
   property alias cfg_layoutBig: layoutBig.checked
   property alias cfg_layoutSmall: layoutSmall.checked
+  property alias cfg_layoutIconsOnly: layoutIconsOnly.checked
   property alias cfg_layoutMinimalist: layoutMinimalist.checked
 
   property alias cfg_iconsFaces: iconsFaces.checked
@@ -51,6 +53,7 @@ Item {
 
 
   ColumnLayout {
+    spacing: 20
     anchors.left: parent.left
     anchors.right: parent.right
 
@@ -95,6 +98,7 @@ Item {
   
           StorageUnitBig {
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignLeft
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
@@ -112,12 +116,31 @@ Item {
 
           StorageUnitSmall {
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignLeft
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
             property string name: "Drive_ID"
             property string device: "/dev/sdX"
           }
+
+          //icons only layout
+          QtControls.RadioButton {
+            id: layoutIconsOnly
+            text: i18nc("Icons only layout", "Icons only")
+            exclusiveGroup: layoutType
+          }
+
+          StorageUnitIcons {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignLeft
+            property string icon: "drive-harddisk"
+            property bool failing: false
+            property bool failingKnown: true
+            property string name: "Drive_ID"
+            property string device: "/dev/sdX"
+          }
+
 
 
           //minimalist layout 
@@ -129,6 +152,7 @@ Item {
 
           StorageUnitMinimalist {
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignLeft
             property string icon: "drive-harddisk"
             property bool failing: false
             property bool failingKnown: true
@@ -167,12 +191,18 @@ Item {
 
         PlasmaCore.IconItem {
           source: "face-cool"
+          Layout.maximumWidth: 16
+          Layout.alignment: Qt.AlignHCenter
         }
         PlasmaCore.IconItem {
           source: "face-sick"
+          Layout.maximumWidth: 16
+          Layout.alignment: Qt.AlignHCenter
         }
         PlasmaCore.IconItem {
           source: "face-confused"
+          Layout.maximumWidth: 16
+          Layout.alignment: Qt.AlignHCenter
         }
 
 
@@ -185,12 +215,18 @@ Item {
 
         PlasmaCore.IconItem {
           source: "dialog-ok"
+          Layout.maximumWidth: 16
+          Layout.alignment: Qt.AlignHCenter
         }
         PlasmaCore.IconItem {
           source: "dialog-error"
+          Layout.maximumWidth: 16
+          Layout.alignment: Qt.AlignHCenter
         }
         PlasmaCore.IconItem {
           source: "unknown"
+          Layout.maximumWidth: 16
+          Layout.alignment: Qt.AlignHCenter
         }
 
         //custom icons
@@ -202,12 +238,15 @@ Item {
 
         IconPickerButton {
           id: iconHealthy
+          Layout.alignment: Qt.AlignHCenter
         }
         IconPickerButton {
           id: iconFailing
+          Layout.alignment: Qt.AlignHCenter
         }
         IconPickerButton {
           id: iconUnknown
+          Layout.alignment: Qt.AlignHCenter
         }
       }
     }
@@ -269,6 +308,8 @@ Item {
         layoutBig.checked = true;
     } else if(plasmoid.configuration.layoutSmall) {
         layoutSmall.checked = true;
+    } else if(plasmoid.configuration.layoutIconsOnly) {
+        layoutIconsOnly.checked = true;
     } else {
         layoutMinimalist.checked = true;
     }
@@ -280,7 +321,6 @@ Item {
     } else {
         iconsCustom.checked = true;
     }
-
   }
 
 }

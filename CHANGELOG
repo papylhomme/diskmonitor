@@ -1,3 +1,6 @@
+Version 0.3.1:
++ Applet : add icons only layout
+
 Version 0.3:
 + Applet : move configuration to plasma config (context menu)
 + Applet : add customization via layouts and other options

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-04 10:43+0000\n"
-"PO-Revision-Date: 2015-03-04 10:31+0000\n"
+"POT-Creation-Date: 2015-03-10 11:20+0000\n"
+"PO-Revision-Date: 2015-03-10 11:21+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -17,119 +17,125 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: notifier/applet/contents/config/config.qml:7
+#: notifier/applet/contents/config/config.qml:27
 msgid "Monitoring"
 msgstr "Surveillance"
 
-#: notifier/applet/contents/config/config.qml:13
+#: notifier/applet/contents/config/config.qml:33
 msgid "Appearance"
 msgstr "Apparence"
 
-#: notifier/applet/contents/ui/ColorPickerButton.qml:10
+#: notifier/applet/contents/ui/ColorPickerButton.qml:30
 msgid "Please choose a color"
 msgstr "Choisissez une couleur"
 
-#: notifier/applet/contents/ui/configAppearance.qml:42
+#: notifier/applet/contents/ui/configAppearance.qml:65
 msgid "Layouts"
 msgstr "Dispositions"
 
-#: notifier/applet/contents/ui/configAppearance.qml:53
+#: notifier/applet/contents/ui/configAppearance.qml:76
 msgid "Use small device name"
 msgstr "Utiliser des noms de périphériques courts"
 
-#: notifier/applet/contents/ui/configAppearance.qml:58
+#: notifier/applet/contents/ui/configAppearance.qml:81
 msgid "Include drive id on small layouts"
 msgstr "Inclure l'identifiant de disque dans les petites dispositions"
 
-#: notifier/applet/contents/ui/configAppearance.qml:72
+#: notifier/applet/contents/ui/configAppearance.qml:95
 msgctxt "Big layout"
 msgid "Big"
 msgstr "Gros"
 
-#: notifier/applet/contents/ui/configAppearance.qml:89
+#: notifier/applet/contents/ui/configAppearance.qml:113
 msgctxt "Small layout"
 msgid "Small"
 msgstr "Petit"
 
-#: notifier/applet/contents/ui/configAppearance.qml:106
+#: notifier/applet/contents/ui/configAppearance.qml:130
+msgctxt "Icons only layout"
+msgid "Icons only"
+msgstr "Icônes seules"
+
+#: notifier/applet/contents/ui/configAppearance.qml:149
 msgctxt "Minimalist layout"
 msgid "Minimalist"
 msgstr "Minimaliste"
 
-#: notifier/applet/contents/ui/configAppearance.qml:128
+#: notifier/applet/contents/ui/configAppearance.qml:172
 msgid "Icons"
 msgstr "Icônes"
 
-#: notifier/applet/contents/ui/configAppearance.qml:144
+#: notifier/applet/contents/ui/configAppearance.qml:188
 msgctxt "Emote icons"
 msgid "Emotes"
 msgstr "Emoticônes"
 
-#: notifier/applet/contents/ui/configAppearance.qml:162
+#: notifier/applet/contents/ui/configAppearance.qml:212
 msgctxt "Dialog icons"
 msgid "Dialogs"
 msgstr "Dialogues"
 
-#: notifier/applet/contents/ui/configAppearance.qml:179
+#: notifier/applet/contents/ui/configAppearance.qml:235
 msgctxt "Custom icons"
 msgid "Custom"
 msgstr "Personnalisé"
 
-#: notifier/applet/contents/ui/configAppearance.qml:201
+#: notifier/applet/contents/ui/configAppearance.qml:260
 msgid "Colors"
 msgstr "Couleurs"
 
-#: notifier/applet/contents/ui/configAppearance.qml:212
+#: notifier/applet/contents/ui/configAppearance.qml:271
 msgctxt "Warning color"
 msgid "Warning"
 msgstr "Avertissement"
 
-#: notifier/applet/contents/ui/configAppearance.qml:222
+#: notifier/applet/contents/ui/configAppearance.qml:281
 msgctxt "Error color"
 msgid "Error"
 msgstr "Erreur"
 
-#: notifier/applet/contents/ui/configMonitoring.qml:21
+#: notifier/applet/contents/ui/configMonitoring.qml:41
 msgid "General"
 msgstr "Général"
 
-#: notifier/applet/contents/ui/configMonitoring.qml:32
+#: notifier/applet/contents/ui/configMonitoring.qml:52
 msgid "Refresh timeout"
 msgstr "Délai de rafraîchissement"
 
-#: notifier/applet/contents/ui/configMonitoring.qml:40
+#: notifier/applet/contents/ui/configMonitoring.qml:60
 msgctxt "abbreviation for minutes"
 msgid " min."
 msgstr " min."
 
-#: notifier/applet/contents/ui/configMonitoring.qml:47
+#: notifier/applet/contents/ui/configMonitoring.qml:67
 msgid "Notify health status change"
 msgstr "Notifier les changements d'état de santé"
 
-#: notifier/applet/contents/ui/main.qml:13
+#: notifier/applet/contents/ui/main.qml:33
 msgid "DisKMonitor"
 msgstr "DisKMonitor"
 
-#: notifier/applet/contents/ui/main.qml:14 notifier/storageunitqmlmodel.cpp:65
+#: notifier/applet/contents/ui/main.qml:34 notifier/storageunitqmlmodel.cpp:85
 msgid "Everything looks healthy."
 msgstr "Tout à l'air sain."
 
-#: notifier/applet/contents/ui/main.qml:72
+#: notifier/applet/contents/ui/main.qml:92
 msgid "Refresh"
 msgstr "Rafraîchir"
 
-#: notifier/applet/contents/ui/main.qml:73
+#: notifier/applet/contents/ui/main.qml:93
 msgid "Open application"
 msgstr "Ouvrir l'application"
 
-#: notifier/storageunitqmlmodel.cpp:72
+#: notifier/storageunitqmlmodel.cpp:92
 msgid "The following storage units are in failing state:<br/>%1"
 msgstr "Les unités de stockage suivantes sont en échec :<br/>%1"
 
-#: notifier/storageunitqmlmodel.cpp:319
+#: notifier/storageunitqmlmodel.cpp:339
 msgid "Storage units failing"
 msgstr "Unités de stockage en échec"
 
-#: notifier/storageunitqmlmodel.cpp:319
+#: notifier/storageunitqmlmodel.cpp:339
 msgid "Storage units are back to healthy status"
 msgstr "Les unités de stockage sont revenues à un état sain"
+

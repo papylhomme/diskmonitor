@@ -45,19 +45,38 @@ public:
   Q_ENUMS(Status)
 
   HealthStatus();
+  HealthStatus(const HealthStatus& other);
+  HealthStatus(const HealthStatus::Status& status);
   ~HealthStatus();
 
   Status getStatus() const;
   bool updateIfGreater(Status newStatus);
 
+  QString toString() const;
   static QString toString(Status);
 
-  HealthStatus& operator =(const HealthStatus::Status&);
-  bool operator <(const HealthStatus::Status&);
+  HealthStatus& operator =(const HealthStatus& other);
+  HealthStatus& operator =(const HealthStatus::Status& status);
+
+  bool operator ==(const HealthStatus::Status& status);
+  bool operator !=(const HealthStatus::Status& status);
+  bool operator <(const HealthStatus::Status& status);
+  bool operator <=(const HealthStatus::Status& status);
+  bool operator >(const HealthStatus::Status& status);
+  bool operator >=(const HealthStatus::Status& status);
+
+  bool operator ==(const HealthStatus& other);
+  bool operator !=(const HealthStatus & other);
+  bool operator <(const HealthStatus& other);
+  bool operator <=(const HealthStatus& other);
+  bool operator >(const HealthStatus& other);
+  bool operator >=(const HealthStatus& other);
 
 private:
   Status status = Unknown;
 };
+
+
 
 
 #endif // TYPES_H

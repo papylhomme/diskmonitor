@@ -29,7 +29,26 @@
  */
 HealthStatus::HealthStatus() : QObject()
 {
+  this -> status = Unknown;
+}
 
+
+/*
+ * Copy constructor
+ */
+HealthStatus::HealthStatus(const HealthStatus& other) : QObject()
+{
+  this -> status = other.status;
+}
+
+
+
+/*
+ * Initializing constructor
+ */
+HealthStatus::HealthStatus(const HealthStatus::Status& status)
+{
+  this -> status = status;
 }
 
 
@@ -69,6 +88,16 @@ bool HealthStatus::updateIfGreater(HealthStatus::Status newStatus)
 
 
 /*
+ * Return a string representation
+ */
+QString HealthStatus::toString() const
+{
+  return HealthStatus::toString(status);
+}
+
+
+
+/*
  * Return a string representation of the given health status
  */
 QString HealthStatus::toString(HealthStatus::Status status)
@@ -83,21 +112,161 @@ QString HealthStatus::toString(HealthStatus::Status status)
 
 
 
+
 /*
  *
+ * HealthStatus vs. HealthStatus::Status operators
+ *
  */
-HealthStatus& HealthStatus::operator =(const HealthStatus::Status& newStatus)
+
+
+
+/*
+ * Operator HealthStatus = HealthStatus::Status
+ */
+HealthStatus& HealthStatus::operator =(const HealthStatus::Status& status)
 {
-  this -> status = newStatus;
+  this -> status = status;
   return *this;
 }
 
 
 
 /*
- *
+ * Operator HealthStatus == HealthStatus::Status
+ */
+bool HealthStatus::operator ==(const HealthStatus::Status& status)
+{
+  return this -> status == status;
+}
+
+
+
+/*
+ * Operator HealthStatus != HealthStatus::Status
+ */
+bool HealthStatus::operator !=(const HealthStatus::Status& status)
+{
+  return this -> status != status;
+}
+
+
+
+/*
+ * Operator HealthStatus < HealthStatus::Status
  */
 bool HealthStatus::operator <(const HealthStatus::Status& status)
 {
   return this -> status < status;
+}
+
+
+
+/*
+ * Operator HealthStatus <= HealthStatus::Status
+ */
+bool HealthStatus::operator <=(const HealthStatus::Status& status)
+{
+  return this -> status <= status;
+}
+
+
+
+/*
+ * Operator HealthStatus > HealthStatus::Status
+ */
+bool HealthStatus::operator >(const HealthStatus::Status& status)
+{
+  return this -> status > status;
+}
+
+
+
+/*
+ * Operator HealthStatus >= HealthStatus::Status
+ */
+bool HealthStatus::operator >=(const HealthStatus::Status& status)
+{
+  return this -> status >= status;
+}
+
+
+
+/*
+ *
+ * HealthStatus vs. HealthStatus operators (forwadings calls to HealthStatus vs. HealthStatus::Status operators)
+ *
+ */
+
+
+
+/*
+ * Operator HealthStatus = HealthStatus
+ */
+HealthStatus& HealthStatus::operator =(const HealthStatus& other)
+{
+  *this = other.status;
+  return *this;
+}
+
+
+
+
+
+/*
+ * Operator HealthStatus == HealthStatus
+ */
+bool HealthStatus::operator ==(const HealthStatus& other)
+{
+  return *this == other.status;
+}
+
+
+
+/*
+ * Operator HealthStatus != HealthStatus
+ */
+bool HealthStatus::operator !=(const HealthStatus& other)
+{
+  return *this != other.status;
+}
+
+
+
+/*
+ * Operator HealthStatus < HealthStatus
+ */
+bool HealthStatus::operator <(const HealthStatus& other)
+{
+  return *this < other.status;
+}
+
+
+
+/*
+ * Operator HealthStatus <= HealthStatus
+ */
+bool HealthStatus::operator <=(const HealthStatus& other)
+{
+  return *this <= other.status;
+}
+
+
+
+/*
+ * Operator HealthStatus > HealthStatus
+ */
+bool HealthStatus::operator >(const HealthStatus& other)
+{
+  return *this > other.status;
+}
+
+
+
+/*
+ * Operator HealthStatus >= HealthStatus
+ */
+bool HealthStatus::operator >=(const HealthStatus& other)
+{
+  return *this >= other.status;
 }

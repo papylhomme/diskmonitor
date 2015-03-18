@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
   KAboutData::setApplicationData(about);
 
-  UDisks2Wrapper::instance() -> addSMARTAttributesMonitor(new SMARTAttributesMonitor(DiskMonitorSettings::sensitiveAttributes()));
+  UDisks2Wrapper::instance() -> addDriveMonitor(new DriveMonitor(DiskMonitorSettings::sensitiveAttributes()));
 
   MainWindow* w = new MainWindow();
   w -> show();

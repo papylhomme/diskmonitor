@@ -54,47 +54,39 @@ MDRaid::~MDRaid()
  */
 void MDRaid::update()
 {
-  healthStatus = HealthStatus::Unknown;
-
   /*
    * Retrieve raid properties
    */
   QDBusInterface* raidIface = UDisks2Wrapper::instance() -> mdraidIface(objectPath);
 
-  this -> failing = getBoolProperty(raidIface, "Degraded");
-
-  //only set StatusKnown if DBus access hasn't failed
-  if(!raidIface -> lastError().isValid())
-    healthStatus = HealthStatus::Healthy;
-
-  if(this -> failing)
-    healthStatus = HealthStatus::Failing;
-
   this -> name = getStringProperty(raidIface, "Name");
   this -> shortName = this -> device.split("/").last().toUpper();
   this -> uuid = getStringProperty(raidIface, "UUID");
-
-  //always set a name (used in the UI)
-  if(this -> name.isEmpty())
-    this -> name = this -> uuid;
-
+  this -> id = uuid;
   this -> level = getStringProperty(raidIface, "Level");
   this -> numDevices = getIntProperty(raidIface, "NumDevices");
+  this -> degraded = getIntProperty(raidIface, "Degraded");
   this -> size = getULongLongProperty(raidIface, "Size");
   this -> syncAction = getStringProperty(raidIface, "SyncAction");
   this -> syncCompleted = getDoubleProperty(raidIface, "SyncCompleted");
   this -> syncRemainingTime = getULongLongProperty(raidIface, "SyncRemainingTime");
 
+
+  //always set a name (used in the UI)
+  if(this -> name.isEmpty())
+    this -> name = this -> uuid;
+
   delete raidIface;
 
+  MDRaidMonitor* monitor = UDisks2Wrapper::instance() -> getMDRaidMonitor(getId());
 
   /*
    * Retrieve members properties
    */
-  QDBusInterface* propIface = UDisks2Wrapper::instance() -> propertiesIface(objectPath);
+  members.clear();
 
   //handle ActiveDevices properties using DBus Properties interface as a direct read fails
-  members.clear();
+  QDBusInterface* propIface = UDisks2Wrapper::instance() -> propertiesIface(objectPath);
   QDBusMessage reply = propIface -> call("Get", UDISKS2_MDRAID_IFACE, "ActiveDevices");
   QVariant v = reply.arguments().first();
   QDBusArgument arg = v.value<QDBusVariant>().variant().value<QDBusArgument>();
@@ -104,18 +96,13 @@ void MDRaid::update()
     MDRaidMember m;
     arg >> m;
 
-    if(m.state.contains("faulty")) {
-      m.healthStatus = HealthStatus::Failing;
-      healthStatus.updateIfGreater(HealthStatus::Warning);
-    } else if(m.numReadErrors != 0) {
-      m.healthStatus = HealthStatus::Warning;
-      healthStatus.updateIfGreater(HealthStatus::Warning);
-    }
-
+    m.healthStatus = monitor -> processMember(this, m);
     members << m;
   }
 
   delete propIface;
+
+  healthStatus = monitor -> process(this);
 
   StorageUnit::update();
 }
@@ -138,6 +125,18 @@ void MDRaid::update()
 int MDRaid::getNumDevices() const
 {
   return this -> numDevices;
+}
+
+
+
+/*
+ * Get the number of devices by which the array is degraded
+ *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-property-org-freedesktop-UDisks2-MDRaid.Degraded
+ */
+int MDRaid::getDegraded() const
+{
+  return this -> degraded;
 }
 
 

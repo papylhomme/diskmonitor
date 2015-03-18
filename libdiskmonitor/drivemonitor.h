@@ -17,57 +17,35 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.              *
  ****************************************************************************/
 
+#ifndef DRIVEMONITOR_H
+#define DRIVEMONITOR_H
 
-#ifndef MDRAID_H
-#define MDRAID_H
 
-#include "storageunit.h"
+#include <QObject>
+#include <QList>
 
-#include "dbus_metatypes.h"
+
+#include "drive.h"
 
 
 /*
- * Represent a MDRaid device node in UDisks2
+ * A component used to monitor smart attributes
  */
-class MDRaid : public StorageUnit
+class DriveMonitor : QObject
 {
   Q_OBJECT
 
 public:
-  explicit MDRaid(QDBusObjectPath objectPath, QString device);
-  ~MDRaid();
+  DriveMonitor();
+  DriveMonitor(const QList<int>& attrs);
+  ~DriveMonitor();
 
-  int getNumDevices() const;
-  int getDegraded() const;
-  qulonglong getSize() const;
-  qulonglong getSyncRemainingTime() const;
-
-  double getSyncCompleted() const;
-
-  const QString& getUUID() const;
-  const QString& getLevel() const;
-  const QString& getSyncAction() const;
-
-  const MDRaidMemberList& getMembers() const;
-
-  virtual void update();
+  HealthStatus::Status process(Drive* drive);
+  HealthStatus::Status processAttributes(Drive* drive, const SmartAttribute& attribute);
 
 
-  virtual bool isMDRaid() const { return true; }
-
-protected:
-  int numDevices = 0;
-  int degraded = 0;
-  qulonglong size = 0;
-  qulonglong syncRemainingTime = 0;
-
-  double syncCompleted = 0;
-
-  QString uuid;
-  QString level;
-  QString syncAction;
-
-  MDRaidMemberList members;
+private:
+  QList<int> sensitiveAttributes;
 };
 
-#endif // MDRAID_H
+#endif // DRIVEMONITOR_H

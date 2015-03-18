@@ -30,10 +30,12 @@
 #include "dbus_metatypes.h"
 
 #include "storageunit.h"
-#include "mdraid.h"
-#include "drive.h"
 
-#include "smartattributesmonitor.h"
+#include "mdraid.h"
+#include "mdraidmonitor.h"
+
+#include "drive.h"
+#include "drivemonitor.h"
 
 
 
@@ -87,19 +89,24 @@ public:
   QDBusInterface* ataIface(QDBusObjectPath) const;
   QDBusInterface* mdraidIface(QDBusObjectPath) const;
 
-  void addSMARTAttributesMonitor(SMARTAttributesMonitor* monitor, const QString& path = QString());
-  SMARTAttributesMonitor* getSMARTAttributeMonitor(const QString& path);
+  void addDriveMonitor(DriveMonitor* monitor, const QString& id = QString());
+  DriveMonitor* getDriveMonitor(const QString& id = QString());
+
+  void addMDRaidMonitor(MDRaidMonitor* monitor, const QString& id = QString());
+  MDRaidMonitor* getMDRaidMonitor(const QString& id = QString());
 
 
 private:
+  bool initialized = false;
+  QMap<QDBusObjectPath, StorageUnit*> units;
+  QMap<QString, DriveMonitor*> driveMonitors;
+  QMap<QString, MDRaidMonitor*> mdraidMonitors;
+
+
   void initialize();
   bool hasATAIface(QDBusObjectPath objectPath) const;
   StorageUnit* createNewUnitFromBlockDevice(const InterfaceList& interfaces) const;
 
-  bool initialized = false;
-  QMap<QDBusObjectPath, StorageUnit*> units;
-
-  SMARTAttributesMonitor* smartAttributesMonitor = NULL;
 
 private slots:
   void interfacesAdded(const QDBusObjectPath&, const InterfaceList&);

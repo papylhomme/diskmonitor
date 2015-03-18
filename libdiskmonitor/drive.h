@@ -41,6 +41,7 @@ public:
 
   bool isSmartSupported() const;
   bool isSmartEnabled() const;
+  bool isSmartFailing() const;
 
   int getSelfTestPercentRemaining() const;
 
@@ -58,6 +59,7 @@ protected:
 
   bool smartSupported = false;
   bool smartEnabled = false;
+  bool smartFailing = false;
 
   int selfTestPercentRemaining = 0;
 

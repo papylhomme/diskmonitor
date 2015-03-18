@@ -45,6 +45,7 @@ public:
   QString getDevice() const;
   QString getName() const;
   QString getShortName() const;
+  QString getId() const;
 
   HealthStatus::Status getHealthStatus() const;
 
@@ -64,12 +65,9 @@ protected:
   QString device;
   QString name;
   QString shortName;
-
+  QString id;
 
   HealthStatus healthStatus;
-  bool failing = false;
-  bool failingStatusKnown = false;
-  bool warnings = false;
 
   static QVariant getProperty(QDBusInterface*, const char*);
   static bool getBoolProperty(QDBusInterface*, const char*);

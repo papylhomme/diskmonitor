@@ -17,50 +17,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.              *
  ****************************************************************************/
 
-#include "smartattributesmonitor.h"
+#ifndef MDRAIDMONITOR_H
+#define MDRAIDMONITOR_H
 
 
-/*
- * Empty constructor
- */
-SMARTAttributesMonitor::SMARTAttributesMonitor() : QObject()
+#include "mdraid.h"
+
+class MDRaidMonitor
 {
-}
+public:
+    MDRaidMonitor();
+    ~MDRaidMonitor();
 
+    HealthStatus::Status process(MDRaid* mdraid);
+    HealthStatus::Status processMember(MDRaid* mdraid, const MDRaidMember& member);
+};
 
-
-/*
- * Construct a new SMARTAttributesMonitor with a given list of sensitive attributes
- */
-SMARTAttributesMonitor::SMARTAttributesMonitor(const QList<int>& attrs)
-{
-  this -> attributes = QList<int>(attrs);
-}
-
-
-
-/*
- * Destructor
- */
-SMARTAttributesMonitor::~SMARTAttributesMonitor()
-{
-
-}
-
-
-
-/*
- * Process a SmartAttribute to extract his HealthStatus
- */
-HealthStatus::Status SMARTAttributesMonitor::process(const SmartAttribute& attr)
-{
-  if(attr.value <= attr.threshold)
-    return HealthStatus::Failing;
-  else if(!attributes.contains(attr.id))
-    return HealthStatus::Unknown;
-  else if(attr.pretty != 0)
-    return HealthStatus::Warning;
-  else
-    return HealthStatus::Healthy;
-}
-
+#endif // MDRAIDMONITOR_H

@@ -156,6 +156,9 @@ UDisks2Wrapper::UDisks2Wrapper() : QObject()
   initQDbusMetaTypes();
 
 
+  addDriveMonitor(new DriveMonitor());
+  addMDRaidMonitor(new MDRaidMonitor());
+
   //connection to UDisks2 signals
   bool connected;
 
@@ -209,10 +212,11 @@ UDisks2Wrapper::~UDisks2Wrapper()
 {
   foreach(StorageUnit* unit, units.values())
     delete unit;
-
   units.clear();
 
-  delete smartAttributesMonitor;
+  foreach(DriveMonitor* monitor, driveMonitors.values())
+    delete monitor;
+  driveMonitors.clear();
 }
 
 
@@ -283,18 +287,18 @@ QDBusInterface*UDisks2Wrapper::mdraidIface(QDBusObjectPath objectPath) const
 
 
 /*
- * Add a new SMART attributes monitor for the given path
+ * Add a new SMART attributes monitor for the given id
  */
-void UDisks2Wrapper::addSMARTAttributesMonitor(SMARTAttributesMonitor* monitor, const QString& path)
+void UDisks2Wrapper::addDriveMonitor(DriveMonitor* monitor, const QString& id)
 {
-  if(this -> smartAttributesMonitor != NULL)
-    delete this -> smartAttributesMonitor;
+  if(this -> driveMonitors[id] != NULL)
+    delete this -> driveMonitors[id];
 
-  this -> smartAttributesMonitor = monitor;
+  this -> driveMonitors[id] = monitor;
 
-  //refresh drive to take new monitor into account
+  //refresh drive(s) to take new monitor into account
   foreach(StorageUnit* unit, units.values()) {
-    if(unit -> isDrive() && (path.isEmpty() || path == unit -> getPath()))
+    if(unit -> isDrive() && (id.isEmpty() || id == unit -> getId()))
       unit -> update();
   }
 }
@@ -302,11 +306,47 @@ void UDisks2Wrapper::addSMARTAttributesMonitor(SMARTAttributesMonitor* monitor, 
 
 
 /*
- * Get a SMART attributes monitor for the given path
+ * Get a SMART attributes monitor for the given id
  */
-SMARTAttributesMonitor* UDisks2Wrapper::getSMARTAttributeMonitor(const QString& /*path*/)
+DriveMonitor* UDisks2Wrapper::getDriveMonitor(const QString& id)
 {
-  return smartAttributesMonitor;
+  if(driveMonitors.contains(id))
+    return driveMonitors[id];
+  else
+    return driveMonitors[QString()];
+}
+
+
+
+/*
+ * Add a new MDRaidMonitor for the given MDRaid id
+ */
+void UDisks2Wrapper::addMDRaidMonitor(MDRaidMonitor* monitor, const QString& id)
+{
+  if(this -> mdraidMonitors[id] != NULL)
+    delete this -> mdraidMonitors[id];
+
+  this -> mdraidMonitors[id] = monitor;
+
+  //refresh mdraid(s) to take new monitor into account
+  foreach(StorageUnit* unit, units.values()) {
+    if(unit -> isMDRaid() && (id.isEmpty() || id == unit -> getId()))
+      unit -> update();
+  }
+
+}
+
+
+
+/*
+ * Get a MDRAidMonitor attributes monitor for the given id
+ */
+MDRaidMonitor*UDisks2Wrapper::getMDRaidMonitor(const QString& id)
+{
+  if(mdraidMonitors.contains(id))
+    return mdraidMonitors[id];
+  else
+    return mdraidMonitors[QString()];
 }
 
 

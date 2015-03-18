@@ -41,7 +41,7 @@ StorageUnitMonitor::StorageUnitMonitor() : QObject()
 
   QList<int> sensitiveAttributes;
   sensitiveAttributes << 1 << 5 << 7 << 192 << 197 << 198 << 201 << 192;
-  udisks2 -> addSMARTAttributesMonitor(new SMARTAttributesMonitor(sensitiveAttributes));
+  udisks2 -> addDriveMonitor(new DriveMonitor(sensitiveAttributes));
 
   connect(udisks2, SIGNAL(storageUnitAdded(StorageUnit*)), this, SLOT(storageUnitAdded(StorageUnit*)));
   connect(udisks2, SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));

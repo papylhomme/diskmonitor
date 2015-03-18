@@ -17,34 +17,75 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.              *
  ****************************************************************************/
 
-#ifndef SMARTATTRIBUTESMONITOR_H
-#define SMARTATTRIBUTESMONITOR_H
-
-
-#include <QObject>
-#include <QList>
-
-
-#include "drive.h"
+#include "drivemonitor.h"
 
 
 /*
- * A component used to monitor smart attributes
+ * Empty constructor
  */
-class SMARTAttributesMonitor : QObject
+DriveMonitor::DriveMonitor() : QObject()
 {
-  Q_OBJECT
-
-public:
-  SMARTAttributesMonitor();
-  SMARTAttributesMonitor(const QList<int>& attrs);
-  ~SMARTAttributesMonitor();
-
-  HealthStatus::Status process(const SmartAttribute& attribute);
+}
 
 
-private:
-  QList<int> attributes;
-};
 
-#endif // SMARTATTRIBUTESMONITOR_H
+/*
+ * Construct a new SMARTAttributesMonitor with a given list of sensitive attributes
+ */
+DriveMonitor::DriveMonitor(const QList<int>& attrs)
+{
+  this -> sensitiveAttributes = QList<int>(attrs);
+}
+
+
+
+/*
+ * Destructor
+ */
+DriveMonitor::~DriveMonitor()
+{
+
+}
+
+
+
+/*
+ * Process a SmartAttribute to extract his HealthStatus
+ */
+HealthStatus::Status DriveMonitor::process(Drive* drive)
+{
+  HealthStatus status;
+
+  if(drive -> isSmartFailing())
+    status = HealthStatus::Failing;
+
+  else if(drive -> isSmartSupported() && drive -> isSmartEnabled())
+    status = HealthStatus::Healthy;
+
+  if(!drive -> isSelfTestStatusHealthy())
+    status.updateIfGreater(HealthStatus::Warning);
+
+  foreach(const SmartAttribute& attr, drive -> getSMARTAttributes())
+    if(attr.healthStatus >= HealthStatus::Warning)
+      status.updateIfGreater(HealthStatus::Warning);
+
+  return status.getStatus();
+}
+
+
+
+/*
+ *
+ */
+HealthStatus::Status DriveMonitor::processAttributes(Drive* /*drive*/, const SmartAttribute& attr)
+{
+  if(attr.value <= attr.threshold)
+    return HealthStatus::Failing;
+  else if(!sensitiveAttributes.contains(attr.id))
+    return HealthStatus::Unknown;
+  else if(attr.pretty != 0)
+    return HealthStatus::Warning;
+  else
+    return HealthStatus::Healthy;
+}
+

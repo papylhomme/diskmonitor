@@ -128,6 +128,16 @@ QString StorageUnit::getShortName() const
 
 
 /*
+ * Get the StorageUnit's id.
+ */
+QString StorageUnit::getId() const
+{
+  return this -> id;
+}
+
+
+
+/*
  * Get the unit's health status
  */
 HealthStatus::Status StorageUnit::getHealthStatus() const

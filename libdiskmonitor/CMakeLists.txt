@@ -2,8 +2,9 @@ set(LIBDISKMONITOR_SRCS
   types.cpp
   storageunit.cpp
   drive.cpp
+  drivemonitor.cpp
   mdraid.cpp
-  smartattributesmonitor.cpp
+  mdraidmonitor.cpp
   udisks2wrapper.cpp
 )
 

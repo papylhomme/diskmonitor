@@ -91,6 +91,18 @@ bool Drive::isSmartEnabled() const
 
 
 /*
+ * Test if SMART is failing on the drive
+ *
+ * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartFailing
+ */
+bool Drive::isSmartFailing() const
+{
+  return this -> smartFailing;
+}
+
+
+
+/*
  * Get the remaining percentage of the running self test, or -1 if unknown
  *
  * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestPercentRemaining
@@ -152,72 +164,54 @@ const SmartAttributesList& Drive::getSMARTAttributes() const
  */
 void Drive::update()
 {
-  healthStatus = HealthStatus::Unknown;
-  attributes.clear();
-
-
   /*
    * retrieve general properties from the DRIVE_IFACE
    */
   QDBusInterface* driveIface = UDisks2Wrapper::instance() -> driveIface(objectPath);
   this -> removable = getBoolProperty(driveIface, "Removable");
   this -> shortName = getStringProperty(driveIface, "Model");
+  this -> id = getStringProperty(driveIface, "Id");
   delete driveIface;
 
-  //Skip smart properties if ATA_IFACE is not present
-  if(!hasATAIface) {
-    return;
-  }
+
+  DriveMonitor* monitor = UDisks2Wrapper::instance() -> getDriveMonitor(getId());
 
 
   /*
    * retrieve SMART properties from the ATA_IFACE
    */
-  QDBusInterface* ataIface = UDisks2Wrapper::instance() -> ataIface(objectPath);
-  this -> smartSupported = getBoolProperty(ataIface, "SmartSupported");
-  this -> smartEnabled = getBoolProperty(ataIface, "SmartEnabled");
+  if(hasATAIface) {
+    QDBusInterface* ataIface = UDisks2Wrapper::instance() -> ataIface(objectPath);
+    this -> smartSupported = getBoolProperty(ataIface, "SmartSupported");
+    this -> smartEnabled = getBoolProperty(ataIface, "SmartEnabled");
 
-  if(this -> smartSupported && this -> smartEnabled) {
-    this -> failing = getBoolProperty(ataIface, "SmartFailing");
+    if(this -> smartSupported && this -> smartEnabled) {
+      this -> smartFailing = getBoolProperty(ataIface, "SmartFailing");
+      this -> selfTestStatus = getStringProperty(ataIface, "SmartSelftestStatus");
+      this -> selfTestPercentRemaining = getIntProperty(ataIface, "SmartSelftestPercentRemaining");
 
-    if(this -> failing)
-      healthStatus = HealthStatus::Failing;
-    else
-      healthStatus = HealthStatus::Healthy;
-
-    this -> selfTestStatus = getStringProperty(ataIface, "SmartSelftestStatus");
-    this -> selfTestPercentRemaining = getIntProperty(ataIface, "SmartSelftestPercentRemaining");
-
-    if(!isSelfTestStatusHealthy())
-      healthStatus.updateIfGreater(HealthStatus::Warning);
-
-    /*
-     * retrieve SMART properties from the ATA_IFACE
-     */
-    QDBusReply<SmartAttributesList> res = ataIface -> call("SmartGetAttributes", QVariantMap());
-    if(!res.isValid())
-      qCritical() << "Error calling SmartGetAttributes for drive '" << getPath() << "':" << res.error();
-    else {
-      attributes = res.value();
-    }
-  }
-
-
-  /*
-   * Update monitor
-   */
-  SMARTAttributesMonitor* monitor = UDisks2Wrapper::instance() -> getSMARTAttributeMonitor(getPath());
-  if(monitor != NULL) {
-    for(SmartAttribute& attr : attributes) {
-      HealthStatus::Status res = monitor -> process(attr);
-      attr.healthStatus = res;
-
-      if(attr.healthStatus >= HealthStatus::Warning)
+      if(!isSelfTestStatusHealthy())
         healthStatus.updateIfGreater(HealthStatus::Warning);
+
+      /*
+       * retrieve SMART properties from the ATA_IFACE
+       */
+      attributes.clear();
+      QDBusReply<SmartAttributesList> res = ataIface -> call("SmartGetAttributes", QVariantMap());
+      if(!res.isValid())
+        qCritical() << "Error calling SmartGetAttributes for drive '" << getPath() << "':" << res.error();
+      else {
+        attributes = res.value();
+      }
+
+      for(SmartAttribute& attr : attributes)
+        attr.healthStatus = monitor -> processAttributes(this, attr);
     }
+
+    delete ataIface;
   }
 
-  delete ataIface;
+  healthStatus = monitor -> process(this);
 
   StorageUnit::update();
 }

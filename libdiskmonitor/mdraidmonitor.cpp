@@ -17,57 +17,62 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.              *
  ****************************************************************************/
 
-
-#ifndef MDRAID_H
-#define MDRAID_H
-
-#include "storageunit.h"
-
-#include "dbus_metatypes.h"
+#include "mdraidmonitor.h"
 
 
 /*
- * Represent a MDRaid device node in UDisks2
+ * Constructor
  */
-class MDRaid : public StorageUnit
+MDRaidMonitor::MDRaidMonitor()
 {
-  Q_OBJECT
 
-public:
-  explicit MDRaid(QDBusObjectPath objectPath, QString device);
-  ~MDRaid();
-
-  int getNumDevices() const;
-  int getDegraded() const;
-  qulonglong getSize() const;
-  qulonglong getSyncRemainingTime() const;
-
-  double getSyncCompleted() const;
-
-  const QString& getUUID() const;
-  const QString& getLevel() const;
-  const QString& getSyncAction() const;
-
-  const MDRaidMemberList& getMembers() const;
-
-  virtual void update();
+}
 
 
-  virtual bool isMDRaid() const { return true; }
 
-protected:
-  int numDevices = 0;
-  int degraded = 0;
-  qulonglong size = 0;
-  qulonglong syncRemainingTime = 0;
+/*
+ * Destructor
+ */
+MDRaidMonitor::~MDRaidMonitor()
+{
 
-  double syncCompleted = 0;
+}
 
-  QString uuid;
-  QString level;
-  QString syncAction;
 
-  MDRaidMemberList members;
-};
 
-#endif // MDRAID_H
+/*
+ * Process the given mdraid unit to detect problems and failures
+ */
+HealthStatus::Status MDRaidMonitor::process(MDRaid* mdraid)
+{
+  HealthStatus status;
+
+  if(mdraid -> getDegraded() > 0)
+    status = HealthStatus::Failing;
+  else
+    status = HealthStatus::Healthy;
+
+  foreach(MDRaidMember member, mdraid -> getMembers())
+    if(member.healthStatus >= HealthStatus::Warning)
+      status.updateIfGreater(HealthStatus::Warning);
+
+  return status.getStatus();
+}
+
+
+
+/*
+ * Process the given MDRaidMember to detected problems and failures
+ */
+HealthStatus::Status MDRaidMonitor::processMember(MDRaid* /*mdraid*/, const MDRaidMember& member)
+{
+  if(member.state.contains("faulty"))
+    return HealthStatus::Failing;
+
+  else if(member.numReadErrors > 0)
+    return HealthStatus::Warning;
+
+  else
+    return HealthStatus::Healthy;
+}
+

@@ -252,6 +252,6 @@ void MainWindow::configChanged()
   qDebug() << "DiskMonitor::MainWindow - Configuration changed, updating UI...";
 
   storageUnitModel -> refresh();
-  UDisks2Wrapper::instance() -> addSMARTAttributesMonitor(new SMARTAttributesMonitor(DiskMonitorSettings::sensitiveAttributes()));
+  UDisks2Wrapper::instance() -> addDriveMonitor(new DriveMonitor(DiskMonitorSettings::sensitiveAttributes()));
 }
 

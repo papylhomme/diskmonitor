@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget* parent) :
   ui -> listView -> setMovement(QListView::Static);
   ui -> listView -> setResizeMode(QListView::Adjust);
   ui -> listView -> setViewMode(QListView::IconMode);
-  ui -> listView -> setGridSize( QSize(150, 100));
+  ui -> listView -> setGridSize(QSize(150, 100));
   ui -> listView -> setWrapping(true);
   ui -> listView -> setWordWrap(true);
   ui -> listView -> setMinimumHeight(100);

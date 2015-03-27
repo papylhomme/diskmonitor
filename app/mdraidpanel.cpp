@@ -93,8 +93,12 @@ void MDRaidPanel::updateUI()
   ui -> progressBar -> setEnabled(running);
   ui -> startScrubButton -> setEnabled(!running);
 
-  double completed = raid -> getSyncCompleted();
-  ui -> progressBar -> setValue(completed * 100);
+  if(raid != NULL) {
+    double completed = raid -> getSyncCompleted();
+    ui -> progressBar -> setValue(completed * 100);
+  } else {
+    ui -> progressBar -> setValue(0);
+  }
 
   this -> modelMembers -> setStorageUnit(raid);
 }

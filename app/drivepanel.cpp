@@ -94,9 +94,10 @@ void DrivePanel::updateUI()
 
   //sanity check
   if(drive == NULL) {
-    ui -> panelSmartNotSupported -> setVisible(!drive -> isSmartSupported());
-    ui -> panelSmartNotEnabled -> setVisible(drive -> isSmartSupported() && !drive -> isSmartEnabled());
+    ui -> panelSmartNotSupported -> setVisible(false);
+    ui -> panelSmartNotEnabled -> setVisible(false);
     ui -> panelSmartWidgets -> setEnabled(false);
+    ui -> progressBar -> setValue(0);
     return;
   }
 

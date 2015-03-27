@@ -119,8 +119,10 @@ void MainWindow::setSelectedUnit(const QString& path)
 
   int i = 0;
   foreach(StorageUnit* u, units) {
-    if(u -> getPath() == path)
+    if(u -> getPath() == path) {
       ui -> listView -> setCurrentIndex(storageUnitModel -> index(i, 0));
+      break;
+    }
 
     i++;
   }
@@ -134,9 +136,6 @@ void MainWindow::setSelectedUnit(const QString& path)
  */
 void MainWindow::unitSelected(const QModelIndex& index)
 {
-  int widgetIndex = 0;
-  QString boxTitle = i18n("Details");
-
   //disconnect the old selected unit if needed
   if(currentUnit != NULL)
     disconnect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
@@ -145,8 +144,8 @@ void MainWindow::unitSelected(const QModelIndex& index)
    * No StorageUnit available, reset the view
    */
   if(!index.isValid() || index.data(Qt::UserRole).value<StorageUnit*>() == NULL) {
-    ui -> groupBox -> setTitle(boxTitle);
-    ui -> stackedWidget -> setCurrentIndex(widgetIndex);
+    ui -> groupBox -> setTitle(i18n("Details"));
+    ui -> stackedWidget -> setCurrentIndex(0);
 
     return;
   }
@@ -162,6 +161,8 @@ void MainWindow::unitSelected(const QModelIndex& index)
 
 
   //select the panel to display
+  int widgetIndex = 0;
+  QString boxTitle = i18n("Details");
   StorageUnitPanel* panel = NULL;
   if(currentUnit -> isDrive()) {
     widgetIndex = 1;

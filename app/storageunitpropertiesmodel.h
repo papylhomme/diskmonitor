@@ -48,9 +48,6 @@ protected:
     StorageUnit* unit = NULL;
     virtual void updateInternalState() { }
 
-public slots:
-    void storageUnitRemoved(StorageUnit* unit);
-
 private slots:
     void storageUnitUpdate(StorageUnit* unit);
 };

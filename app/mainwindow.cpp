@@ -70,6 +70,7 @@ MainWindow::MainWindow(QWidget* parent) :
 
   //connect(ui -> listView, SIGNAL(activated(QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
   connect(ui -> listView -> selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(unitSelected(QModelIndex)));
+  connect(UDisks2Wrapper::instance(), SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 
 
   /*
@@ -136,48 +137,68 @@ void MainWindow::setSelectedUnit(const QString& path)
  */
 void MainWindow::unitSelected(const QModelIndex& index)
 {
+  if(!index.isValid() || index.data(Qt::UserRole).value<StorageUnit*>() == NULL) {
+    updateCurrentUnit(NULL);
+  } else {
+    updateCurrentUnit(index.data(Qt::UserRole).value<StorageUnit*>());
+  }
+}
+
+
+
+/*
+ *
+ */
+void MainWindow::updateCurrentUnit(StorageUnit* unit)
+{
   //disconnect the old selected unit if needed
   if(currentUnit != NULL)
     disconnect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
 
-  /*
-   * No StorageUnit available, reset the view
-   */
-  if(!index.isValid() || index.data(Qt::UserRole).value<StorageUnit*>() == NULL) {
+  currentUnit = unit;
+
+  //No StorageUnit available, reset the view
+  if(currentUnit == NULL) {
     ui -> groupBox -> setTitle(i18n("Details"));
     ui -> stackedWidget -> setCurrentIndex(0);
 
-    return;
+  //Update the view according to curren unit
+  } else {
+    connect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
+    currentUnit -> update();
+
+    //select the panel to display
+    int widgetIndex = 0;
+    QString boxTitle = i18n("Details");
+    StorageUnitPanel* panel = NULL;
+    if(currentUnit -> isDrive()) {
+      widgetIndex = 1;
+      boxTitle = i18n("Drive %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
+      panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
+      panel -> setStorageUnit(currentUnit);
+
+    } else if(currentUnit -> isMDRaid()) {
+      widgetIndex = 2;
+      boxTitle = i18n("MDRaid %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
+      panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
+      panel -> setStorageUnit(currentUnit);
+    }
+
+    ui -> groupBox -> setTitle(boxTitle);
+    ui -> stackedWidget -> setCurrentIndex(widgetIndex);
   }
+}
 
 
-  /*
-   * StorageUnit selected, set the details panel accordingly
-   */
-  StorageUnit* u = index.data(Qt::UserRole).value<StorageUnit*>();
-  currentUnit = u;
-  connect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
-  currentUnit -> update();
 
-
-  //select the panel to display
-  int widgetIndex = 0;
-  QString boxTitle = i18n("Details");
-  StorageUnitPanel* panel = NULL;
-  if(currentUnit -> isDrive()) {
-    widgetIndex = 1;
-    panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
-    boxTitle = i18n("Drive %1 (%2)", u -> getName(), u -> getDevice());
-
-  } else if(u -> isMDRaid()) {
-    widgetIndex = 2;
-    panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
-    boxTitle = i18n("MDRaid %1 (%2)", u -> getName(), u -> getDevice());
+/*
+ * Handle hot unplug of selected unit
+ */
+void MainWindow::storageUnitRemoved(StorageUnit* unit)
+{
+  if(unit == currentUnit) {
+    updateCurrentUnit(NULL);
   }
-
-  panel -> setStorageUnit(currentUnit);
-  ui -> groupBox -> setTitle(boxTitle);
-  ui -> stackedWidget -> setCurrentIndex(widgetIndex);
 }
 
 

@@ -97,6 +97,7 @@ void DrivePanel::updateUI()
     ui -> panelSmartNotSupported -> setVisible(false);
     ui -> panelSmartNotEnabled -> setVisible(false);
     ui -> panelSmartWidgets -> setEnabled(false);
+    ui -> selfTestStatusLabel -> setText(i18n("unknown"));
     ui -> progressBar -> setValue(0);
     return;
   }

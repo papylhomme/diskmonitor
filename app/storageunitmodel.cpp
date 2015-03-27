@@ -190,7 +190,7 @@ void StorageUnitModel::storageUnitRemoved(StorageUnit* unit)
 /*
  * Handle StorageUnit updated signal and update the display accordingly
  */
-void StorageUnitModel::storageUnitUpdated(StorageUnit* /*unit*/)
+void StorageUnitModel::storageUnitUpdated(StorageUnit* unit)
 {
   if(inhibitUpdate)
     return;
@@ -202,11 +202,10 @@ void StorageUnitModel::storageUnitUpdated(StorageUnit* /*unit*/)
    * updated do not wrap anymore until the layout is resetted)
    * So we go for the hammer and reset the model...
    */
-  beginResetModel();
-  endResetModel();
+  //beginResetModel();
+  //endResetModel();
 
 
-  /*
   QVector<int> roles;
   roles << Qt::DisplayRole << Qt::DecorationRole << Qt::ToolTipRole;
   int index = storageUnits.indexOf(unit);
@@ -215,5 +214,4 @@ void StorageUnitModel::storageUnitUpdated(StorageUnit* /*unit*/)
     QModelIndex idx = createIndex(index, 0);
     emit dataChanged(idx, idx, roles);
   }
-  */
 }

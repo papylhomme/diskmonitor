@@ -53,9 +53,12 @@ private:
 
   Settings::IconProvider iconProvider;
 
+  void updateCurrentUnit(StorageUnit* unit);
+
 public slots:
   void unitSelected(const QModelIndex& index);
-  void updateHealthStatus(StorageUnit*);
+  void storageUnitRemoved(StorageUnit* unit);
+  void updateHealthStatus(StorageUnit* unit);
 
   void refreshDetails();
   void showSettings();

@@ -25,12 +25,11 @@
 
 
 /*
- * Constructor. Connect to the UDisks2Wrapper::storageUnitRemoved() signal
- * to ensure consistency
+ * Constructor
  */
 StorageUnitPropertiesModel::StorageUnitPropertiesModel()
 {
-  connect(UDisks2Wrapper::instance(), SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
+
 }
 
 
@@ -70,22 +69,9 @@ void StorageUnitPropertiesModel::setStorageUnit(StorageUnit* unit)
 /*
  * Retrieve the associated StorageUnit. Can be NULL
  */
-StorageUnit*StorageUnitPropertiesModel::getStorageUnit()
+StorageUnit* StorageUnitPropertiesModel::getStorageUnit()
 {
   return this -> unit;
-}
-
-
-
-/*
- * Handle removal of the model's underlying StorageUnit
- */
-void StorageUnitPropertiesModel::storageUnitRemoved(StorageUnit* unit)
-{
-  if(this -> unit != NULL && this -> unit -> getObjectPath() == unit -> getObjectPath()) {
-    disconnect(this -> unit, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdate(StorageUnit*)));
-    setStorageUnit(NULL);
-  }
 }
 
 

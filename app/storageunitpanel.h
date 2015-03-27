@@ -55,7 +55,7 @@ private:
 
 public slots:
   void refresh();
-
+  void storageUnitRemoved(StorageUnit* unit);
 };
 
 #endif // STORAGEUNITPANEL_H

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-04 10:43+0000\n"
+"POT-Creation-Date: 2015-03-29 21:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/drivepanel.cpp:29
+#: app/drivepanel.cpp:50
 msgid "Short test"
 msgstr ""
 
-#: app/drivepanel.cpp:31
+#: app/drivepanel.cpp:52
 msgid "Extended test"
 msgstr ""
 
@@ -29,212 +29,238 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, selfTestStatusLabel)
 #. i18n: file: app/mainwindow.ui:72
 #. i18n: ectx: property (text), widget (QLabel, statusLabel)
-#: app/drivepanel.cpp:108 rc.cpp:18 rc.cpp:33
+#: app/drivepanel.cpp:103 app/drivepanel.cpp:136 rc.cpp:18 rc.cpp:33
 msgid "unknown"
 msgstr ""
 
-#: app/drivepanel.cpp:183
+#: app/drivepanel.cpp:199 app/drivepanel.cpp:222 app/mdraidpanel.cpp:134
+#: app/mdraidpanel.cpp:157
+msgctxt "Dialog confirmation"
+msgid "Confirm"
+msgstr ""
+
+#: app/drivepanel.cpp:200
+msgid ""
+"Running an extended selftest may take several hours, are you sure you want "
+"to run it now ?"
+msgstr ""
+
+#: app/drivepanel.cpp:223
+msgid "Are you sure you want to cancel the current selftest ?"
+msgstr ""
+
+#: app/drivepanel.cpp:243
 msgctxt "SelfTest status"
 msgid "In progress"
 msgstr ""
 
-#: app/drivepanel.cpp:185
+#: app/drivepanel.cpp:245
 msgctxt "SelfTest status"
 msgid "Success"
 msgstr ""
 
-#: app/drivepanel.cpp:187
+#: app/drivepanel.cpp:247
 msgctxt "SelfTest status"
 msgid "Aborted"
 msgstr ""
 
-#: app/drivepanel.cpp:189
+#: app/drivepanel.cpp:249
 msgctxt "SelfTest status"
 msgid "Interrupted"
 msgstr ""
 
-#: app/drivepanel.cpp:191
+#: app/drivepanel.cpp:251
 msgctxt "SelfTest status"
 msgid "Fatal"
 msgstr ""
 
-#: app/drivepanel.cpp:193
+#: app/drivepanel.cpp:253
 msgctxt "SelfTest status"
 msgid "Error (%1)"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:21
+#: app/drivepropertiesmodel.cpp:41
 msgctxt "Attribute's id"
 msgid "Id"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:22
+#: app/drivepropertiesmodel.cpp:42
 msgctxt "Attribute's name"
 msgid "Name"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:23
+#: app/drivepropertiesmodel.cpp:43
 msgctxt "Attribute's flags"
 msgid "Flags"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:24
+#: app/drivepropertiesmodel.cpp:44
 msgctxt "Worst known value for this attribute"
 msgid "Worst"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:25
+#: app/drivepropertiesmodel.cpp:45
 msgctxt "Threshold value for this attribute"
 msgid "Threshold"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:26
+#: app/drivepropertiesmodel.cpp:46
 msgctxt "Normalized value for this attribute"
 msgid "Normalized value"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:27
+#: app/drivepropertiesmodel.cpp:47
 msgctxt "Human friendly value for this attribute"
 msgid "Value"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:143 app/mdraidpropertiesmodel.cpp:90
-#: app/mdraidpropertiesmodel.cpp:91 app/mdraidpropertiesmodel.cpp:92
+#: app/drivepropertiesmodel.cpp:165 app/mdraidpropertiesmodel.cpp:110
+#: app/mdraidpropertiesmodel.cpp:111 app/mdraidpropertiesmodel.cpp:112
 msgid "Raw value: %1"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:156
+#: app/drivepropertiesmodel.cpp:178
 msgctxt "value type is unknown"
 msgid "unknown"
 msgstr ""
 
-#: app/drivepropertiesmodel.cpp:159
+#: app/drivepropertiesmodel.cpp:181
 msgid "%1 sectors"
 msgstr ""
 
 #. i18n: file: app/mainwindow.ui:14
 #. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
-#: app/main.cpp:14 rc.cpp:24
+#: app/main.cpp:35 rc.cpp:24
 msgid "DisKMonitor"
 msgstr ""
 
-#: app/main.cpp:15
+#: app/main.cpp:36
 msgid "KDE tools to monitor SMART devices and MDRaid health status"
 msgstr ""
 
-#: app/main.cpp:17
+#: app/main.cpp:38
 msgid "Copyright (C) 2015 Michaël Lhomme"
 msgstr ""
 
-#: app/main.cpp:23
+#: app/main.cpp:44
 msgid "Michaël Lhomme"
 msgstr ""
 
-#: app/main.cpp:23
+#: app/main.cpp:44
 msgid "Maintainer & Developer"
 msgstr ""
 
-#: app/main.cpp:25 app/main.cpp:26
+#: app/main.cpp:46 app/main.cpp:47
 msgid "Please report bugs directly to %1"
 msgstr ""
 
 #. i18n: file: app/mainwindow.ui:39
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: app/mainwindow.cpp:118 rc.cpp:27
+#: app/mainwindow.cpp:162 app/mainwindow.cpp:172 rc.cpp:27
 msgid "Details"
 msgstr ""
 
-#: app/mainwindow.cpp:149
+#: app/mainwindow.cpp:176
 msgid "Drive %1 (%2)"
 msgstr ""
 
-#: app/mainwindow.cpp:154
+#: app/mainwindow.cpp:182
 msgid "MDRaid %1 (%2)"
 msgstr ""
 
-#: app/mainwindow.cpp:189
+#: app/mainwindow.cpp:231
 msgctxt "Unknown health status"
 msgid "Unknown"
 msgstr ""
 
-#: app/mainwindow.cpp:194
+#: app/mainwindow.cpp:236
 msgctxt "Failing health status"
 msgid "Failing"
 msgstr ""
 
-#: app/mainwindow.cpp:198
+#: app/mainwindow.cpp:240
 msgctxt "Healthy health status"
 msgid "Healthy"
 msgstr ""
 
-#: app/mdraidmembersmodel.cpp:17
+#: app/mdraidmembersmodel.cpp:37
 msgctxt "RAID member device"
 msgid "Block device"
 msgstr ""
 
-#: app/mdraidmembersmodel.cpp:18
+#: app/mdraidmembersmodel.cpp:38
 msgctxt "RAID member slot"
 msgid "Slot"
 msgstr ""
 
-#: app/mdraidmembersmodel.cpp:19
+#: app/mdraidmembersmodel.cpp:39
 msgctxt "RAID member state"
 msgid "State"
 msgstr ""
 
-#: app/mdraidmembersmodel.cpp:20
+#: app/mdraidmembersmodel.cpp:40
 msgctxt "RAID member read errors count"
 msgid "Read errors"
 msgstr ""
 
-#: app/mdraidpropertiesmodel.cpp:15
+#: app/mdraidpanel.cpp:135
+msgid ""
+"Running a scrub operation may take several hours, are you sure you want to "
+"run it now ?"
+msgstr ""
+
+#: app/mdraidpanel.cpp:158
+msgid "Are you sure you want to cancel the current scrubbing operation ?"
+msgstr ""
+
+#: app/mdraidpropertiesmodel.cpp:35
 msgctxt "RAID property UUID"
 msgid "UUID"
 msgstr ""
 
-#: app/mdraidpropertiesmodel.cpp:16
+#: app/mdraidpropertiesmodel.cpp:36
 msgctxt "RAID level"
 msgid "Level"
 msgstr ""
 
-#: app/mdraidpropertiesmodel.cpp:17
+#: app/mdraidpropertiesmodel.cpp:37
 msgctxt "RAID device's count"
 msgid "Devices"
 msgstr ""
 
-#: app/mdraidpropertiesmodel.cpp:18
+#: app/mdraidpropertiesmodel.cpp:38
 msgctxt "RAID size"
 msgid "Size"
 msgstr ""
 
-#: app/mdraidpropertiesmodel.cpp:19
+#: app/mdraidpropertiesmodel.cpp:39
 msgctxt "RAID current action"
 msgid "Action"
 msgstr ""
 
-#: app/mdraidpropertiesmodel.cpp:20
+#: app/mdraidpropertiesmodel.cpp:40
 msgctxt "RAID current action remaining time"
 msgid "Remaining time"
 msgstr ""
 
-#: app/mdraidpropertiesmodel.cpp:21
+#: app/mdraidpropertiesmodel.cpp:41
 msgctxt "RAID current action % completed"
 msgid "Completed"
 msgstr ""
 
-#: settings/configdialog.cpp:47
+#: settings/configdialog.cpp:67
 msgid "Appearance"
 msgstr ""
 
-#: settings/configdialog.cpp:47
+#: settings/configdialog.cpp:67
 msgid "Appearance options"
 msgstr ""
 
-#: settings/configdialog.cpp:48
+#: settings/configdialog.cpp:68
 msgid "S.M.A.R.T"
 msgstr ""
 
-#: settings/configdialog.cpp:48
+#: settings/configdialog.cpp:68
 msgid "S.M.A.R.T options"
 msgstr ""
 
@@ -274,7 +300,7 @@ msgstr ""
 msgid "SelfTest status:"
 msgstr ""
 
-#. i18n: file: app/drivepanel.ui:173
+#. i18n: file: app/drivepanel.ui:185
 #. i18n: ectx: property (text), widget (QPushButton, startSelfTestButton)
 #: rc.cpp:21
 msgid "Start SelfTest"
@@ -322,7 +348,7 @@ msgstr ""
 msgid "&Settings"
 msgstr ""
 
-#. i18n: file: app/mdraidpanel.ui:55
+#. i18n: file: app/mdraidpanel.ui:67
 #. i18n: ectx: property (text), widget (QPushButton, startScrubButton)
 #: rc.cpp:57
 msgid "Start scrubbing"

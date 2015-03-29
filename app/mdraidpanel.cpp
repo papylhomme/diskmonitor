@@ -24,6 +24,7 @@
 
 #include "udisks2wrapper.h"
 
+#include <QMessageBox>
 
 
 /*
@@ -128,9 +129,16 @@ void MDRaidPanel::startScrubbing()
   MDRaid* currentMDRaid = getMDRaid();
 
   if(currentMDRaid != NULL) {
-    UDisks2Wrapper::instance() -> startMDRaidScrubbing(currentMDRaid);
-    //delay the refresh as UDisks2 may take some time to update the status
-    QTimer::singleShot(2000, this, SLOT(refresh()));
+
+    if(QMessageBox::question(this,
+                             i18nc("Dialog confirmation", "Confirm"),
+                             i18n("Running a scrub operation may take several hours, are you sure you want to run it now ?")
+                             ) == QMessageBox::Yes) {
+
+      UDisks2Wrapper::instance() -> startMDRaidScrubbing(currentMDRaid);
+      //delay the refresh as UDisks2 may take some time to update the status
+      QTimer::singleShot(2000, this, SLOT(refresh()));
+    }
   }
 }
 
@@ -144,9 +152,16 @@ void MDRaidPanel::cancelScrubbing()
   MDRaid* currentMDRaid = getMDRaid();
 
   if(currentMDRaid != NULL) {
-    UDisks2Wrapper::instance() -> cancelMDRaidScrubbing(currentMDRaid);
-    //delay the refresh as UDisks2 may take some time to update the status
-    QTimer::singleShot(2000, this, SLOT(refresh()));
+
+    if(QMessageBox::question(this,
+                             i18nc("Dialog confirmation", "Confirm"),
+                             i18n("Are you sure you want to cancel the current scrubbing operation ?")
+                             ) == QMessageBox::Yes) {
+
+      UDisks2Wrapper::instance() -> cancelMDRaidScrubbing(currentMDRaid);
+      //delay the refresh as UDisks2 may take some time to update the status
+      QTimer::singleShot(2000, this, SLOT(refresh()));
+    }
   }
 
 }

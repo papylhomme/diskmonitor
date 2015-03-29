@@ -170,7 +170,7 @@
         <item>
          <widget class="QToolButton" name="cancelSelfTestButton">
           <property name="text">
-           <string>...</string>
+           <string/>
           </property>
           <property name="icon">
            <iconset theme="dialog-cancel">

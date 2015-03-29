@@ -24,6 +24,7 @@
 #include "udisks2wrapper.h"
 
 #include <QMenu>
+#include <QMessageBox>
 
 /*
  * Constructor
@@ -192,9 +193,17 @@ void DrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
   Drive* currentDrive = getDrive();
 
   if(currentDrive != NULL) {
-    UDisks2Wrapper::instance() -> startSMARTSelfTest(currentDrive, type);
-    //delay the refresh as UDisks2 may take some time to update the status
-    QTimer::singleShot(2000, this, SLOT(refresh()));
+
+    if(type == UDisks2Wrapper::ShortSelfTest ||
+       QMessageBox::question(this,
+                             i18nc("Dialog confirmation", "Confirm"),
+                             i18n("Running an extended selftest may take several hours, are you sure you want to run it now ?")
+                             ) == QMessageBox::Yes) {
+
+      UDisks2Wrapper::instance() -> startSMARTSelfTest(currentDrive, type);
+      //delay the refresh as UDisks2 may take some time to update the status
+      QTimer::singleShot(2000, this, SLOT(refresh()));
+    }
   }
 }
 
@@ -208,9 +217,16 @@ void DrivePanel::cancelSelfTest()
   Drive* currentDrive = getDrive();
 
   if(currentDrive != NULL) {
-    UDisks2Wrapper::instance() -> cancelSMARTSelfTest(currentDrive);
-    //delay the refresh as UDisks2 may take some time to update the status
-    QTimer::singleShot(2000, this, SLOT(refresh()));
+
+    if(QMessageBox::question(this,
+                             i18nc("Dialog confirmation", "Confirm"),
+                             i18n("Are you sure you want to cancel the current selftest ?")
+                             ) == QMessageBox::Yes) {
+
+      UDisks2Wrapper::instance() -> cancelSMARTSelfTest(currentDrive);
+      //delay the refresh as UDisks2 may take some time to update the status
+      QTimer::singleShot(2000, this, SLOT(refresh()));
+    }
   }
 }
 

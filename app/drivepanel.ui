@@ -168,6 +168,18 @@
          </widget>
         </item>
         <item>
+         <widget class="QToolButton" name="cancelSelfTestButton">
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="dialog-cancel">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="startSelfTestButton">
           <property name="text">
            <string>Start SelfTest</string>

@@ -299,6 +299,31 @@ void UDisks2Wrapper::startMDRaidScrubbing(MDRaid* mdraid) const
 
 
 /*
+ * Cancel a running operation on the given raid array (sync action = 'idle')
+ *
+ * @param mdraid The raid array
+ */
+
+void UDisks2Wrapper::cancelMDRaidScrubbing(MDRaid* mdraid) const
+{
+  QDBusInterface mdraid_iface(UDISKS2_SERVICE, mdraid -> getPath(), UDISKS2_MDRAID_IFACE, QDBusConnection::systemBus());
+
+  QString currentOperation = mdraid_iface.property("RequestSyncAction").toString();
+  if(currentOperation != "check") {
+    qWarning() << "Can't cancel operation '" << currentOperation << "' on MDRaid '" << mdraid -> getPath() << "': aborting";
+    return;
+  }
+
+  qDebug() << "Request cancelation of scrubbing on MDRaid '" << mdraid -> getPath() << "'";
+  QDBusReply<void> res = mdraid_iface.call("RequestSyncAction", "idle", QVariantMap());
+
+  if(!res.isValid())
+    qWarning() << "Error sending request to cancel scrubbing on MDRaid '" << mdraid -> getPath() << "' : " << res.error();
+}
+
+
+
+/*
  * Enable SMART on the given drive
  *
  * @param drive The drive for which to enable SMART
@@ -339,6 +364,25 @@ void UDisks2Wrapper::startSMARTSelfTest(Drive* drive, SMARTSelfTestType type) co
 
   if(!res.isValid())
     qWarning() << "Error sending request to start SMART SelfTest on drive '" << drive -> getPath() << "' : " << res.error();
+}
+
+
+
+/*
+ * Cancel a running SMART SelfTest on the given drive
+ *
+ * @param drive The drive to test
+ */
+void UDisks2Wrapper::cancelSMARTSelfTest(Drive* drive) const
+{
+  QDBusInterface ata_iface(UDISKS2_SERVICE, drive -> getPath(), UDISKS2_ATA_IFACE, QDBusConnection::systemBus());
+
+  qDebug() << "Request cancelation of selftest on Drive '" << drive -> getPath() << "'";
+  QDBusReply<void> res = ata_iface.call("SmartSelftestAbort", QVariantMap());
+
+  if(!res.isValid())
+    qWarning() << "Error sending request to cancel SMART SelfTest on drive '" << drive -> getPath() << "' : " << res.error();
+
 }
 
 

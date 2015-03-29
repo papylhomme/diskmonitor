@@ -47,6 +47,7 @@ MDRaidPanel::MDRaidPanel(QWidget *parent) :
   ui -> membersView -> setModel(modelMembers);
 
   connect(ui -> startScrubButton, SIGNAL(clicked()), this, SLOT(startScrubbing()));
+  connect(ui -> cancelScrubButton, SIGNAL(clicked()), this, SLOT(cancelScrubbing()));
 }
 
 
@@ -96,8 +97,10 @@ void MDRaidPanel::updateUI()
   if(raid != NULL) {
     double completed = raid -> getSyncCompleted();
     ui -> progressBar -> setValue(completed * 100);
+    ui -> cancelScrubButton -> setVisible(raid -> getSyncAction() == "check");
   } else {
     ui -> progressBar -> setValue(0);
+    ui -> cancelScrubButton -> setVisible(false);
   }
 
   this -> modelMembers -> setStorageUnit(raid);
@@ -129,4 +132,21 @@ void MDRaidPanel::startScrubbing()
     //delay the refresh as UDisks2 may take some time to update the status
     QTimer::singleShot(2000, this, SLOT(refresh()));
   }
+}
+
+
+
+/*
+ * Slot to cancel scrubbing on the raid
+ */
+void MDRaidPanel::cancelScrubbing()
+{
+  MDRaid* currentMDRaid = getMDRaid();
+
+  if(currentMDRaid != NULL) {
+    UDisks2Wrapper::instance() -> cancelMDRaidScrubbing(currentMDRaid);
+    //delay the refresh as UDisks2 may take some time to update the status
+    QTimer::singleShot(2000, this, SLOT(refresh()));
+  }
+
 }

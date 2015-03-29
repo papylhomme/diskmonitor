@@ -28,7 +28,7 @@
 /*
  * Constructor
  */
-DrivePanel::DrivePanel(QWidget *parent) :
+DrivePanel::DrivePanel(QWidget* parent) :
     StorageUnitPanel(new DrivePropertiesModel(), parent),
     ui(new Ui::DrivePanel)
 {
@@ -51,6 +51,8 @@ DrivePanel::DrivePanel(QWidget *parent) :
   action = menu -> addAction(i18n("Extended test"));
   connect(action, SIGNAL(triggered()), this, SLOT(startExtendedSelfTest()));
   ui -> startSelfTestButton -> setMenu(menu);
+
+  connect(ui -> cancelSelfTestButton, SIGNAL(clicked()), this, SLOT(cancelSelfTest()));
 }
 
 
@@ -99,6 +101,7 @@ void DrivePanel::updateUI()
     ui -> panelSmartWidgets -> setEnabled(false);
     ui -> selfTestStatusLabel -> setText(i18n("unknown"));
     ui -> progressBar -> setValue(0);
+    ui -> cancelSelfTestButton -> setVisible(false);
     return;
   }
 
@@ -118,17 +121,20 @@ void DrivePanel::updateUI()
     if(status == "inprogress") {
       ui -> startSelfTestButton -> setEnabled(false);
       ui -> progressBar -> setEnabled(true);
+      ui -> cancelSelfTestButton -> setVisible(true);
       if(percent >= 0) ui -> progressBar -> setValue(100 - percent);
 
     } else {
       ui -> startSelfTestButton -> setEnabled(true);
       ui -> progressBar -> setEnabled(false);
       ui -> progressBar -> setValue(0);
+      ui -> cancelSelfTestButton -> setVisible(false);
     }
 
   } else {
     ui -> selfTestStatusLabel -> setText(i18n("unknown"));
     ui -> progressBar -> setValue(0);
+    ui -> cancelSelfTestButton -> setVisible(false);
   }
 }
 
@@ -187,6 +193,22 @@ void DrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
 
   if(currentDrive != NULL) {
     UDisks2Wrapper::instance() -> startSMARTSelfTest(currentDrive, type);
+    //delay the refresh as UDisks2 may take some time to update the status
+    QTimer::singleShot(2000, this, SLOT(refresh()));
+  }
+}
+
+
+
+/*
+ * Cancel a SMART selftest on the drive
+ */
+void DrivePanel::cancelSelfTest()
+{
+  Drive* currentDrive = getDrive();
+
+  if(currentDrive != NULL) {
+    UDisks2Wrapper::instance() -> cancelSMARTSelfTest(currentDrive);
     //delay the refresh as UDisks2 may take some time to update the status
     QTimer::singleShot(2000, this, SLOT(refresh()));
   }

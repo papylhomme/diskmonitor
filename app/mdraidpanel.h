@@ -54,6 +54,7 @@ private:
 
 public slots:
   void startScrubbing();
+  void cancelScrubbing();
 };
 
 #endif // MDRAIDPANEL_H

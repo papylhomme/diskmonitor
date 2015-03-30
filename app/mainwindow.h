@@ -44,6 +44,11 @@ public:
 
   void setSelectedUnit(const QString& path);
 
+  void closeEvent(QCloseEvent *);
+
+protected:
+  virtual void applyMainWindowSettings(const KConfigGroup &config);
+
 
 private:
   Ui::MainWindow* ui;

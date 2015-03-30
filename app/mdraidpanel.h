@@ -52,6 +52,8 @@ private:
 
   MDRaidMembersModel* modelMembers;
 
+  void enforceAttributesViewSize();
+
 public slots:
   void startScrubbing();
   void cancelScrubbing();

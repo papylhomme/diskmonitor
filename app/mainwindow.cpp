@@ -94,6 +94,10 @@ MainWindow::MainWindow(QWidget* parent) :
    */
   connect(ui -> actionSettings, SIGNAL(triggered()), this, SLOT(showSettings()));
   connect(DiskMonitorSettings::self(), SIGNAL(configChanged()), this, SLOT(configChanged()));
+
+
+  //autosave config activation
+  setAutoSaveSettings();
 }
 
 
@@ -105,6 +109,32 @@ MainWindow::~MainWindow()
 {
   delete storageUnitModel;
   delete ui;
+}
+
+
+
+/*
+ * Override KMainWindow::applyMainWindowSettings to restore additional properties
+ * on autosave config
+ */
+void MainWindow::applyMainWindowSettings(const KConfigGroup& config)
+{
+  KMainWindow::applyMainWindowSettings(config);
+
+  if(config.hasKey("MainSplitter"))
+    ui -> splitter -> restoreState(config.readEntry("MainSplitter", QByteArray()));
+}
+
+
+
+/*
+ * Override KMainWindow::closeEvent to store additional properties on autosave config
+ */
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+  KConfigGroup config = KConfigGroup(KSharedConfig::openConfig(), "MainWindow");
+  config.writeEntry("MainSplitter", ui -> splitter -> saveState());
+  KMainWindow::closeEvent(event);
 }
 
 

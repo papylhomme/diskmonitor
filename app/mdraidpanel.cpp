@@ -25,6 +25,7 @@
 #include "udisks2wrapper.h"
 
 #include <QMessageBox>
+#include <QScrollBar>
 
 
 /*
@@ -99,6 +100,9 @@ void MDRaidPanel::updateUI()
     double completed = raid -> getSyncCompleted();
     ui -> progressBar -> setValue(completed * 100);
     ui -> cancelScrubButton -> setVisible(raid -> getSyncAction() == "check");
+
+    //force height of attributesView to be minimal
+    enforceAttributesViewSize();
   } else {
     ui -> progressBar -> setValue(0);
     ui -> cancelScrubButton -> setVisible(false);
@@ -117,6 +121,19 @@ bool MDRaidPanel::isOperationRunning()
   MDRaid* raid = getMDRaid();
 
   return !(raid == NULL || raid -> getSyncAction() == "idle");
+}
+
+
+
+/*
+ * Enforce a minimal size for the attributes listview
+ */
+void MDRaidPanel::enforceAttributesViewSize()
+{
+  int scrollHeight = ui -> attributesView -> horizontalScrollBar() -> height();
+
+  ui -> attributesView -> setMinimumHeight(ui -> attributesView -> minimumSizeHint().height() + scrollHeight);
+  ui -> attributesView -> setMaximumHeight(ui -> attributesView -> minimumSizeHint().height() + scrollHeight);
 }
 
 

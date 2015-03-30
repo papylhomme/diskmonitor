@@ -2,19 +2,20 @@ Version 0.3.1:
 + Applet : add icons only layout
 + App : add ability to cancel SMART tests and MDRaid scrubbing
 + App : add some confirmation dialogs
++ App : add persistence of main window's geometry
 * App : fix a segfault with removed storage units
 
-Version 0.3:
+Version 0.3, 2015-03-04:
 + Applet : move configuration to plasma config (context menu)
 + Applet : add customization via layouts and other options
 + Add localization support
 + Add french language
 
-Version 0.2:
+Version 0.2, 2015-02-16:
 + Add settings to configure appearance
 + Add settings to configure SMART sensitive attributes
 + Add Plasma applet to monitor the storage units
 + Notify when the health status has changed
 
-Version 0.1:
+Version 0.1, 2015-02-11:
 * First release, features the main application

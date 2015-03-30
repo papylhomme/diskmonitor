@@ -29,6 +29,13 @@
 
 
 /*
+ * Initialize item size
+ */
+const QSize& StorageUnitModel::ItemSize = QSize(150, 100);
+
+
+
+/*
  * Constructor
  */
 StorageUnitModel::StorageUnitModel()
@@ -114,7 +121,7 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
   StorageUnit* u = storageUnits[index.row()];
 
   if(role == Qt::SizeHintRole) {
-    return QVariant(QSize(150, 100));
+    return QVariant(ItemSize);
 
   } else if(role == Qt::DisplayRole || role == Qt::ToolTipRole) {
     QString dev = u -> getDevice().split("/").last();

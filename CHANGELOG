@@ -1,5 +1,8 @@
 Version 0.3.1:
 + Applet : add icons only layout
++ App : add ability to cancel SMART tests and MDRaid scrubbing
++ App : add some confirmation dialogs
+* App : fix a segfault with removed storage units
 
 Version 0.3:
 + Applet : move configuration to plasma config (context menu)

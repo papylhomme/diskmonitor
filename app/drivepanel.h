@@ -55,6 +55,7 @@ public slots:
   void startShortSelfTest();
   void startExtendedSelfTest();
   void startSelfTest(UDisks2Wrapper::SMARTSelfTestType type);
+  void cancelSelfTest();
 };
 
 #endif // DRIVEPANEL_H

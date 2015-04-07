@@ -29,6 +29,13 @@
 
 
 /*
+ * Initialize item size
+ */
+const QSize& StorageUnitModel::ItemSize = QSize(150, 100);
+
+
+
+/*
  * Constructor
  */
 StorageUnitModel::StorageUnitModel()
@@ -112,11 +119,12 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
 
   StorageUnit* u = storageUnits[index.row()];
 
-  if(role == Qt::DisplayRole) {
-    return QVariant(u -> getName());
+  if(role == Qt::SizeHintRole) {
+    return QVariant(ItemSize);
 
-  } else if(role == Qt::ToolTipRole) {
-    return QVariant(u -> getName());
+  } else if(role == Qt::DisplayRole || role == Qt::ToolTipRole) {
+    QString dev = u -> getDevice().split("/").last();
+    return QVariant(dev + " (" + u -> getShortName() + ")");
 
   } else if(role == Qt::DecorationRole) {
 
@@ -183,23 +191,11 @@ void StorageUnitModel::storageUnitRemoved(StorageUnit* unit)
 /*
  * Handle StorageUnit updated signal and update the display accordingly
  */
-void StorageUnitModel::storageUnitUpdated(StorageUnit* /*unit*/)
+void StorageUnitModel::storageUnitUpdated(StorageUnit* unit)
 {
   if(inhibitUpdate)
     return;
 
-  /*
-   * TODO FixThis
-   *
-   * Somehow emitting the dataChanged signal break the grid layout (items
-   * updated do not wrap anymore until the layout is resetted)
-   * So we go for the hammer and reset the model...
-   */
-  beginResetModel();
-  endResetModel();
-
-
-  /*
   QVector<int> roles;
   roles << Qt::DisplayRole << Qt::DecorationRole << Qt::ToolTipRole;
   int index = storageUnits.indexOf(unit);
@@ -208,5 +204,4 @@ void StorageUnitModel::storageUnitUpdated(StorageUnit* /*unit*/)
     QModelIndex idx = createIndex(index, 0);
     emit dataChanged(idx, idx, roles);
   }
-  */
 }

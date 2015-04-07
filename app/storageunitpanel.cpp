@@ -20,6 +20,7 @@
 
 #include "storageunitpanel.h"
 
+#include "udisks2wrapper.h"
 
 /*
  * Constructor
@@ -27,6 +28,8 @@
 StorageUnitPanel::StorageUnitPanel(StorageUnitPropertiesModel* model, QWidget* parent) : QWidget(parent)
 {
   this -> model = model;
+
+  connect(UDisks2Wrapper::instance(), SIGNAL(storageUnitRemoved(StorageUnit*)), this, SLOT(storageUnitRemoved(StorageUnit*)));
 
   this -> autorefreshTimer = new QTimer();
   connect(autorefreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
@@ -64,6 +67,17 @@ void StorageUnitPanel::refresh()
   this -> model -> refreshAll();
   updateUI();
   updateAutoRefreshTimer();
+}
+
+
+
+/*
+ * Handle hot unplug of current unit
+ */
+void StorageUnitPanel::storageUnitRemoved(StorageUnit* unit)
+{
+  if(this -> model -> getStorageUnit() == unit)
+    setStorageUnit(NULL);
 }
 
 

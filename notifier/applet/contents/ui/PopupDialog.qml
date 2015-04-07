@@ -53,6 +53,8 @@ FocusScope {
               return "StorageUnitSmall.qml";
             else if(plasmoid.configuration.layoutMinimalist)
               return "StorageUnitMinimalist.qml";
+            else if(plasmoid.configuration.layoutIconsOnly)
+              return "StorageUnitIcons.qml";
             else
               return "StorageUnitBig.qml";
           }

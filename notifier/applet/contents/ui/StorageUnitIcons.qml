@@ -18,44 +18,40 @@
  ****************************************************************************/
 
 
-#ifndef STORAGEUNITPANEL_H
-#define STORAGEUNITPANEL_H
-
-#include <QWidget>
-#include <QTimer>
-
-#include "storageunitpropertiesmodel.h"
+import QtQuick 2.3
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
+import QtQuick.Layouts 1.1
+import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 
 
+PlasmaComponents.ListItem {
+  id: storageUnitItem
+  enabled: true
 
-/*
- * Base class to implement a panel displaying information for a StorageUnit
- *
- * Handle refreshing the internal data, and auto refresh during a running operation
- */
-class StorageUnitPanel : public QWidget
-{
-    Q_OBJECT
-public:
-  explicit StorageUnitPanel(StorageUnitPropertiesModel* model, QWidget *parent = 0);
-  ~StorageUnitPanel();
 
-  void setStorageUnit(StorageUnit* unit);
+  PlasmaCore.IconItem {
+    id: unitIcon
+    height: 16
+    width: 16
+    source: icon
 
-protected:
-  StorageUnitPropertiesModel* model = NULL;
+    anchors.left: parent.left
+  }
 
-  virtual bool isOperationRunning() { return false; }
-  virtual void updateUI() { }
+  PlasmaCore.IconItem {
+    id: healthIcon
+    height: 16
+    width: 16
+    source: { failingKnown ? (failing? iconProvider.failing : iconProvider.healthy) : iconProvider.unknown; }
 
-private:
-  QTimer* autorefreshTimer;
+    anchors.left: unitIcon.right
+    anchors.leftMargin: width / 2
+  }
 
-  void updateAutoRefreshTimer();
 
-public slots:
-  void refresh();
-  void storageUnitRemoved(StorageUnit* unit);
-};
+  onClicked: {
+    myStorageModel.openApp(path);
+  }
 
-#endif // STORAGEUNITPANEL_H
+}

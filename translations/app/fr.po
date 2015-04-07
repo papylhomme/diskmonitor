@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
-"POT-Creation-Date: 2015-03-05 10:41+0000\n"
-"PO-Revision-Date: 2015-03-05 10:42+0000\n"
+"POT-Creation-Date: 2015-04-08 00:32+0200\n"
+"PO-Revision-Date: 2015-03-29 22:02+0000\n"
 "Last-Translator: Michaël Lhomme <papylhomme@gmail.com>\n"
 "Language-Team: French <>\n"
 "Language: fr\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: app/drivepanel.cpp:50
+#: app/drivepanel.cpp:51
 msgid "Short test"
 msgstr "Test court"
 
-#: app/drivepanel.cpp:52
+#: app/drivepanel.cpp:53
 msgid "Extended test"
 msgstr "Test étendu"
 
@@ -29,36 +29,54 @@ msgstr "Test étendu"
 #. i18n: ectx: property (text), widget (QLabel, selfTestStatusLabel)
 #. i18n: file: app/mainwindow.ui:72
 #. i18n: ectx: property (text), widget (QLabel, statusLabel)
-#: app/drivepanel.cpp:138 rc.cpp:18 rc.cpp:33
+#: app/drivepanel.cpp:104 app/drivepanel.cpp:146 rc.cpp:18 rc.cpp:33
 msgid "unknown"
 msgstr "inconnu"
 
-#: app/drivepanel.cpp:213
+#: app/drivepanel.cpp:209 app/drivepanel.cpp:232 app/mdraidpanel.cpp:151
+#: app/mdraidpanel.cpp:174
+msgctxt "Dialog confirmation"
+msgid "Confirm"
+msgstr "Confirmer "
+
+#: app/drivepanel.cpp:210
+msgid ""
+"Running an extended selftest may take several hours, are you sure you want "
+"to run it now ?"
+msgstr ""
+"L'opération de test peut durer plusieurs heures, êtes vous sur de vouloir la "
+"démarrer maintenant ?"
+
+#: app/drivepanel.cpp:233
+msgid "Are you sure you want to cancel the current selftest ?"
+msgstr "Etes vous sur de vouloir annuler le test en court ?"
+
+#: app/drivepanel.cpp:253
 msgctxt "SelfTest status"
 msgid "In progress"
 msgstr "En cours"
 
-#: app/drivepanel.cpp:215
+#: app/drivepanel.cpp:255
 msgctxt "SelfTest status"
 msgid "Success"
 msgstr "Succès"
 
-#: app/drivepanel.cpp:217
+#: app/drivepanel.cpp:257
 msgctxt "SelfTest status"
 msgid "Aborted"
 msgstr "Annulé"
 
-#: app/drivepanel.cpp:219
+#: app/drivepanel.cpp:259
 msgctxt "SelfTest status"
 msgid "Interrupted"
 msgstr "Interrompu"
 
-#: app/drivepanel.cpp:221
+#: app/drivepanel.cpp:261
 msgctxt "SelfTest status"
 msgid "Fatal"
 msgstr "Fatal"
 
-#: app/drivepanel.cpp:223
+#: app/drivepanel.cpp:263
 msgctxt "SelfTest status"
 msgid "Error (%1)"
 msgstr "Erreur (%1)"
@@ -98,72 +116,61 @@ msgctxt "Human friendly value for this attribute"
 msgid "Value"
 msgstr "Valeur"
 
-#: app/drivepropertiesmodel.cpp:165 app/mdraidpropertiesmodel.cpp:110
+#: app/drivepropertiesmodel.cpp:166 app/mdraidpropertiesmodel.cpp:110
 #: app/mdraidpropertiesmodel.cpp:111 app/mdraidpropertiesmodel.cpp:112
 msgid "Raw value: %1"
 msgstr "Valeur brute : %1"
 
-#: app/drivepropertiesmodel.cpp:178
+#: app/drivepropertiesmodel.cpp:179
 msgctxt "value type is unknown"
 msgid "unknown"
 msgstr "inconnu"
 
-#: app/drivepropertiesmodel.cpp:181
+#: app/drivepropertiesmodel.cpp:182
 msgid "%1 sectors"
 msgstr "%1 secteurs"
 
 #. i18n: file: app/mainwindow.ui:14
 #. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
-#: app/main.cpp:35 rc.cpp:24
+#: app/main.cpp:36 rc.cpp:24
 msgid "DisKMonitor"
 msgstr "DisKMonitor"
 
-#: app/main.cpp:36
+#: app/main.cpp:37
 msgid "KDE tools to monitor SMART devices and MDRaid health status"
 msgstr ""
 "Outils KDE pour surveiller l'état de santé des périphériques SMART et des "
 "raid MD"
 
-#: app/main.cpp:38
+#: app/main.cpp:39
 msgid "Copyright (C) 2015 Michaël Lhomme"
 msgstr "Copyright (C) 2015 Michaël Lhomme"
 
-#: app/main.cpp:44
+#: app/main.cpp:45
 msgid "Michaël Lhomme"
 msgstr "Michaël Lhomme"
 
-#: app/main.cpp:44
+#: app/main.cpp:45
 msgid "Maintainer & Developer"
 msgstr "Mainteneur & développeur"
 
-#: app/main.cpp:46 app/main.cpp:47
+#: app/main.cpp:47 app/main.cpp:48
 msgid "Please report bugs directly to %1"
 msgstr "Merci de reporter les bugs directement à %1"
 
 #. i18n: file: app/mainwindow.ui:39
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: app/mainwindow.cpp:138 rc.cpp:27
+#: app/mainwindow.cpp:192 app/mainwindow.cpp:202 rc.cpp:27
 msgid "Details"
 msgstr "Détails"
 
-#: app/mainwindow.cpp:169
+#: app/mainwindow.cpp:206
 msgid "Drive %1 (%2)"
 msgstr "Disque %1 (%2)"
 
-#: app/mainwindow.cpp:174
+#: app/mainwindow.cpp:212
 msgid "MDRaid %1 (%2)"
 msgstr "Raid MD %1 (%2)"
-
-#. i18n: file: settings/appearance.ui:148
-#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton)
-#. i18n: file: settings/appearance.ui:246
-#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_6)
-#. i18n: file: settings/appearance.ui:368
-#. i18n: ectx: property (toolTip), widget (KIconButton, kcfg_UnknownIcon)
-#: app/mainwindow.cpp:208 rc.cpp:87 rc.cpp:102 rc.cpp:117
-msgctxt "Unknown health status"
-msgid "Unknown"
-msgstr "Inconnu"
 
 #. i18n: file: settings/appearance.ui:106
 #. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_2)
@@ -171,12 +178,12 @@ msgstr "Inconnu"
 #. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_5)
 #. i18n: file: settings/appearance.ui:306
 #. i18n: ectx: property (toolTip), widget (KIconButton, kcfg_FailingIcon)
-#: app/mainwindow.cpp:213 rc.cpp:81 rc.cpp:96 rc.cpp:111
+#: app/mainwindow.cpp:262 rc.cpp:81 rc.cpp:96 rc.cpp:111
 msgctxt "Failing health status"
 msgid "Failing"
 msgstr "Echec"
 
-#: app/mainwindow.cpp:218
+#: app/mainwindow.cpp:268
 msgctxt "Warning health status"
 msgid "Warning"
 msgstr "Danger"
@@ -187,10 +194,21 @@ msgstr "Danger"
 #. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_4)
 #. i18n: file: settings/appearance.ui:281
 #. i18n: ectx: property (toolTip), widget (KIconButton, kcfg_HealthyIcon)
-#: app/mainwindow.cpp:222 rc.cpp:78 rc.cpp:93 rc.cpp:108
+#: app/mainwindow.cpp:272 rc.cpp:78 rc.cpp:93 rc.cpp:108
 msgctxt "Healthy health status"
 msgid "Healthy"
 msgstr "Sain"
+
+#. i18n: file: settings/appearance.ui:148
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton)
+#. i18n: file: settings/appearance.ui:246
+#. i18n: ectx: property (toolTip), widget (QToolButton, toolButton_6)
+#. i18n: file: settings/appearance.ui:368
+#. i18n: ectx: property (toolTip), widget (KIconButton, kcfg_UnknownIcon)
+#: app/mainwindow.cpp:277 rc.cpp:87 rc.cpp:102 rc.cpp:117
+msgctxt "Unknown health status"
+msgid "Unknown"
+msgstr "Inconnu"
 
 #: app/mdraidmembersmodel.cpp:37
 msgctxt "RAID member device"
@@ -211,6 +229,18 @@ msgstr "Etat"
 msgctxt "RAID member read errors count"
 msgid "Read errors"
 msgstr "Erreurs de lecture"
+
+#: app/mdraidpanel.cpp:152
+msgid ""
+"Running a scrub operation may take several hours, are you sure you want to "
+"run it now ?"
+msgstr ""
+"L'opération de nettoyage peut durer plusieurs heures, êtes vous sur de "
+"vouloir la démarrer maintenant ?"
+
+#: app/mdraidpanel.cpp:175
+msgid "Are you sure you want to cancel the current scrubbing operation ?"
+msgstr "Etes vous sur de vouloir annuler le nettoyage en court ?"
 
 #: app/mdraidpropertiesmodel.cpp:35
 msgctxt "RAID property UUID"
@@ -299,7 +329,7 @@ msgstr "Activer"
 msgid "SelfTest status:"
 msgstr "Etat du test :"
 
-#. i18n: file: app/drivepanel.ui:173
+#. i18n: file: app/drivepanel.ui:185
 #. i18n: ectx: property (text), widget (QPushButton, startSelfTestButton)
 #: rc.cpp:21
 msgid "Start SelfTest"
@@ -348,7 +378,7 @@ msgstr "&Rafraichir"
 msgid "&Settings"
 msgstr "&Configuration"
 
-#. i18n: file: app/mdraidpanel.ui:55
+#. i18n: file: app/mdraidpanel.ui:67
 #. i18n: ectx: property (text), widget (QPushButton, startScrubButton)
 #: rc.cpp:57
 msgid "Start scrubbing"

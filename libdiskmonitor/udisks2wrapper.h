@@ -80,9 +80,13 @@ public:
   static UDisks2Wrapper* instance();
 
   QList<StorageUnit*> listStorageUnits();
+
   void startMDRaidScrubbing(MDRaid* mdraid) const;
+  void cancelMDRaidScrubbing(MDRaid* mdraid) const;
+
   void enableSMART(Drive* drive) const;
   void startSMARTSelfTest(Drive* drive, SMARTSelfTestType type) const;
+  void cancelSMARTSelfTest(Drive* drive) const;
 
   QDBusInterface* propertiesIface(QDBusObjectPath) const;
   QDBusInterface* driveIface(QDBusObjectPath) const;

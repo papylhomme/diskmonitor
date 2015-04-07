@@ -24,6 +24,8 @@
 
 #include "udisks2wrapper.h"
 
+#include <QMessageBox>
+#include <QScrollBar>
 
 
 /*
@@ -47,6 +49,7 @@ MDRaidPanel::MDRaidPanel(QWidget *parent) :
   ui -> membersView -> setModel(modelMembers);
 
   connect(ui -> startScrubButton, SIGNAL(clicked()), this, SLOT(startScrubbing()));
+  connect(ui -> cancelScrubButton, SIGNAL(clicked()), this, SLOT(cancelScrubbing()));
 }
 
 
@@ -93,8 +96,17 @@ void MDRaidPanel::updateUI()
   ui -> progressBar -> setEnabled(running);
   ui -> startScrubButton -> setEnabled(!running);
 
-  double completed = raid -> getSyncCompleted();
-  ui -> progressBar -> setValue(completed * 100);
+  if(raid != NULL) {
+    double completed = raid -> getSyncCompleted();
+    ui -> progressBar -> setValue(completed * 100);
+    ui -> cancelScrubButton -> setVisible(raid -> getSyncAction() == "check");
+
+    //force height of attributesView to be minimal
+    enforceAttributesViewSize();
+  } else {
+    ui -> progressBar -> setValue(0);
+    ui -> cancelScrubButton -> setVisible(false);
+  }
 
   this -> modelMembers -> setStorageUnit(raid);
 }
@@ -114,6 +126,19 @@ bool MDRaidPanel::isOperationRunning()
 
 
 /*
+ * Enforce a minimal size for the attributes listview
+ */
+void MDRaidPanel::enforceAttributesViewSize()
+{
+  int scrollHeight = ui -> attributesView -> horizontalScrollBar() -> height();
+
+  ui -> attributesView -> setMinimumHeight(ui -> attributesView -> minimumSizeHint().height() + scrollHeight);
+  ui -> attributesView -> setMaximumHeight(ui -> attributesView -> minimumSizeHint().height() + scrollHeight);
+}
+
+
+
+/*
  * Slot to start scrubbing on the raid
  */
 void MDRaidPanel::startScrubbing()
@@ -121,8 +146,39 @@ void MDRaidPanel::startScrubbing()
   MDRaid* currentMDRaid = getMDRaid();
 
   if(currentMDRaid != NULL) {
-    UDisks2Wrapper::instance() -> startMDRaidScrubbing(currentMDRaid);
-    //delay the refresh as UDisks2 may take some time to update the status
-    QTimer::singleShot(2000, this, SLOT(refresh()));
+
+    if(QMessageBox::question(this,
+                             i18nc("Dialog confirmation", "Confirm"),
+                             i18n("Running a scrub operation may take several hours, are you sure you want to run it now ?")
+                             ) == QMessageBox::Yes) {
+
+      UDisks2Wrapper::instance() -> startMDRaidScrubbing(currentMDRaid);
+      //delay the refresh as UDisks2 may take some time to update the status
+      QTimer::singleShot(2000, this, SLOT(refresh()));
+    }
   }
+}
+
+
+
+/*
+ * Slot to cancel scrubbing on the raid
+ */
+void MDRaidPanel::cancelScrubbing()
+{
+  MDRaid* currentMDRaid = getMDRaid();
+
+  if(currentMDRaid != NULL) {
+
+    if(QMessageBox::question(this,
+                             i18nc("Dialog confirmation", "Confirm"),
+                             i18n("Are you sure you want to cancel the current scrubbing operation ?")
+                             ) == QMessageBox::Yes) {
+
+      UDisks2Wrapper::instance() -> cancelMDRaidScrubbing(currentMDRaid);
+      //delay the refresh as UDisks2 may take some time to update the status
+      QTimer::singleShot(2000, this, SLOT(refresh()));
+    }
+  }
+
 }

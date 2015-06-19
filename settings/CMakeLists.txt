@@ -21,6 +21,7 @@ target_link_libraries( libsettings
   Qt5::Core
   KF5::ConfigWidgets
   KF5::IconThemes
+  KF5::I18n
 )
 
 install( FILES diskmonitor.kcfg  DESTINATION ${KCFG_INSTALL_DIR})

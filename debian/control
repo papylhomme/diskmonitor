@@ -1,0 +1,41 @@
+Source: plasma-diskmonitor
+Section: utils
+Priority: extra
+Maintainer: m.eik michalke <meik.michalke@hhu.de>
+Build-Depends:
+    debhelper (>= 7),
+    cmake,
+    libudisks2-dev,
+    plasma-framework-dev
+Standards-Version: 3.9.5
+Homepage: https://github.com/papylhomme/diskmonitor
+
+Package: plasma-diskmonitor
+Section: utils
+Architecture: any
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends},
+    libdiskmonitor0 (>= ${binary:Version})
+Description: DisKMonitor
+ KDE tools to monitor SMART devices and MDRaid health status.
+ Features a full application and a Plasma applet.
+
+Package: libdiskmonitor0
+Section: libs
+Architecture: any
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends}
+Description: Shared libraries for DisKMonitor
+ This package contains the shared libraries for the DisKMonitor application and Plasma widget.
+
+Package: plasma-widget-diskmonitor
+Section: utils
+Architecture: any
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends},
+    plasma-diskmonitor (>= ${binary:Version})
+Description: DisKMonitor Plasma widget
+ This package contains the plasmoid of the DisKMonitor application.

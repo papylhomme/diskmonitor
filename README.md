@@ -1,9 +1,18 @@
 # DisKMonitor
 KDE tools to monitor SMART devices and MDRaid health status. Features a full application and a Plasma applet.
 
-# Requirements
+# Dependencies
+* **Qt**
+  * qt5-base
+  * qt5-declarative
 * **KF5**
+  * kiconthemes
+  * knotifications
+  * kxmlgui
+  * plasma-framework
 * **UDisks2** >= 2.1
+
+Additionally, **cmake** and **extra-cmake-modules** are required to build the package. 
 
 # Build
     mkdir build && cd build

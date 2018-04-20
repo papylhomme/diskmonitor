@@ -1,3 +1,6 @@
+Version 0.3.2: 2018-04-20
++ Fix compilation problem with KLocalizedString
+
 Version 0.3.1:
 + Applet : add icons only layout
 + App : add ability to cancel SMART tests and MDRaid scrubbing

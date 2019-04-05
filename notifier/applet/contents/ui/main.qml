@@ -19,6 +19,8 @@
 
 
 import QtQuick 2.3
+import QtQuick.Layouts 1.11
+
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
 import org.papylhomme.diskmonitor 0.1 as DiskMonitor
@@ -52,7 +54,11 @@ Item {
     onStatusChanged: { updateTray(); }
   }
 
-  Plasmoid.compactRepresentation: CompactRepresentation { }
+  Plasmoid.compactRepresentation: CompactRepresentation {
+    Layout.maximumWidth: units.iconSizeHints.panel
+    Layout.maximumHeight: units.iconSizeHints.panel
+  }
+
   Plasmoid.fullRepresentation: PopupDialog {
     id: dialogItem
 

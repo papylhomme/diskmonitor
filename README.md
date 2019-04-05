@@ -6,6 +6,7 @@ KDE tools to monitor SMART devices and MDRaid health status. Features a full app
   * qt5-base
   * qt5-declarative
 * **KF5**
+  * kwindowsystem
   * kiconthemes
   * knotifications
   * kxmlgui

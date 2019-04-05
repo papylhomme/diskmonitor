@@ -1,3 +1,6 @@
+Version 0.3.3:
++ Various fixes
+
 Version 0.3.2: 2018-04-20
 + Fix compilation problem with KLocalizedString
 

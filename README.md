@@ -49,7 +49,7 @@ Additionally, **cmake** and **extra-cmake-modules** are required to build the pa
 
 # Getting involved
 
-If you like this software, contribution is welcome! You can submit new features or bugfixes using github pull request. You can also help translating DisKMonitor in your language using Transifex at https://www.transifex.com/projects/p/diskmonitor
+If you like this software, contribution is welcome! You can submit new features or bugfixes using github pull request. You can also help translating DisKMonitor in your language using Transifex at https://www.transifex.com/orgpapylhomme/diskmonitor/
 
 # Test health status change
 

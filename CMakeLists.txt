@@ -9,6 +9,9 @@ set(DISKMONITOR_VERSION "${DISKMONITOR_VERSION_MAJOR}.${DISKMONITOR_VERSION_MINO
 cmake_minimum_required(VERSION 2.8.12)
 set (QT_MIN_VERSION "5.2.0")
 
+# Suppress warning with CMake >= 3.3
+cmake_policy(SET CMP0063 NEW)
+
 find_package(ECM 1.6.0 REQUIRED NO_MODULE)
 set (CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 

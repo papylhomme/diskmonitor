@@ -142,7 +142,7 @@ QVariant StorageUnitModel::data(const QModelIndex &index, int role) const
     QString icon;
     if(u -> isMDRaid())
       icon = "drive-harddisk";
-    else if(u -> isDrive() && ((Drive*) u) -> isRemovable())
+    else if(u -> isDrive() && static_cast<Drive*>(u) -> isRemovable())
       icon = "drive-removable-media";
     else
       icon = "drive-harddisk";

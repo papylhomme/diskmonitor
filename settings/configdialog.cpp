@@ -58,7 +58,7 @@ bool ConfigDialog::showDialog(QWidget* parent)
 {
   DiskMonitorSettings::self() -> load();
 
-  ConfigDialog* dialog = (ConfigDialog*) exists("settings");
+  ConfigDialog* dialog = static_cast<ConfigDialog*>(exists("settings"));
   if(dialog)
     delete dialog;
 

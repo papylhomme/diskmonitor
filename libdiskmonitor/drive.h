@@ -48,8 +48,8 @@ public:
 
   const SmartAttributesList& getSMARTAttributes() const;
 
-  virtual void update();
-  virtual bool isDrive() const { return true; }
+  virtual void update() override;
+  virtual bool isDrive() const override { return true; }
 
 protected:
   bool removable = false;

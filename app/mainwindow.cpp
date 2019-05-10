@@ -167,8 +167,8 @@ void MainWindow::setSelectedUnit(const QString& path)
  */
 void MainWindow::unitSelected(const QModelIndex& index)
 {
-  if(!index.isValid() || index.data(Qt::UserRole).value<StorageUnit*>() == NULL) {
-    updateCurrentUnit(NULL);
+  if(!index.isValid() || index.data(Qt::UserRole).value<StorageUnit*>() == nullptr) {
+    updateCurrentUnit(nullptr);
   } else {
     updateCurrentUnit(index.data(Qt::UserRole).value<StorageUnit*>());
   }
@@ -182,13 +182,13 @@ void MainWindow::unitSelected(const QModelIndex& index)
 void MainWindow::updateCurrentUnit(StorageUnit* unit)
 {
   //disconnect the old selected unit if needed
-  if(currentUnit != NULL)
+  if(currentUnit != nullptr)
     disconnect(currentUnit, SIGNAL(updated(StorageUnit*)), this, SLOT(updateHealthStatus(StorageUnit*)));
 
   currentUnit = unit;
 
   //No StorageUnit available, reset the view
-  if(currentUnit == NULL) {
+  if(currentUnit == nullptr) {
     ui -> groupBox -> setTitle(i18n("Details"));
     ui -> stackedWidget -> setCurrentIndex(0);
 
@@ -200,17 +200,17 @@ void MainWindow::updateCurrentUnit(StorageUnit* unit)
     //select the panel to display
     int widgetIndex = 0;
     QString boxTitle = i18n("Details");
-    StorageUnitPanel* panel = NULL;
+    StorageUnitPanel* panel = nullptr;
     if(currentUnit -> isDrive()) {
       widgetIndex = 1;
       boxTitle = i18n("Drive %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
-      panel = (DrivePanel*) ui -> stackedWidget -> widget(1);
+      panel = static_cast<DrivePanel*>(ui -> stackedWidget -> widget(1));
       panel -> setStorageUnit(currentUnit);
 
     } else if(currentUnit -> isMDRaid()) {
       widgetIndex = 2;
       boxTitle = i18n("MDRaid %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
-      panel = (MDRaidPanel*) ui -> stackedWidget -> widget(2);
+      panel = static_cast<MDRaidPanel*>(ui -> stackedWidget -> widget(2));
       panel -> setStorageUnit(currentUnit);
     }
 
@@ -227,7 +227,7 @@ void MainWindow::updateCurrentUnit(StorageUnit* unit)
 void MainWindow::storageUnitRemoved(StorageUnit* unit)
 {
   if(unit == currentUnit) {
-    updateCurrentUnit(NULL);
+    updateCurrentUnit(nullptr);
   }
 }
 
@@ -240,7 +240,7 @@ void MainWindow::refreshDetails()
 {
   switch(ui -> stackedWidget -> currentIndex()) {
     case 1:
-    case 2: ((StorageUnitPanel*) ui -> stackedWidget -> currentWidget()) -> refresh(); break;
+    case 2: static_cast<StorageUnitPanel*>(ui -> stackedWidget -> currentWidget()) -> refresh(); break;
     default: break;
   }
 }

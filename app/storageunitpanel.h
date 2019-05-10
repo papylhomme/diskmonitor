@@ -37,13 +37,13 @@ class StorageUnitPanel : public QWidget
 {
     Q_OBJECT
 public:
-  explicit StorageUnitPanel(StorageUnitPropertiesModel* model, QWidget *parent = 0);
+  explicit StorageUnitPanel(StorageUnitPropertiesModel* model, QWidget *parent = nullptr);
   ~StorageUnitPanel();
 
   void setStorageUnit(StorageUnit* unit);
 
 protected:
-  StorageUnitPropertiesModel* model = NULL;
+  StorageUnitPropertiesModel* model = nullptr;
 
   virtual bool isOperationRunning() { return false; }
   virtual void updateUI() { }

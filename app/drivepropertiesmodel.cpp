@@ -65,7 +65,7 @@ DrivePropertiesModel::~DrivePropertiesModel()
  */
 Drive* DrivePropertiesModel::getDrive() const
 {
-  return (Drive*) this -> unit;
+  return static_cast<Drive*>(this -> unit);
 }
 
 
@@ -77,7 +77,7 @@ void DrivePropertiesModel::updateInternalState()
 {
   Drive* drive = getDrive();
 
-  if(drive != NULL)
+  if(drive != nullptr)
     attributes = drive -> getSMARTAttributes();
   else
     attributes.clear();
@@ -110,7 +110,7 @@ int DrivePropertiesModel::columnCount(const QModelIndex& /*index*/) const
  */
 QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 {
-  if(!index.isValid() || unit == NULL)
+  if(!index.isValid() || unit == nullptr)
     return QVariant();
 
   SmartAttribute attr = attributes.at(index.row());
@@ -148,15 +148,15 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
   // Handle display value
   } else if(role == Qt::DisplayRole) {
     switch(index.column()) {
-    case 0: return QVariant(attr.id); break;
-    case 1: return QVariant(attr.name); break;
-    case 2: return QVariant(attr.flags); break;
-    case 3: return QVariant(attr.worst); break;
-    case 4: return QVariant(attr.threshold); break;
-    case 5: return QVariant(attr.value); break;
-    case 6: return humanizeSmartAttribute(attr); break;
+    case 0: return QVariant(attr.id);
+    case 1: return QVariant(attr.name);
+    case 2: return QVariant(attr.flags);
+    case 3: return QVariant(attr.worst);
+    case 4: return QVariant(attr.threshold);
+    case 5: return QVariant(attr.value);
+    case 6: return humanizeSmartAttribute(attr);
     //case 7: return QVariant(attr.pretty_unit); break;
-    default: return QVariant(); break;
+    default: return QVariant();
     }
 
 
@@ -175,11 +175,11 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 QVariant DrivePropertiesModel::humanizeSmartAttribute(const SmartAttribute& attr) const
 {
   switch(attr.pretty_unit) {
-    case 0: return QVariant(i18nc("value type is unknown", "unknown")); break;
-    case 1: return QVariant(attr.pretty); break;
-    case 2: return QVariant(Humanize::duration(attr.pretty, "ms")); break;
-    case 3: return QVariant(i18n("%1 sectors", QString::number(attr.pretty))); break;
-    case 4: return QVariant(Humanize::temperature(attr.pretty)); break;
+    case 0: return QVariant(i18nc("value type is unknown", "unknown"));
+    case 1: return QVariant(attr.pretty);
+    case 2: return QVariant(Humanize::duration(attr.pretty, "ms"));
+    case 3: return QVariant(i18n("%1 sectors", QString::number(attr.pretty)));
+    case 4: return QVariant(Humanize::temperature(attr.pretty));
     default: return QVariant();
   }
 }

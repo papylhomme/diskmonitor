@@ -35,15 +35,15 @@ class DrivePanel : public StorageUnitPanel
     Q_OBJECT
 
 public:
-    explicit DrivePanel(QWidget *parent = 0);
-    ~DrivePanel();
+    explicit DrivePanel(QWidget *parent = nullptr);
+    ~DrivePanel() override;
 
   void setDrive(Drive* drive);
   Drive* getDrive();
 
 protected:
-  virtual void updateUI();
-  virtual bool isOperationRunning();
+  virtual void updateUI() override;
+  virtual bool isOperationRunning() override;
 
 private:
   Ui::DrivePanel *ui;

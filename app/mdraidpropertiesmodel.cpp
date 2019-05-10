@@ -58,7 +58,7 @@ MDRaidPropertiesModel::~MDRaidPropertiesModel()
  */
 MDRaid* MDRaidPropertiesModel::getMDRaid() const
 {
-  return (MDRaid*) this -> unit;
+  return static_cast<MDRaid*>(this -> unit);
 }
 
 
@@ -89,28 +89,28 @@ QVariant MDRaidPropertiesModel::data(const QModelIndex& index, int role) const
 {
   MDRaid* mdraid = getMDRaid();
 
-  if(!index.isValid() || index.row() != 0 || mdraid == NULL)
+  if(!index.isValid() || index.row() != 0 || mdraid == nullptr)
     return QVariant();
 
 
   if(role == Qt::DisplayRole) {
     switch(index.column()) {
-      case 0: return QVariant(mdraid -> getUUID()); break;
-      case 1: return QVariant(mdraid -> getLevel()); break;
-      case 2: return QVariant(mdraid -> getNumDevices()); break;
-      case 3: return QVariant(Humanize::size(mdraid -> getSize())); break;
-      case 4: return QVariant(mdraid -> getSyncAction()); break;
-      case 5: return QVariant(Humanize::duration(mdraid -> getSyncRemainingTime(), "us", "s")); break;
-      case 6: return QVariant(Humanize::percentage(mdraid -> getSyncCompleted())); break;
-      default: return QVariant(); break;
+      case 0: return QVariant(mdraid -> getUUID());
+      case 1: return QVariant(mdraid -> getLevel());
+      case 2: return QVariant(mdraid -> getNumDevices());
+      case 3: return QVariant(Humanize::size(mdraid -> getSize()));
+      case 4: return QVariant(mdraid -> getSyncAction());
+      case 5: return QVariant(Humanize::duration(mdraid -> getSyncRemainingTime(), "us", "s"));
+      case 6: return QVariant(Humanize::percentage(mdraid -> getSyncCompleted()));
+      default: return QVariant();
     }
 
   } else if(role == Qt::ToolTipRole) {
     switch(index.column()) {
-      case 3: return QVariant(i18n("Raw value: %1", QString::number(mdraid -> getSize()))); break;
-      case 5: return QVariant(i18n("Raw value: %1", QString::number(mdraid -> getSyncRemainingTime()))); break;
-      case 6: return QVariant(i18n("Raw value: %1", QString::number(mdraid -> getSyncCompleted()))); break;
-      default: return QVariant(); break;
+      case 3: return QVariant(i18n("Raw value: %1", QString::number(mdraid -> getSize())));
+      case 5: return QVariant(i18n("Raw value: %1", QString::number(mdraid -> getSyncRemainingTime())));
+      case 6: return QVariant(i18n("Raw value: %1", QString::number(mdraid -> getSyncCompleted())));
+      default: return QVariant();
     }
   }
 

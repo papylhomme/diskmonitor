@@ -56,7 +56,7 @@ MDRaidMembersModel::~MDRaidMembersModel()
  */
 MDRaid* MDRaidMembersModel::getMDRaid() const
 {
-  return (MDRaid*) this -> unit;
+  return static_cast<MDRaid*>(this -> unit);
 }
 
 
@@ -68,7 +68,7 @@ void MDRaidMembersModel::updateInternalState()
 {
   MDRaid* mdraid = getMDRaid();
 
-  if(mdraid != NULL)
+  if(mdraid != nullptr)
     members = mdraid -> getMembers();
   else
     members.clear();
@@ -102,7 +102,7 @@ QVariant MDRaidMembersModel::data(const QModelIndex& index, int role) const
 {
   MDRaid* mdraid = getMDRaid();
 
-  if(!index.isValid() || mdraid == NULL)
+  if(!index.isValid() || mdraid == nullptr)
     return QVariant();
 
   MDRaidMember member = members.at(index.row());
@@ -126,11 +126,11 @@ QVariant MDRaidMembersModel::data(const QModelIndex& index, int role) const
 
   } else if(role == Qt::DisplayRole) {
     switch(index.column()) {
-      case 0: return QVariant(member.block.path()); break;
-      case 1: return QVariant(member.slot); break;
-      case 2: return QVariant(member.state.join(", ")); break;
-      case 3: return QVariant(member.numReadErrors); break;
-      default: return QVariant(); break;
+      case 0: return QVariant(member.block.path());
+      case 1: return QVariant(member.slot);
+      case 2: return QVariant(member.state.join(", "));
+      case 3: return QVariant(member.numReadErrors);
+      default: return QVariant();
     }
 
   }

@@ -77,7 +77,7 @@ void StorageUnitPanel::refresh()
 void StorageUnitPanel::storageUnitRemoved(StorageUnit* unit)
 {
   if(this -> model -> getStorageUnit() == unit)
-    setStorageUnit(NULL);
+    setStorageUnit(nullptr);
 }
 
 

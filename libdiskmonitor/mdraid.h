@@ -35,7 +35,7 @@ class MDRaid : public StorageUnit
 
 public:
   explicit MDRaid(QDBusObjectPath objectPath, QString device);
-  ~MDRaid();
+  ~MDRaid() override;
 
   int getNumDevices() const;
   qulonglong getSize() const;
@@ -49,10 +49,10 @@ public:
 
   const MDRaidMemberList& getMembers() const;
 
-  virtual void update();
+  virtual void update() override;
 
 
-  virtual bool isMDRaid() const { return true; }
+  virtual bool isMDRaid() const override { return true; }
 
 protected:
   int numDevices = 0;

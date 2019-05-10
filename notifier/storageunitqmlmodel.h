@@ -71,9 +71,9 @@ public:
   void setIconHealthy(QString healthyIcon);
   void setIconFailing(QString failingIcon);
 
-  virtual QHash<int, QByteArray> roleNames() const;
-  int rowCount(const QModelIndex & parent = QModelIndex()) const;
-  QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+  virtual QHash<int, QByteArray> roleNames() const override;
+  int rowCount(const QModelIndex & parent = QModelIndex()) const override;
+  QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
 private:
   QList<StorageUnit*> storageUnits;

@@ -37,7 +37,7 @@ namespace Settings {
     Q_PROPERTY(QString unknown READ unknown NOTIFY unknownChanged)
 
   public:
-    explicit IconProvider(QObject *parent = 0);
+    explicit IconProvider(QObject *parent = nullptr);
     ~IconProvider();
 
     QString healthy() const;

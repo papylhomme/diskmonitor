@@ -37,15 +37,15 @@ class MDRaidPanel : public StorageUnitPanel
   Q_OBJECT
 
 public:
-  explicit MDRaidPanel(QWidget *parent = 0);
-  ~MDRaidPanel();
+  explicit MDRaidPanel(QWidget *parent = nullptr);
+  ~MDRaidPanel() override;
 
   void setMDRaid(MDRaid* raid);
   MDRaid* getMDRaid();
 
 protected:
-  virtual void updateUI();
-  virtual bool isOperationRunning();
+  virtual void updateUI() override;
+  virtual bool isOperationRunning() override;
 
 private:
   Ui::MDRaidPanel* ui;

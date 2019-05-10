@@ -51,12 +51,12 @@ void StorageUnitPropertiesModel::setStorageUnit(StorageUnit* unit)
 {
   beginResetModel();
 
-  if(this -> unit != NULL)
+  if(this -> unit != nullptr)
     disconnect(this -> unit, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdate(StorageUnit*)));
 
   this -> unit = unit;
 
-  if(this -> unit != NULL)
+  if(this -> unit != nullptr)
     connect(this -> unit, SIGNAL(updated(StorageUnit*)), this, SLOT(storageUnitUpdate(StorageUnit*)));
 
 
@@ -93,7 +93,7 @@ void StorageUnitPropertiesModel::storageUnitUpdate(StorageUnit* /*unit*/)
  */
 void StorageUnitPropertiesModel::refreshAll()
 {
-  if(unit != NULL)
+  if(unit != nullptr)
     unit -> update();
 }
 

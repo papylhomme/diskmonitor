@@ -33,10 +33,10 @@ class StorageUnitModel : public QAbstractListModel
 
 public:
     StorageUnitModel();
-    ~StorageUnitModel();
+    ~StorageUnitModel() override;
 
-    virtual int rowCount(const QModelIndex& index) const;
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+    virtual int rowCount(const QModelIndex& index) const override;
+    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
     static const QSize& ItemSize;
 

@@ -45,7 +45,7 @@ public:
     void refreshAll();
 
 protected:
-    StorageUnit* unit = NULL;
+    StorageUnit* unit = nullptr;
     virtual void updateInternalState() { }
 
 private slots:

@@ -80,7 +80,7 @@ void MDRaidPanel::setMDRaid(MDRaid* raid)
  */
 MDRaid* MDRaidPanel::getMDRaid()
 {
-  return (MDRaid*) this -> model -> getStorageUnit();
+  return static_cast<MDRaid*>(this -> model -> getStorageUnit());
 }
 
 
@@ -96,7 +96,7 @@ void MDRaidPanel::updateUI()
   ui -> progressBar -> setEnabled(running);
   ui -> startScrubButton -> setEnabled(!running);
 
-  if(raid != NULL) {
+  if(raid != nullptr) {
     double completed = raid -> getSyncCompleted();
     ui -> progressBar -> setValue(completed * 100);
     ui -> cancelScrubButton -> setVisible(raid -> getSyncAction() == "check");
@@ -120,7 +120,7 @@ bool MDRaidPanel::isOperationRunning()
 {
   MDRaid* raid = getMDRaid();
 
-  return !(raid == NULL || raid -> getSyncAction() == "idle");
+  return !(raid == nullptr || raid -> getSyncAction() == "idle");
 }
 
 
@@ -145,7 +145,7 @@ void MDRaidPanel::startScrubbing()
 {
   MDRaid* currentMDRaid = getMDRaid();
 
-  if(currentMDRaid != NULL) {
+  if(currentMDRaid != nullptr) {
 
     if(QMessageBox::question(this,
                              i18nc("Dialog confirmation", "Confirm"),
@@ -168,7 +168,7 @@ void MDRaidPanel::cancelScrubbing()
 {
   MDRaid* currentMDRaid = getMDRaid();
 
-  if(currentMDRaid != NULL) {
+  if(currentMDRaid != nullptr) {
 
     if(QMessageBox::question(this,
                              i18nc("Dialog confirmation", "Confirm"),

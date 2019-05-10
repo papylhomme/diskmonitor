@@ -35,7 +35,7 @@ namespace Settings {
     Q_OBJECT
     Q_PROPERTY(int current READ selected WRITE setSelected)
   public:
-    explicit InvisibleButtonGroup(QWidget* parent = 0);
+    explicit InvisibleButtonGroup(QWidget* parent = nullptr);
     ~InvisibleButtonGroup();
 
     int selected() const;

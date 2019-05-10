@@ -193,7 +193,7 @@ void UDisks2Wrapper::initialize()
   foreach(QDBusObjectPath objectPath, objects.keys()) {
     StorageUnit* newUnit = createNewUnitFromBlockDevice(objects[objectPath]);
 
-    if(newUnit != NULL)
+    if(newUnit != nullptr)
       units[newUnit -> getObjectPath()] = newUnit;
   }
 
@@ -398,7 +398,7 @@ void UDisks2Wrapper::interfacesAdded(const QDBusObjectPath& objectPath, const In
   qDebug() << "UDisks2Wrapper => New interfaces added to path '" << objectPath.path() << "'";
 
   StorageUnit* newUnit = createNewUnitFromBlockDevice(interfaces);
-  if(newUnit != NULL) {
+  if(newUnit != nullptr) {
     units[newUnit -> getObjectPath()] = newUnit;
     emit storageUnitAdded(newUnit);
   }
@@ -453,7 +453,7 @@ StorageUnit* UDisks2Wrapper::createNewUnitFromBlockDevice(const InterfaceList& i
     }
   }
 
-  return NULL;
+  return nullptr;
 }
 
 

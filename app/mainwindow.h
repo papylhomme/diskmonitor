@@ -39,21 +39,21 @@ class MainWindow : public KMainWindow
   Q_OBJECT
 
 public:
-  explicit MainWindow(QWidget* parent = 0);
-  ~MainWindow();
+  explicit MainWindow(QWidget* parent = nullptr);
+  ~MainWindow() override;
 
   void setSelectedUnit(const QString& path);
 
-  void closeEvent(QCloseEvent *);
+  void closeEvent(QCloseEvent *) override;
 
 protected:
-  virtual void applyMainWindowSettings(const KConfigGroup &config);
+  virtual void applyMainWindowSettings(const KConfigGroup &config) override;
 
 
 private:
   Ui::MainWindow* ui;
 
-  StorageUnit* currentUnit = NULL;
+  StorageUnit* currentUnit = nullptr;
   StorageUnitModel* storageUnitModel;
 
   Settings::IconProvider iconProvider;

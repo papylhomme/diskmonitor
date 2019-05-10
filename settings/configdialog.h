@@ -33,10 +33,10 @@ namespace Settings {
   class ConfigDialog : public KConfigDialog
   {
   public:
-      ConfigDialog(QWidget* parent = NULL);
+      ConfigDialog(QWidget* parent = nullptr);
       ~ConfigDialog();
 
-      static bool showDialog(QWidget* parent = NULL);
+      static bool showDialog(QWidget* parent = nullptr);
   };
 
 }

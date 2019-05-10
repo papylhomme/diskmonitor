@@ -34,17 +34,17 @@ class DrivePropertiesModel : public StorageUnitPropertiesModel
 
 public:
   DrivePropertiesModel();
-  ~DrivePropertiesModel();
+  ~DrivePropertiesModel() override;
 
   Drive* getDrive() const;
 
-  virtual int rowCount(const QModelIndex& index) const;
-  virtual int columnCount(const QModelIndex& index) const;
-  virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-  virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+  virtual int rowCount(const QModelIndex& index) const override;
+  virtual int columnCount(const QModelIndex& index) const override;
+  virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+  virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 protected:
-  virtual void updateInternalState();
+  virtual void updateInternalState() override;
 
   QVariant humanizeSmartAttribute(const SmartAttribute& attr) const;
 

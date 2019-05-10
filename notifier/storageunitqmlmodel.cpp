@@ -215,16 +215,14 @@ QVariant StorageUnitQmlModel::data(const QModelIndex& index, int role) const
   StorageUnit* unit = storageUnits.at(index.row());
 
   switch(role) {
-    case NameRole: return QVariant(unit -> getShortName()); break;
-    case IconRole: return QVariant(getIconForUnit(unit)); break;
-    case DeviceRole: return QVariant(unit -> getDevice()); break;
-    case PathRole: return QVariant(unit -> getPath()); break;
-    case FailingRole: return QVariant(unit -> isFailing()); break;
-    case FailingKnownRole: return QVariant(unit -> isFailingStatusKnown()); break;
-    default: return QVariant(); break;
+    case NameRole: return QVariant(unit -> getShortName());
+    case IconRole: return QVariant(getIconForUnit(unit));
+    case DeviceRole: return QVariant(unit -> getDevice());
+    case PathRole: return QVariant(unit -> getPath());
+    case FailingRole: return QVariant(unit -> isFailing());
+    case FailingKnownRole: return QVariant(unit -> isFailingStatusKnown());
+    default: return QVariant();
   }
-
-  return QVariant();
 }
 
 
@@ -237,7 +235,7 @@ QString StorageUnitQmlModel::getIconForUnit(StorageUnit* unit) const
   QString icon;
   if(unit -> isMDRaid())
     icon = "drive-harddisk";
-  else if(unit -> isDrive() && ((Drive*) unit) -> isRemovable())
+  else if(unit -> isDrive() && static_cast<Drive*>(unit) -> isRemovable())
     icon = "drive-removable-media";
   else
     icon = "drive-harddisk";
@@ -339,7 +337,7 @@ void StorageUnitQmlModel::processUnits(const QList<StorageUnit*>& units)
                            hasFailing ? i18n("Storage units failing") : i18n("Storage units are back to healthy status"),
                            status(),
                            hasFailing ? iconFailing() : iconHealthy(),
-                           NULL,
+                           nullptr,
                            KNotification::Persistent,
                            "diskmonitor"
                            );

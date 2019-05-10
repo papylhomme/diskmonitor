@@ -83,7 +83,7 @@ void DrivePanel::setDrive(Drive* drive)
  */
 Drive* DrivePanel::getDrive()
 {
-  return (Drive*) this -> model -> getStorageUnit();
+  return static_cast<Drive*>(this -> model -> getStorageUnit());
 }
 
 
@@ -96,7 +96,7 @@ void DrivePanel::updateUI()
   Drive* drive = getDrive();
 
   //sanity check
-  if(drive == NULL) {
+  if(drive == nullptr) {
     ui -> panelSmartNotSupported -> setVisible(false);
     ui -> panelSmartNotEnabled -> setVisible(false);
     ui -> panelSmartWidgets -> setEnabled(false);
@@ -148,7 +148,7 @@ bool DrivePanel::isOperationRunning()
 {
   Drive* drive = getDrive();
 
-  return !(drive == NULL || drive -> getSelfTestStatus() != "inprogress");
+  return !(drive == nullptr || drive -> getSelfTestStatus() != "inprogress");
 }
 
 
@@ -192,7 +192,7 @@ void DrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
 {
   Drive* currentDrive = getDrive();
 
-  if(currentDrive != NULL) {
+  if(currentDrive != nullptr) {
 
     if(type == UDisks2Wrapper::ShortSelfTest ||
        QMessageBox::question(this,
@@ -216,7 +216,7 @@ void DrivePanel::cancelSelfTest()
 {
   Drive* currentDrive = getDrive();
 
-  if(currentDrive != NULL) {
+  if(currentDrive != nullptr) {
 
     if(QMessageBox::question(this,
                              i18nc("Dialog confirmation", "Confirm"),

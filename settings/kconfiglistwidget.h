@@ -33,7 +33,7 @@ namespace Settings {
     Q_OBJECT
     Q_PROPERTY( QList<int> items READ items WRITE setItems USER true )
   public:
-    KConfigListWidget(QWidget* parent = NULL);
+    KConfigListWidget(QWidget* parent = nullptr);
     ~KConfigListWidget();
 
     QList<int> items();

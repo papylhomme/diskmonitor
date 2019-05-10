@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
     i18n("Please report bugs directly to %1", QString("<a href='https://github.com/papylhomme/diskmonitor/issues'>GitHub</a>"))
   );
 
+  about.setDesktopFileName("diskmonitor");
   KAboutData::setApplicationData(about);
 
   UDisks2Wrapper::instance();

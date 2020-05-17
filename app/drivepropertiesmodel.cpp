@@ -138,12 +138,12 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 
   // Handle text colors
   } else if(role == Qt::ForegroundRole) {
+    QPalette palette;
 
     if(attr.value == -1) {
-      QPalette palette;
       return QVariant(palette.brush(QPalette::Disabled, QPalette::Text));
     } else
-      return QVariant(QBrush());
+      return QVariant(palette.brush(QPalette::Text));
 
   // Handle display value
   } else if(role == Qt::DisplayRole) {

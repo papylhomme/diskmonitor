@@ -1,0 +1,448 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Matevž Jekovec <matevz.jekovec@gmail.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: DisKMonitor\n"
+"Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
+"POT-Creation-Date: 2015-03-04 10:43+0000\n"
+"PO-Revision-Date: 2020-04-25 15:44+0000\n"
+"Last-Translator: Matevž Jekovec <matevz.jekovec@gmail.com>\n"
+"Language-Team: Slovenian (http://www.transifex.com/orgpapylhomme/diskmonitor/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#: app/drivepanel.cpp:29
+msgid "Short test"
+msgstr "Kratek preizkus"
+
+#: app/drivepanel.cpp:31
+msgid "Extended test"
+msgstr "Podaljšan preizkus"
+
+#. i18n: file: app/drivepanel.ui:123
+#. i18n: ectx: property (text), widget (QLabel, selfTestStatusLabel)
+#. i18n: file: app/mainwindow.ui:72
+#. i18n: ectx: property (text), widget (QLabel, statusLabel)
+#: app/drivepanel.cpp:108 rc.cpp:18 rc.cpp:33
+msgid "unknown"
+msgstr "neznano"
+
+#: app/drivepanel.cpp:183
+msgctxt "SelfTest status"
+msgid "In progress"
+msgstr "V teku"
+
+#: app/drivepanel.cpp:185
+msgctxt "SelfTest status"
+msgid "Success"
+msgstr "Uspešno"
+
+#: app/drivepanel.cpp:187
+msgctxt "SelfTest status"
+msgid "Aborted"
+msgstr "Preklicano"
+
+#: app/drivepanel.cpp:189
+msgctxt "SelfTest status"
+msgid "Interrupted"
+msgstr "Prekinjeno"
+
+#: app/drivepanel.cpp:191
+msgctxt "SelfTest status"
+msgid "Fatal"
+msgstr "Usodno"
+
+#: app/drivepanel.cpp:193
+msgctxt "SelfTest status"
+msgid "Error (%1)"
+msgstr "Napaka (%1)"
+
+#: app/drivepropertiesmodel.cpp:21
+msgctxt "Attribute's id"
+msgid "Id"
+msgstr "ID"
+
+#: app/drivepropertiesmodel.cpp:22
+msgctxt "Attribute's name"
+msgid "Name"
+msgstr "Ime"
+
+#: app/drivepropertiesmodel.cpp:23
+msgctxt "Attribute's flags"
+msgid "Flags"
+msgstr "Zastavice"
+
+#: app/drivepropertiesmodel.cpp:24
+msgctxt "Worst known value for this attribute"
+msgid "Worst"
+msgstr "Najslabše"
+
+#: app/drivepropertiesmodel.cpp:25
+msgctxt "Threshold value for this attribute"
+msgid "Threshold"
+msgstr "Prag"
+
+#: app/drivepropertiesmodel.cpp:26
+msgctxt "Normalized value for this attribute"
+msgid "Normalized value"
+msgstr "Normalizirana vrednost"
+
+#: app/drivepropertiesmodel.cpp:27
+msgctxt "Human friendly value for this attribute"
+msgid "Value"
+msgstr "Vrednost"
+
+#: app/drivepropertiesmodel.cpp:143 app/mdraidpropertiesmodel.cpp:90
+#: app/mdraidpropertiesmodel.cpp:91 app/mdraidpropertiesmodel.cpp:92
+msgid "Raw value: %1"
+msgstr "Surova vrednost: %1"
+
+#: app/drivepropertiesmodel.cpp:156
+msgctxt "value type is unknown"
+msgid "unknown"
+msgstr "neznan"
+
+#: app/drivepropertiesmodel.cpp:159
+msgid "%1 sectors"
+msgstr "%1 sektorjev"
+
+#. i18n: file: app/mainwindow.ui:14
+#. i18n: ectx: property (windowTitle), widget (QMainWindow, MainWindow)
+#: app/main.cpp:14 rc.cpp:24
+msgid "DisKMonitor"
+msgstr "DisKMonitor"
+
+#: app/main.cpp:15
+msgid "KDE tools to monitor SMART devices and MDRaid health status"
+msgstr "Orodja KDE za nadzor naprav SMART in MDRaid"
+
+#: app/main.cpp:17
+msgid "Copyright (C) 2015 Michaël Lhomme"
+msgstr "Copyright (C) 2015 Michaël Lhomme"
+
+#: app/main.cpp:23
+msgid "Michaël Lhomme"
+msgstr "Michaël Lhomme"
+
+#: app/main.cpp:23
+msgid "Maintainer & Developer"
+msgstr "Vzdrževalec & Razvijalec"
+
+#: app/main.cpp:25 app/main.cpp:26
+msgid "Please report bugs directly to %1"
+msgstr "Prosimo, da sporočite hrošče na %1"
+
+#. i18n: file: app/mainwindow.ui:39
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: app/mainwindow.cpp:118 rc.cpp:27
+msgid "Details"
+msgstr "Podrobnosti"
+
+#: app/mainwindow.cpp:149
+msgid "Drive %1 (%2)"
+msgstr "Pogon %1 (%2)"
+
+#: app/mainwindow.cpp:154
+msgid "MDRaid %1 (%2)"
+msgstr "MDRaid %1 (%2)"
+
+#: app/mainwindow.cpp:189
+msgctxt "Unknown health status"
+msgid "Unknown"
+msgstr "Neznano"
+
+#: app/mainwindow.cpp:194
+msgctxt "Failing health status"
+msgid "Failing"
+msgstr "V odpovedovanju"
+
+#: app/mainwindow.cpp:198
+msgctxt "Healthy health status"
+msgid "Healthy"
+msgstr "Zdravo"
+
+#: app/mdraidmembersmodel.cpp:17
+msgctxt "RAID member device"
+msgid "Block device"
+msgstr "Bločna naprava"
+
+#: app/mdraidmembersmodel.cpp:18
+msgctxt "RAID member slot"
+msgid "Slot"
+msgstr "Reža"
+
+#: app/mdraidmembersmodel.cpp:19
+msgctxt "RAID member state"
+msgid "State"
+msgstr "Stanje"
+
+#: app/mdraidmembersmodel.cpp:20
+msgctxt "RAID member read errors count"
+msgid "Read errors"
+msgstr "Napake branja"
+
+#: app/mdraidpropertiesmodel.cpp:15
+msgctxt "RAID property UUID"
+msgid "UUID"
+msgstr "UUID"
+
+#: app/mdraidpropertiesmodel.cpp:16
+msgctxt "RAID level"
+msgid "Level"
+msgstr "Vrsta"
+
+#: app/mdraidpropertiesmodel.cpp:17
+msgctxt "RAID device's count"
+msgid "Devices"
+msgstr "Naprave"
+
+#: app/mdraidpropertiesmodel.cpp:18
+msgctxt "RAID size"
+msgid "Size"
+msgstr "Velikost"
+
+#: app/mdraidpropertiesmodel.cpp:19
+msgctxt "RAID current action"
+msgid "Action"
+msgstr "Opravilo"
+
+#: app/mdraidpropertiesmodel.cpp:20
+msgctxt "RAID current action remaining time"
+msgid "Remaining time"
+msgstr "Preostanek časa"
+
+#: app/mdraidpropertiesmodel.cpp:21
+msgctxt "RAID current action % completed"
+msgid "Completed"
+msgstr "Končano"
+
+#: settings/configdialog.cpp:47
+msgid "Appearance"
+msgstr "Izgled"
+
+#: settings/configdialog.cpp:47
+msgid "Appearance options"
+msgstr "Možnosti izgleda"
+
+#: settings/configdialog.cpp:48
+msgid "S.M.A.R.T"
+msgstr "SMART"
+
+#: settings/configdialog.cpp:48
+msgid "S.M.A.R.T options"
+msgstr "Možnosti SMART"
+
+#. i18n: file: app/drivepanel.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, DrivePanel)
+#. i18n: file: app/mdraidpanel.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, MDRaidPanel)
+#. i18n: file: settings/appearance.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Appearance)
+#. i18n: file: settings/smart.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, SMART)
+#: rc.cpp:3 rc.cpp:54 rc.cpp:60 rc.cpp:102
+msgid "Form"
+msgstr "Oblika"
+
+#. i18n: file: app/drivepanel.ui:39
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:6
+msgid "Unable to detect SMART support for this drive"
+msgstr "Pogon ne podpira SMART"
+
+#. i18n: file: app/drivepanel.ui:81
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:9
+msgid "SMART isn't activated for this drive"
+msgstr "SMART za pogon ni omogočen"
+
+#. i18n: file: app/drivepanel.ui:88
+#. i18n: ectx: property (text), widget (QPushButton, enableSmartButton)
+#: rc.cpp:12
+msgid "Activate"
+msgstr "Omogoči"
+
+#. i18n: file: app/drivepanel.ui:116
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:15
+msgid "SelfTest status:"
+msgstr "Rezultat preizkusa:"
+
+#. i18n: file: app/drivepanel.ui:173
+#. i18n: ectx: property (text), widget (QPushButton, startSelfTestButton)
+#: rc.cpp:21
+msgid "Start SelfTest"
+msgstr "Začni preizkus"
+
+#. i18n: file: app/mainwindow.ui:59
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:30
+msgid "General status is:"
+msgstr "Stanje pogona je:"
+
+#. i18n: file: app/mainwindow.ui:111
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:36
+msgid "Please select a storage unit to display informations"
+msgstr "Izberite enoto za prikaz informacij"
+
+#. i18n: file: app/mainwindow.ui:136
+#. i18n: ectx: property (title), widget (QMenu, menuFile)
+#: rc.cpp:39
+msgid "Fi&le"
+msgstr "D&atoteka"
+
+#. i18n: file: app/mainwindow.ui:148
+#. i18n: ectx: property (text), widget (QStatusBar, statusbar)
+#: rc.cpp:42
+msgid "&Quit"
+msgstr "&Končaj"
+
+#. i18n: file: app/mainwindow.ui:151
+#. i18n: ectx: property (shortcut), widget (QStatusBar, statusbar)
+#: rc.cpp:45
+msgid "Ctrl+Q"
+msgstr "Ctrl+Q"
+
+#. i18n: file: app/mainwindow.ui:156
+#. i18n: ectx: property (text), widget (QStatusBar, statusbar)
+#: rc.cpp:48
+msgid "&Refresh"
+msgstr "&Osveži"
+
+#. i18n: file: app/mainwindow.ui:161
+#. i18n: ectx: property (text), widget (QStatusBar, statusbar)
+#: rc.cpp:51
+msgid "&Settings"
+msgstr "&Nastavitve"
+
+#. i18n: file: app/mdraidpanel.ui:55
+#. i18n: ectx: property (text), widget (QPushButton, startScrubButton)
+#: rc.cpp:57
+msgid "Start scrubbing"
+msgstr "Začni prečiščevanje"
+
+#. i18n: file: settings/appearance.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:63
+msgid "Colors"
+msgstr "Barve"
+
+#. i18n: file: settings/appearance.ui:29
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:66
+msgid "Warning color:"
+msgstr "Opozorilna barva:"
+
+#. i18n: file: settings/appearance.ui:36
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:69
+msgid "Error color:"
+msgstr "Barva napake:"
+
+#. i18n: file: settings/appearance.ui:52
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:72
+msgid "Icons"
+msgstr "Ikone"
+
+#. i18n: file: settings/appearance.ui:61
+#. i18n: ectx: property (text), widget (QRadioButton,
+#. emotesIconModeRadioButton)
+#: rc.cpp:75
+msgctxt "Emote icons"
+msgid "Emo&tes"
+msgstr "Emo&džiji"
+
+#. i18n: file: settings/appearance.ui:138
+#. i18n: ectx: property (text), widget (QRadioButton,
+#. dialogsIconModeRadioButton)
+#: rc.cpp:78
+msgctxt "Dialog icons"
+msgid "Dialo&gs"
+msgstr "Pogovo&rna okna"
+
+#. i18n: file: settings/appearance.ui:212
+#. i18n: ectx: property (text), widget (QRadioButton,
+#. customIconModeRadioButton)
+#: rc.cpp:81
+msgctxt "Custom icons"
+msgid "Custom"
+msgstr "Po meri"
+
+#. i18n: file: settings/diskmonitor.kcfg:9
+#. i18n: ectx: label, entry (ErrorColor), group (Appearance)
+#: rc.cpp:84
+msgid "Defines the color used for errors."
+msgstr "Določi barve za napake."
+
+#. i18n: file: settings/diskmonitor.kcfg:13
+#. i18n: ectx: label, entry (WarningColor), group (Appearance)
+#: rc.cpp:87
+msgid "Defines the color used for warnings."
+msgstr "Določi barve za opozorila."
+
+#. i18n: file: settings/diskmonitor.kcfg:25
+#. i18n: ectx: label, entry (HealthyIcon), group (Appearance)
+#: rc.cpp:90
+msgid "Defines the icon used for healthy unit."
+msgstr "Določi ikone za zdrave pogone."
+
+#. i18n: file: settings/diskmonitor.kcfg:29
+#. i18n: ectx: label, entry (FailingIcon), group (Appearance)
+#: rc.cpp:93
+msgid "Defines the icon used for failing unit."
+msgstr "Določi ikone za pogone v odpovedovanju."
+
+#. i18n: file: settings/diskmonitor.kcfg:33
+#. i18n: ectx: label, entry (UnknownIcon), group (Appearance)
+#: rc.cpp:96
+msgid "Defines the icon used when health status is unknown."
+msgstr "Določi ikone za naprave, katerih zdravje ni znano."
+
+#. i18n: file: settings/diskmonitor.kcfg:39
+#. i18n: ectx: label, entry (SensitiveAttributes), group (SMART)
+#: rc.cpp:99
+msgid "Defines the attributes considered sensitive."
+msgstr "Določi nadzirane atribute."
+
+#. i18n: file: settings/smart.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:105
+msgid "Sensitive Attributes"
+msgstr "ID-ji nadziranih atributov"
+
+#. i18n: file: settings/smart.ui:44
+#. i18n: ectx: property (text), widget (QPushButton, addButton)
+#: rc.cpp:108
+msgid "Add"
+msgstr "Dodaj"
+
+#. i18n: file: settings/smart.ui:51
+#. i18n: ectx: property (text), widget (QPushButton, removeButton)
+#: rc.cpp:111
+msgid "Remove"
+msgstr "Odstrani"
+
+#. i18n: file: settings/smart.ui:58
+#. i18n: ectx: property (text), widget (QPushButton, clearButton)
+#: rc.cpp:114
+msgid "Clear"
+msgstr "Počisti"
+
+#: rc.cpp:115
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Vaša imena"
+
+#: rc.cpp:116
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Vaši e-naslovi"

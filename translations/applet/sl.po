@@ -1,0 +1,136 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Matevž Jekovec <matevz.jekovec@gmail.com>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: DisKMonitor\n"
+"Report-Msgid-Bugs-To: https://github.com/papylhomme/diskmonitor/issues\n"
+"POT-Creation-Date: 2015-03-04 10:43+0000\n"
+"PO-Revision-Date: 2020-04-25 15:45+0000\n"
+"Last-Translator: Matevž Jekovec <matevz.jekovec@gmail.com>\n"
+"Language-Team: Slovenian (http://www.transifex.com/orgpapylhomme/diskmonitor/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#: notifier/applet/contents/config/config.qml:7
+msgid "Monitoring"
+msgstr "Nadziranje"
+
+#: notifier/applet/contents/config/config.qml:13
+msgid "Appearance"
+msgstr "Izgled"
+
+#: notifier/applet/contents/ui/ColorPickerButton.qml:10
+msgid "Please choose a color"
+msgstr "Izberite barvo"
+
+#: notifier/applet/contents/ui/configAppearance.qml:42
+msgid "Layouts"
+msgstr "Postavitve"
+
+#: notifier/applet/contents/ui/configAppearance.qml:53
+msgid "Use small device name"
+msgstr "Uporabi kratko ime naprave"
+
+#: notifier/applet/contents/ui/configAppearance.qml:58
+msgid "Include drive id on small layouts"
+msgstr "Vključi ID pogona na majhnih postavitvah"
+
+#: notifier/applet/contents/ui/configAppearance.qml:72
+msgctxt "Big layout"
+msgid "Big"
+msgstr "Velika"
+
+#: notifier/applet/contents/ui/configAppearance.qml:89
+msgctxt "Small layout"
+msgid "Small"
+msgstr "Mala"
+
+#: notifier/applet/contents/ui/configAppearance.qml:106
+msgctxt "Minimalist layout"
+msgid "Minimalist"
+msgstr "Minimalistična"
+
+#: notifier/applet/contents/ui/configAppearance.qml:128
+msgid "Icons"
+msgstr "Ikone"
+
+#: notifier/applet/contents/ui/configAppearance.qml:144
+msgctxt "Emote icons"
+msgid "Emotes"
+msgstr "Emodžiji"
+
+#: notifier/applet/contents/ui/configAppearance.qml:162
+msgctxt "Dialog icons"
+msgid "Dialogs"
+msgstr "Pogovorna okna"
+
+#: notifier/applet/contents/ui/configAppearance.qml:179
+msgctxt "Custom icons"
+msgid "Custom"
+msgstr "Po meri"
+
+#: notifier/applet/contents/ui/configAppearance.qml:201
+msgid "Colors"
+msgstr "Barve"
+
+#: notifier/applet/contents/ui/configAppearance.qml:212
+msgctxt "Warning color"
+msgid "Warning"
+msgstr "Opozorilo"
+
+#: notifier/applet/contents/ui/configAppearance.qml:222
+msgctxt "Error color"
+msgid "Error"
+msgstr "Napaka"
+
+#: notifier/applet/contents/ui/configMonitoring.qml:21
+msgid "General"
+msgstr "Splošno"
+
+#: notifier/applet/contents/ui/configMonitoring.qml:32
+msgid "Refresh timeout"
+msgstr "Interval osveževanja"
+
+#: notifier/applet/contents/ui/configMonitoring.qml:40
+msgctxt "abbreviation for minutes"
+msgid " min."
+msgstr "min."
+
+#: notifier/applet/contents/ui/configMonitoring.qml:47
+msgid "Notify health status change"
+msgstr "Opozori, ko se zdravje naprave spremeni"
+
+#: notifier/applet/contents/ui/main.qml:13
+msgid "DisKMonitor"
+msgstr "DisKMonitor"
+
+#: notifier/applet/contents/ui/main.qml:14 notifier/storageunitqmlmodel.cpp:65
+msgid "Everything looks healthy."
+msgstr "Vsi pogoni so zdravi."
+
+#: notifier/applet/contents/ui/main.qml:72
+msgid "Refresh"
+msgstr "Osveži"
+
+#: notifier/applet/contents/ui/main.qml:73
+msgid "Open application"
+msgstr "Odpri aplikacijo"
+
+#: notifier/storageunitqmlmodel.cpp:72
+msgid "The following storage units are in failing state:<br/>%1"
+msgstr "Naslednje naprave so v fazi odpovedovanja:<br/>%1"
+
+#: notifier/storageunitqmlmodel.cpp:319
+msgid "Storage units failing"
+msgstr "Naprave odpovedujejo"
+
+#: notifier/storageunitqmlmodel.cpp:319
+msgid "Storage units are back to healthy status"
+msgstr "Naprave so ponovno zdrave"

@@ -40,7 +40,6 @@ InvisibleButtonGroup::InvisibleButtonGroup(QWidget* parent) :
   const QString name = metaObject() -> className();
   if (!KConfigDialogManager::propertyMap() -> contains(name)) {
     KConfigDialogManager::propertyMap() -> insert(name, "current");
-    KConfigDialogManager::changedMap() -> insert(name, SIGNAL(selectionChanged(int)));
   }
 }
 

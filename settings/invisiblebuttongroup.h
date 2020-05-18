@@ -33,7 +33,7 @@ namespace Settings {
   class InvisibleButtonGroupPrivate;
   class InvisibleButtonGroup : public QWidget {
     Q_OBJECT
-    Q_PROPERTY(int current READ selected WRITE setSelected)
+    Q_PROPERTY(int current READ selected WRITE setSelected NOTIFY selectionChanged)
   public:
     explicit InvisibleButtonGroup(QWidget* parent = nullptr);
     ~InvisibleButtonGroup();

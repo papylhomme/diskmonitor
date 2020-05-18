@@ -31,9 +31,7 @@ using namespace Settings;
  */
 KConfigListWidget::KConfigListWidget(QWidget* parent) : QListWidget(parent)
 {
-  //register change signal to KConfigDialogManager
-  if(!KConfigDialogManager::changedMap() -> contains("KConfigListWidget"))
-    KConfigDialogManager::changedMap() -> insert("Settings::KConfigListWidget", SIGNAL(changed(const QList<int>&)));
+
 }
 
 

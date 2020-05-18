@@ -31,7 +31,7 @@ namespace Settings {
   class KConfigListWidget : public QListWidget
   {
     Q_OBJECT
-    Q_PROPERTY( QList<int> items READ items WRITE setItems USER true )
+    Q_PROPERTY( QList<int> items READ items WRITE setItems USER true NOTIFY changed)
   public:
     KConfigListWidget(QWidget* parent = nullptr);
     ~KConfigListWidget();

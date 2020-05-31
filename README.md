@@ -1,7 +1,25 @@
 # DisKMonitor
 KDE tools to monitor SMART devices and MDRaid health status. Features a full application and a Plasma applet.
 
-# Dependencies
+# Installation
+
+## Arch Linux
+
+DisKMonitor is available on the AUR:
+* `diskmonitor` for the latest release
+* `diskmonitor-git` for the current master branch
+
+## Kubuntu
+
+Thanks to @hleroy, DiskMonitor is also available as a PPA for KUbuntu users. You can install the latest version using:
+
+    sudo add-apt-repository ppa:hleroy/kde-diskmonitor
+    sudo apt update
+    sudo apt install diskmonitor
+
+## Compilation from sources
+
+### Dependencies
 * **Qt**
   * qt5-base
   * qt5-declarative
@@ -15,7 +33,7 @@ KDE tools to monitor SMART devices and MDRaid health status. Features a full app
 
 Additionally, **cmake** and **extra-cmake-modules** are required to build the package. 
 
-# Build
+### Build
     mkdir build && cd build
     cmake .. -DCMAKE_INSTALL_PREFIX=$(kf5-config --prefix) \
            -DCMAKE_BUILD_TYPE=Release \

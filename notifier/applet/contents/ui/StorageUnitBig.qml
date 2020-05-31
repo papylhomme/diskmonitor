@@ -22,7 +22,6 @@ import QtQuick 2.3
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import QtQuick.Layouts 1.1
-import org.papylhomme.diskmonitor 0.1 as DiskMonitor
 
 
 PlasmaComponents.ListItem {

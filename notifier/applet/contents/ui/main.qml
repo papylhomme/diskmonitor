@@ -19,7 +19,7 @@
 
 
 import QtQuick 2.3
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.1
 
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
@@ -30,7 +30,7 @@ Item {
 
   property int passiveStatus: PlasmaCore.Types.PassiveStatus
   property int needsAttentionStatus: PlasmaCore.Types.NeedsAttentionStatus
-  property int requireAttentionStatus: PlasmaCore.Types.RequireAttentionStatus
+  property int requireAttentionStatus: PlasmaCore.Types.RequiresAttentionStatus
 
   Plasmoid.toolTipMainText: i18n("DisKMonitor")
   Plasmoid.toolTipSubText: i18n("Everything looks healthy.")

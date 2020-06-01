@@ -1,3 +1,8 @@
+Version 0.3.4 (2020-06-01):
++ Include Slovenian translation (thanks to @matevz)
++ Document package installation (thanks to @hlreoy for the PPA)
++ Various fixes
+
 Version 0.3.3:
 + Various fixes
 

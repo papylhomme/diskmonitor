@@ -33,7 +33,7 @@ Thanks to @hleroy, DiskMonitor is also available as a PPA for KUbuntu users. You
 
 Additionally, **cmake** and **extra-cmake-modules** are required to build the package.
 
-###Install Dependencies for Ubuntu
+### Install Dependencies for Ubuntu
 
 	sudo apt install cmake extra-cmake-modules qtbase5-dev qtdeclarative5-dev qt5ct qtdeclarative5-dev libkf5windowsystem-dev libkf5iconthemes-dev libkf5notifications-dev libkf5xmlgui-dev libkf5plasma-dev
 

@@ -46,12 +46,12 @@ public:
 protected:
   virtual void updateInternalState() override;
 
-  QVariant humanizeSmartAttribute(const SmartAttribute& attr) const;
+  QVariant humanizeSmartAttribute(const AtaSmartAttribute& attr) const;
 
 private:
   QStringList headerLabels;
   QList<int> sensitiveAttributes;
-  SmartAttributesList attributes;
+  AtaSmartAttributesList attributes;
 
 public slots:
   void configChanged();

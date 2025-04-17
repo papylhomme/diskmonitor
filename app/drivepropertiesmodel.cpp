@@ -113,7 +113,7 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
   if(!index.isValid() || unit == nullptr)
     return QVariant();
 
-  SmartAttribute attr = attributes.at(index.row());
+  AtaSmartAttribute attr = attributes.at(index.row());
 
   // Handle background colors
   if(role == Qt::BackgroundRole) {
@@ -172,7 +172,7 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 /*
  * Format the 'pretty' value for human readability
  */
-QVariant DrivePropertiesModel::humanizeSmartAttribute(const SmartAttribute& attr) const
+QVariant DrivePropertiesModel::humanizeSmartAttribute(const AtaSmartAttribute& attr) const
 {
   switch(attr.pretty_unit) {
     case 0: return QVariant(i18nc("value type is unknown", "unknown"));

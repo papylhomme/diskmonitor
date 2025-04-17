@@ -46,7 +46,7 @@ public:
 
   const QString& getSelfTestStatus() const;
 
-  const SmartAttributesList& getSMARTAttributes() const;
+  const AtaSmartAttributesList& getSMARTAttributes() const;
 
   virtual void update() override;
   virtual bool isDrive() const override { return true; }
@@ -62,7 +62,7 @@ protected:
 
   QString selfTestStatus;
 
-  SmartAttributesList attributes;
+  AtaSmartAttributesList attributes;
 
 signals:
 

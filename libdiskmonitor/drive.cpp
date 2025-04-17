@@ -130,7 +130,7 @@ const QString& Drive::getSelfTestStatus() const
  *
  * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartGetAttributes
  */
-const SmartAttributesList& Drive::getSMARTAttributes() const
+const AtaSmartAttributesList& Drive::getSMARTAttributes() const
 {
   return this -> attributes;
 }
@@ -172,7 +172,7 @@ void Drive::update()
     this -> failingStatusKnown = true;
 
 
-    QDBusReply<SmartAttributesList> res = ataIface -> call("SmartGetAttributes", QVariantMap());
+    QDBusReply<AtaSmartAttributesList> res = ataIface -> call("SmartGetAttributes", QVariantMap());
     if(!res.isValid())
       qCritical() << "Error calling SmartGetAttributes for drive '" << getPath() << "':" << res.error();
     else

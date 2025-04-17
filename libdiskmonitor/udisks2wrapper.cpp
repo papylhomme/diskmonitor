@@ -43,11 +43,11 @@ void initQDbusMetaTypes()
   qRegisterMetaType<InterfaceList>("InterfaceList");
   qDBusRegisterMetaType<InterfaceList>();
 
-  qRegisterMetaType<SmartAttribute>("SmartAttribute");
-  qDBusRegisterMetaType<SmartAttribute>();
+  qRegisterMetaType<AtaSmartAttribute>("AtaSmartAttribute");
+  qDBusRegisterMetaType<AtaSmartAttribute>();
 
-  qRegisterMetaType<SmartAttributesList>("SmartAttributesList");
-  qDBusRegisterMetaType<SmartAttributesList>();
+  qRegisterMetaType<AtaSmartAttributesList>("AtaSmartAttributesList");
+  qDBusRegisterMetaType<AtaSmartAttributesList>();
 
   qRegisterMetaType<MDRaidMember>("MDRaidMember");
   qDBusRegisterMetaType<MDRaidMember>();
@@ -59,20 +59,20 @@ void initQDbusMetaTypes()
 
 
 /*
- * Marshall the SmartAttribute data into a D-Bus argument
+ * Marshall the AtaSmartAttribute data into a D-Bus argument
  */
-QDBusArgument &operator<<(QDBusArgument &argument, const SmartAttribute& smartAttribue)
+QDBusArgument &operator<<(QDBusArgument &argument, const AtaSmartAttribute& ataSmartAttribue)
 {
     argument.beginStructure();
-    argument << smartAttribue.id;
-    argument << smartAttribue.name;
-    argument << smartAttribue.flags;
-    argument << smartAttribue.value;
-    argument << smartAttribue.worst;
-    argument << smartAttribue.threshold;
-    argument << smartAttribue.pretty;
-    argument << smartAttribue.pretty_unit;
-    argument << smartAttribue.expansion;
+    argument << ataSmartAttribue.id;
+    argument << ataSmartAttribue.name;
+    argument << ataSmartAttribue.flags;
+    argument << ataSmartAttribue.value;
+    argument << ataSmartAttribue.worst;
+    argument << ataSmartAttribue.threshold;
+    argument << ataSmartAttribue.pretty;
+    argument << ataSmartAttribue.pretty_unit;
+    argument << ataSmartAttribue.expansion;
     argument.endStructure();
 
     return argument;
@@ -81,20 +81,20 @@ QDBusArgument &operator<<(QDBusArgument &argument, const SmartAttribute& smartAt
 
 
 /*
- * Retrieve the SmartAttribute data from the D-Bus argument
+ * Retrieve the AtaSmartAttribute data from the D-Bus argument
  */
-const QDBusArgument &operator>>(const QDBusArgument &argument, SmartAttribute& smartAttribue)
+const QDBusArgument &operator>>(const QDBusArgument &argument, AtaSmartAttribute& ataSmartAttribue)
 {
     argument.beginStructure();
-    argument >> smartAttribue.id;
-    argument >> smartAttribue.name;
-    argument >> smartAttribue.flags;
-    argument >> smartAttribue.value;
-    argument >> smartAttribue.worst;
-    argument >> smartAttribue.threshold;
-    argument >> smartAttribue.pretty;
-    argument >> smartAttribue.pretty_unit;
-    argument >> smartAttribue.expansion;
+    argument >> ataSmartAttribue.id;
+    argument >> ataSmartAttribue.name;
+    argument >> ataSmartAttribue.flags;
+    argument >> ataSmartAttribue.value;
+    argument >> ataSmartAttribue.worst;
+    argument >> ataSmartAttribue.threshold;
+    argument >> ataSmartAttribue.pretty;
+    argument >> ataSmartAttribue.pretty_unit;
+    argument >> ataSmartAttribue.expansion;
     argument.endStructure();
 
     return argument;

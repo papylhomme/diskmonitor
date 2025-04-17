@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 
-#include "drivepropertiesmodel.h"
+#include "atadrivepropertiesmodel.h"
 
 #include "diskmonitor_settings.h"
 
@@ -35,7 +35,7 @@
 /*
  * Constructor
  */
-DrivePropertiesModel::DrivePropertiesModel()
+AtaDrivePropertiesModel::AtaDrivePropertiesModel()
 {
   sensitiveAttributes = DiskMonitorSettings::sensitiveAttributes();
   headerLabels << i18nc("Attribute's id", "Id")
@@ -54,7 +54,7 @@ DrivePropertiesModel::DrivePropertiesModel()
 /*
  * Destructor
  */
-DrivePropertiesModel::~DrivePropertiesModel()
+AtaDrivePropertiesModel::~AtaDrivePropertiesModel()
 {
 }
 
@@ -63,9 +63,9 @@ DrivePropertiesModel::~DrivePropertiesModel()
 /*
  * Retrieve the Drive associated to the model. Can be NULL
  */
-Drive* DrivePropertiesModel::getDrive() const
+AtaDrive* AtaDrivePropertiesModel::getAtaDrive() const
 {
-  return static_cast<Drive*>(this -> unit);
+  return static_cast<AtaDrive*>(this -> unit);
 }
 
 
@@ -73,12 +73,12 @@ Drive* DrivePropertiesModel::getDrive() const
 /*
  * Handler when StorageUnitPropertiesModel refresh the underlying unit
  */
-void DrivePropertiesModel::updateInternalState()
+void AtaDrivePropertiesModel::updateInternalState()
 {
-  Drive* drive = getDrive();
+  AtaDrive* ataDrive = getAtaDrive();
 
-  if(drive != nullptr)
-    attributes = drive -> getSMARTAttributes();
+  if(ataDrive != nullptr)
+    attributes = ataDrive -> getSMARTAttributes();
   else
     attributes.clear();
 }
@@ -88,7 +88,7 @@ void DrivePropertiesModel::updateInternalState()
 /*
  * Get the number of rows contained in the model's data
  */
-int DrivePropertiesModel::rowCount(const QModelIndex& /*index*/) const
+int AtaDrivePropertiesModel::rowCount(const QModelIndex& /*index*/) const
 {
   return attributes.size();
 }
@@ -98,7 +98,7 @@ int DrivePropertiesModel::rowCount(const QModelIndex& /*index*/) const
 /*
  * Get the number of column of the model
  */
-int DrivePropertiesModel::columnCount(const QModelIndex& /*index*/) const
+int AtaDrivePropertiesModel::columnCount(const QModelIndex& /*index*/) const
 {
   return headerLabels.size();
 }
@@ -108,7 +108,7 @@ int DrivePropertiesModel::columnCount(const QModelIndex& /*index*/) const
 /*
  * Retrieve data for an item in the model
  */
-QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
+QVariant AtaDrivePropertiesModel::data(const QModelIndex& index, int role) const
 {
   if(!index.isValid() || unit == nullptr)
     return QVariant();
@@ -172,7 +172,7 @@ QVariant DrivePropertiesModel::data(const QModelIndex& index, int role) const
 /*
  * Format the 'pretty' value for human readability
  */
-QVariant DrivePropertiesModel::humanizeSmartAttribute(const AtaSmartAttribute& attr) const
+QVariant AtaDrivePropertiesModel::humanizeSmartAttribute(const AtaSmartAttribute& attr) const
 {
   switch(attr.pretty_unit) {
     case 0: return QVariant(i18nc("value type is unknown", "unknown"));
@@ -189,7 +189,7 @@ QVariant DrivePropertiesModel::humanizeSmartAttribute(const AtaSmartAttribute& a
 /*
  * Handle the headers of the model
  */
-QVariant DrivePropertiesModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant AtaDrivePropertiesModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
   if(orientation != Qt::Horizontal)
     return QVariant();
@@ -211,7 +211,7 @@ QVariant DrivePropertiesModel::headerData(int section, Qt::Orientation orientati
 /*
  * Handle config change
  */
-void DrivePropertiesModel::configChanged()
+void AtaDrivePropertiesModel::configChanged()
 {
   sensitiveAttributes = DiskMonitorSettings::sensitiveAttributes();
 }

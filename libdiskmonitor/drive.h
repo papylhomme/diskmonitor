@@ -1,6 +1,6 @@
 /****************************************************************************
  * DisKMonitor, KDE tools to monitor SMART and MDRaid health status         *
- * Copyright (C) 2014-2015 Michaël Lhomme <papylhomme@gmail.com>            *
+ * Copyright (C) 2014-2025 Michaël Lhomme <papylhomme@gmail.com>            *
  *                                                                          *
  * This program is free software; you can redistribute it and/or modify     *
  * it under the terms of the GNU General Public License as published by     *
@@ -34,35 +34,17 @@ class Drive : public StorageUnit
 
 
 public:
-  explicit Drive(QDBusObjectPath objectPath, QString device, bool hasATAIface);
+  explicit Drive(QDBusObjectPath objectPath, QString device);
   ~Drive();
 
   bool isRemovable() const;
 
-  bool isSmartSupported() const;
-  bool isSmartEnabled() const;
-
-  int getSelfTestPercentRemaining() const;
-
-  const QString& getSelfTestStatus() const;
-
-  const AtaSmartAttributesList& getSMARTAttributes() const;
-
   virtual void update() override;
+  virtual bool isAtaDrive() const { return false; }
   virtual bool isDrive() const override { return true; }
 
 protected:
   bool removable = false;
-  bool hasATAIface = false;
-
-  bool smartSupported = false;
-  bool smartEnabled = false;
-
-  int selfTestPercentRemaining = 0;
-
-  QString selfTestStatus;
-
-  AtaSmartAttributesList attributes;
 
 signals:
 

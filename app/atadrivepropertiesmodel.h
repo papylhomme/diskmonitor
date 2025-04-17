@@ -18,25 +18,25 @@
  ****************************************************************************/
 
 
-#ifndef DRIVEPROPERTIESMODEL_H
-#define DRIVEPROPERTIESMODEL_H
+#ifndef ATADRIVEPROPERTIESMODEL_H
+#define ATADRIVEPROPERTIESMODEL_H
 
 #include "storageunitpropertiesmodel.h"
-#include "drive.h"
+#include "atadrive.h"
 
 
 /*
  * A Qt model to display smart attributes in a table
  */
-class DrivePropertiesModel : public StorageUnitPropertiesModel
+class AtaDrivePropertiesModel : public StorageUnitPropertiesModel
 {
   Q_OBJECT
 
 public:
-  DrivePropertiesModel();
-  ~DrivePropertiesModel() override;
+  AtaDrivePropertiesModel();
+  ~AtaDrivePropertiesModel() override;
 
-  Drive* getDrive() const;
+  AtaDrive* getAtaDrive() const;
 
   virtual int rowCount(const QModelIndex& index) const override;
   virtual int columnCount(const QModelIndex& index) const override;
@@ -57,4 +57,4 @@ public slots:
   void configChanged();
 };
 
-#endif // DRIVEPROPERTIESMODEL_H
+#endif // ATADRIVEPROPERTIESMODEL_H

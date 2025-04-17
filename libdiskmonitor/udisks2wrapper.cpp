@@ -22,6 +22,7 @@
 
 
 #include "drive.h"
+#include "atadrive.h"
 #include "mdraid.h"
 
 
@@ -186,10 +187,8 @@ void UDisks2Wrapper::initialize()
     //TODO ? exception to handle in UI and display error to user ?
   }
 
-  ManagedObjectList objects = res.value();
-
-
   //loop over the result to extract existing raid arrays and drives.
+  ManagedObjectList objects = res.value();
   foreach(QDBusObjectPath objectPath, objects.keys()) {
     StorageUnit* newUnit = createNewUnitFromBlockDevice(objects[objectPath]);
 
@@ -442,9 +441,12 @@ StorageUnit* UDisks2Wrapper::createNewUnitFromBlockDevice(const InterfaceList& i
   if(!interfaces[UDISKS2_BLOCK_IFACE].empty()) {
     QDBusObjectPath drivePath = interfaces[UDISKS2_BLOCK_IFACE]["Drive"].value<QDBusObjectPath>();
     if(drivePath.path().size() > 1 && !units.contains(drivePath)) {
-      return new Drive(drivePath,
-                       interfaces[UDISKS2_BLOCK_IFACE]["Device"].toString(),
-                       hasATAIface(drivePath));
+      QString deviceName = interfaces[UDISKS2_BLOCK_IFACE]["Device"].toString();
+      if(hasATAIface(drivePath)) {
+        return new AtaDrive(drivePath, deviceName);
+      } else {
+        return new Drive(drivePath, deviceName);
+      }
     }
 
     QDBusObjectPath mdraidPath = interfaces[UDISKS2_BLOCK_IFACE]["MDRaid"].value<QDBusObjectPath>();

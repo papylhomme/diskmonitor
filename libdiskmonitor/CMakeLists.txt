@@ -1,6 +1,7 @@
 set(LIBDISKMONITOR_SRCS
   storageunit.cpp
   drive.cpp
+  atadrive.cpp
   mdraid.cpp
   udisks2wrapper.cpp
 )

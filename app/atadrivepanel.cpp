@@ -17,9 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.              *
  ****************************************************************************/
 
-
-#include "drivepanel.h"
-#include "ui_drivepanel.h"
+#include "atadrivepanel.h"
+#include "ui_atadrivepanel.h"
 
 #include "udisks2wrapper.h"
 
@@ -29,9 +28,9 @@
 /*
  * Constructor
  */
-DrivePanel::DrivePanel(QWidget* parent) :
-    StorageUnitPanel(new DrivePropertiesModel(), parent),
-    ui(new Ui::DrivePanel)
+AtaDrivePanel::AtaDrivePanel(QWidget* parent) :
+    StorageUnitPanel(new AtaDrivePropertiesModel(), parent),
+    ui(new Ui::AtaDrivePanel)
 {
   ui -> setupUi(this);
 
@@ -61,7 +60,7 @@ DrivePanel::DrivePanel(QWidget* parent) :
 /*
  * Destructor
  */
-DrivePanel::~DrivePanel()
+AtaDrivePanel::~AtaDrivePanel()
 {
   delete ui;
 }
@@ -71,9 +70,9 @@ DrivePanel::~DrivePanel()
 /*
  * Set the drive to display in the panel. Can be NULL
  */
-void DrivePanel::setDrive(Drive* drive)
+void AtaDrivePanel::setAtaDrive(AtaDrive* ataDrive)
 {
-  this -> setStorageUnit(drive);
+  this -> setStorageUnit(ataDrive);
 }
 
 
@@ -81,9 +80,9 @@ void DrivePanel::setDrive(Drive* drive)
 /*
  * Retrieve the drive associated with the panel. Can be NULL
  */
-Drive* DrivePanel::getDrive()
+AtaDrive* AtaDrivePanel::getAtaDrive()
 {
-  return static_cast<Drive*>(this -> model -> getStorageUnit());
+  return static_cast<AtaDrive*>(this -> model -> getStorageUnit());
 }
 
 
@@ -91,12 +90,12 @@ Drive* DrivePanel::getDrive()
 /*
  * Update the UI according to the state of the currently selected drive
  */
-void DrivePanel::updateUI()
+void AtaDrivePanel::updateUI()
 {
-  Drive* drive = getDrive();
+  AtaDrive* ataDrive = getAtaDrive();
 
   //sanity check
-  if(drive == nullptr) {
+  if(ataDrive == nullptr) {
     ui -> panelSmartNotSupported -> setVisible(false);
     ui -> panelSmartNotEnabled -> setVisible(false);
     ui -> panelSmartWidgets -> setEnabled(false);
@@ -106,16 +105,16 @@ void DrivePanel::updateUI()
     return;
   }
 
-  ui -> panelSmartNotSupported -> setVisible(!drive -> isSmartSupported());
-  ui -> panelSmartNotEnabled -> setVisible(drive -> isSmartSupported() && !drive -> isSmartEnabled());
+  ui -> panelSmartNotSupported -> setVisible(!ataDrive -> isSmartSupported());
+  ui -> panelSmartNotEnabled -> setVisible(ataDrive -> isSmartSupported() && !ataDrive -> isSmartEnabled());
 
-  bool smartOK = drive -> isSmartSupported() && drive -> isSmartEnabled();
+  bool smartOK = ataDrive -> isSmartSupported() && ataDrive -> isSmartEnabled();
   ui -> panelSmartWidgets -> setEnabled(smartOK);
 
 
   if(smartOK) {
-    int percent = drive -> getSelfTestPercentRemaining();
-    QString status = drive -> getSelfTestStatus();
+    int percent = ataDrive -> getSelfTestPercentRemaining();
+    QString status = ataDrive -> getSelfTestStatus();
 
     ui -> selfTestStatusLabel -> setText(localizeSelfTestStatus(status));
 
@@ -144,11 +143,10 @@ void DrivePanel::updateUI()
 /*
  * Test if an operation is currently running on the drive
  */
-bool DrivePanel::isOperationRunning()
+bool AtaDrivePanel::isOperationRunning()
 {
-  Drive* drive = getDrive();
-
-  return !(drive == nullptr || drive -> getSelfTestStatus() != "inprogress");
+  AtaDrive* ataDrive = getAtaDrive();
+  return !(ataDrive == nullptr || ataDrive -> getSelfTestStatus() != "inprogress");
 }
 
 
@@ -156,8 +154,8 @@ bool DrivePanel::isOperationRunning()
 /*
  * Enable SMART for the given drive
  */
-void DrivePanel::enableSmart() {
-  UDisks2Wrapper::instance() -> enableSMART(getDrive());
+void AtaDrivePanel::enableSmart() {
+  UDisks2Wrapper::instance() -> enableSMART(getAtaDrive());
   //delay the refresh as UDisks2 may take some time to update the status
   QTimer::singleShot(2000, this, SLOT(refresh()));
 }
@@ -167,7 +165,7 @@ void DrivePanel::enableSmart() {
 /*
  * Slot to start a short selftest on the drive
  */
-void DrivePanel::startShortSelfTest()
+void AtaDrivePanel::startShortSelfTest()
 {
   startSelfTest(UDisks2Wrapper::ShortSelfTest);
 }
@@ -177,7 +175,7 @@ void DrivePanel::startShortSelfTest()
 /*
  * Slot to start an extended selftest on the drive
  */
-void DrivePanel::startExtendedSelfTest()
+void AtaDrivePanel::startExtendedSelfTest()
 {
   startSelfTest(UDisks2Wrapper::ExtendedSelfTest);
 }
@@ -188,9 +186,9 @@ void DrivePanel::startExtendedSelfTest()
 /*
  * Start SMART selftest of the given type on the drive
  */
-void DrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
+void AtaDrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
 {
-  Drive* currentDrive = getDrive();
+  AtaDrive* currentDrive = getAtaDrive();
 
   if(currentDrive != nullptr) {
 
@@ -212,9 +210,9 @@ void DrivePanel::startSelfTest(UDisks2Wrapper::SMARTSelfTestType type)
 /*
  * Cancel a SMART selftest on the drive
  */
-void DrivePanel::cancelSelfTest()
+void AtaDrivePanel::cancelSelfTest()
 {
-  Drive* currentDrive = getDrive();
+  AtaDrive* currentDrive = getAtaDrive();
 
   if(currentDrive != nullptr) {
 
@@ -237,7 +235,7 @@ void DrivePanel::cancelSelfTest()
  *
  * @see Drive::getSelfTestStatus()
  */
-QString DrivePanel::localizeSelfTestStatus(QString status) const
+QString AtaDrivePanel::localizeSelfTestStatus(QString status) const
 {
   if(status == "inprogress")
     return i18nc("SelfTest status", "In progress");

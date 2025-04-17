@@ -18,35 +18,35 @@
  ****************************************************************************/
 
 
-#ifndef DRIVEPANEL_H
-#define DRIVEPANEL_H
+#ifndef ATADRIVEPANEL_H
+#define ATADRIVEPANEL_H
 
 #include "udisks2wrapper.h"
-#include "drivepropertiesmodel.h"
+#include "atadrivepropertiesmodel.h"
 #include "storageunitpanel.h"
 
 
 namespace Ui {
-class DrivePanel;
+class AtaDrivePanel;
 }
 
-class DrivePanel : public StorageUnitPanel
+class AtaDrivePanel : public StorageUnitPanel
 {
     Q_OBJECT
 
 public:
-    explicit DrivePanel(QWidget *parent = nullptr);
-    ~DrivePanel() override;
+    explicit AtaDrivePanel(QWidget *parent = nullptr);
+    ~AtaDrivePanel() override;
 
-  void setDrive(Drive* drive);
-  Drive* getDrive();
+  void setAtaDrive(AtaDrive* drive);
+  AtaDrive* getAtaDrive();
 
 protected:
   virtual void updateUI() override;
   virtual bool isOperationRunning() override;
 
 private:
-  Ui::DrivePanel *ui;
+  Ui::AtaDrivePanel *ui;
 
   QString localizeSelfTestStatus(QString status) const;
 
@@ -58,4 +58,4 @@ public slots:
   void cancelSelfTest();
 };
 
-#endif // DRIVEPANEL_H
+#endif // ATADRIVEPANEL_H

@@ -3,19 +3,21 @@ set(APP_SRCS
   humanize.cpp
   mainwindow.cpp
   storageunitpanel.cpp
-  drivepanel.cpp
+  unknowndrivepanel.cpp
+  atadrivepanel.cpp
   mdraidpanel.cpp
   storageunitmodel.cpp
   storageunitpropertiesmodel.cpp
   mdraidpropertiesmodel.cpp
   mdraidmembersmodel.cpp
-  drivepropertiesmodel.cpp
+  atadrivepropertiesmodel.cpp
   resources.qrc
 )
 
 ki18n_wrap_ui(APP_SRCS
   mainwindow.ui
-  drivepanel.ui
+  unknowndrivepanel.ui
+  atadrivepanel.ui
   mdraidpanel.ui
 )
 

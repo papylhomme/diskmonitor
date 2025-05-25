@@ -18,64 +18,26 @@
  ****************************************************************************/
 
 
-#include "drive.h"
+#ifndef UNKNOWNDRIVEPANEL_H
+#define UNKNOWNDRIVEPANEL_H
 
-#include "udisks2wrapper.h"
-
-#include <QDebug>
-
+#include <QWidget>
 
 
-/*
- * Initialize a new Drive
- *
- * @param objectPath The DBus object path to the UDisks2 node represented by this drive
- * @param device A string identifying the underlying Linux device (/dev/sdX)
- *
- * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.html
- * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html
- */
-Drive::Drive(QDBusObjectPath objectPath, QString device) : StorageUnit(objectPath, device)
-{
-  update();
+namespace Ui {
+class UnknownDrivePanel;
 }
 
-
-
-/*
- * Destructor
- */
-Drive::~Drive()
+class UnknownDrivePanel : public QWidget
 {
+    Q_OBJECT
 
-}
+public:
+    explicit UnknownDrivePanel(QWidget *parent = nullptr);
+    ~UnknownDrivePanel() override;
 
+private:
+  Ui::UnknownDrivePanel *ui;
+};
 
-
-/*
- * Test if this is a removable drive
- *
- * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable
- */
-bool Drive::isRemovable() const
-{
-  return this -> removable;
-}
-
-
-
-/*
- * Update the cached property and SMART attributes of this Drive
- */
-void Drive::update()
-{
-  /*
-   * retrieve general properties from the DRIVE_IFACE
-   */
-  QDBusInterface* driveIface = UDisks2Wrapper::instance() -> driveIface(objectPath);
-  this -> removable = getBoolProperty(driveIface, "Removable");
-  this -> shortName = getStringProperty(driveIface, "Model");
-  delete driveIface;
-
-  StorageUnit::update();
-}
+#endif // UNKNOWNDRIVEPANEL_H

@@ -26,7 +26,8 @@
 #include <KLocalizedString>
 
 #include "storageunitmodel.h"
-#include "drivepanel.h"
+#include "unknowndrivepanel.h"
+#include "atadrivepanel.h"
 #include "mdraidpanel.h"
 
 #include "diskmonitor_settings.h"
@@ -76,7 +77,8 @@ MainWindow::MainWindow(QWidget* parent) :
   /*
    * setup details panels
    */
-  ui -> stackedWidget -> addWidget(new DrivePanel(this));
+  ui -> stackedWidget -> addWidget(new UnknownDrivePanel(this));
+  ui -> stackedWidget -> addWidget(new AtaDrivePanel(this));
   ui -> stackedWidget -> addWidget(new MDRaidPanel(this));
 
   ui -> splitter -> setStretchFactor(0, 1);
@@ -201,17 +203,26 @@ void MainWindow::updateCurrentUnit(StorageUnit* unit)
     int widgetIndex = 0;
     QString boxTitle = i18n("Details");
     StorageUnitPanel* panel = nullptr;
-    if(currentUnit -> isDrive()) {
-      widgetIndex = 1;
-      boxTitle = i18n("Drive %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
-      panel = static_cast<DrivePanel*>(ui -> stackedWidget -> widget(1));
+    
+    if(currentUnit -> isMDRaid()) {
+      widgetIndex = 3;
+      boxTitle = i18n("MDRaid %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
+      panel = static_cast<MDRaidPanel*>(ui -> stackedWidget -> widget(3));
       panel -> setStorageUnit(currentUnit);
 
-    } else if(currentUnit -> isMDRaid()) {
-      widgetIndex = 2;
-      boxTitle = i18n("MDRaid %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
-      panel = static_cast<MDRaidPanel*>(ui -> stackedWidget -> widget(2));
-      panel -> setStorageUnit(currentUnit);
+    } else if(currentUnit -> isDrive()) {
+      Drive* drive = static_cast<Drive*>(currentUnit);
+
+      if(drive -> isAtaDrive()) {
+        widgetIndex = 2;
+        boxTitle = i18n("Drive %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
+        panel = static_cast<AtaDrivePanel*>(ui -> stackedWidget -> widget(2));
+        panel -> setStorageUnit(currentUnit);
+        
+      } else {
+        widgetIndex = 1;
+        boxTitle = i18n("Drive %1 (%2)", currentUnit -> getName(), currentUnit -> getDevice());
+      }
     }
 
     ui -> groupBox -> setTitle(boxTitle);
@@ -239,8 +250,9 @@ void MainWindow::storageUnitRemoved(StorageUnit* unit)
 void MainWindow::refreshDetails()
 {
   switch(ui -> stackedWidget -> currentIndex()) {
-    case 1:
-    case 2: static_cast<StorageUnitPanel*>(ui -> stackedWidget -> currentWidget()) -> refresh(); break;
+    case 1: break; // Unknown drive
+    case 2:
+    case 3: static_cast<StorageUnitPanel*>(ui -> stackedWidget -> currentWidget()) -> refresh(); break;
     default: break;
   }
 }

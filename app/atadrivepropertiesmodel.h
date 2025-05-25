@@ -18,44 +18,43 @@
  ****************************************************************************/
 
 
-#ifndef DRIVEPANEL_H
-#define DRIVEPANEL_H
+#ifndef ATADRIVEPROPERTIESMODEL_H
+#define ATADRIVEPROPERTIESMODEL_H
 
-#include "udisks2wrapper.h"
-#include "drivepropertiesmodel.h"
-#include "storageunitpanel.h"
+#include "storageunitpropertiesmodel.h"
+#include "atadrive.h"
 
 
-namespace Ui {
-class DrivePanel;
-}
-
-class DrivePanel : public StorageUnitPanel
+/*
+ * A Qt model to display smart attributes in a table
+ */
+class AtaDrivePropertiesModel : public StorageUnitPropertiesModel
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit DrivePanel(QWidget *parent = nullptr);
-    ~DrivePanel() override;
+  AtaDrivePropertiesModel();
+  ~AtaDrivePropertiesModel() override;
 
-  void setDrive(Drive* drive);
-  Drive* getDrive();
+  AtaDrive* getAtaDrive() const;
+
+  virtual int rowCount(const QModelIndex& index) const override;
+  virtual int columnCount(const QModelIndex& index) const override;
+  virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+  virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 protected:
-  virtual void updateUI() override;
-  virtual bool isOperationRunning() override;
+  virtual void updateInternalState() override;
+
+  QVariant humanizeSmartAttribute(const AtaSmartAttribute& attr) const;
 
 private:
-  Ui::DrivePanel *ui;
-
-  QString localizeSelfTestStatus(QString status) const;
+  QStringList headerLabels;
+  QList<int> sensitiveAttributes;
+  AtaSmartAttributesList attributes;
 
 public slots:
-  void enableSmart();
-  void startShortSelfTest();
-  void startExtendedSelfTest();
-  void startSelfTest(UDisks2Wrapper::SMARTSelfTestType type);
-  void cancelSelfTest();
+  void configChanged();
 };
 
-#endif // DRIVEPANEL_H
+#endif // ATADRIVEPROPERTIESMODEL_H

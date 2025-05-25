@@ -18,64 +18,46 @@
  ****************************************************************************/
 
 
+#ifndef NVMEDRIVE_H
+#define NVMEDRIVE_H
+
 #include "drive.h"
 
-#include "udisks2wrapper.h"
-
-#include <QDebug>
-
 
 
 /*
- * Initialize a new Drive
- *
- * @param objectPath The DBus object path to the UDisks2 node represented by this drive
- * @param device A string identifying the underlying Linux device (/dev/sdX)
- *
- * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.html
- * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.Ata.html
+ * Represent an NVME Drive node in UDisks2
  */
-Drive::Drive(QDBusObjectPath objectPath, QString device) : StorageUnit(objectPath, device)
+class NvmeDrive : public Drive
 {
-  update();
-}
+  Q_OBJECT
 
 
+public:
+  explicit NvmeDrive(QDBusObjectPath objectPath, QString device);
+  ~NvmeDrive();
 
-/*
- * Destructor
- */
-Drive::~Drive()
-{
+  bool isSmartEnabled() const;
+  bool isSmartSupported() const;
 
-}
+  int getSelfTestPercentRemaining() const;
+  const QString& getSelfTestStatus() const;
+  const NvmeSmartAttributes& getSMARTAttributes() const;
 
+  virtual void update() override;
+  virtual bool isNvmeDrive() const override { return true; }
 
+protected:
+    bool smartEnabled = false;
+    bool smartSupported = false;
+    int selfTestPercentRemaining = 0;
 
-/*
- * Test if this is a removable drive
- *
- * http://udisks.freedesktop.org/docs/latest/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable
- */
-bool Drive::isRemovable() const
-{
-  return this -> removable;
-}
+    QString selfTestStatus;
+    NvmeSmartAttributes attributes;
 
+signals:
 
+public slots:
+};
 
-/*
- * Update the cached property and SMART attributes of this Drive
- */
-void Drive::update()
-{
-  /*
-   * retrieve general properties from the DRIVE_IFACE
-   */
-  QDBusInterface* driveIface = UDisks2Wrapper::instance() -> driveIface(objectPath);
-  this -> removable = getBoolProperty(driveIface, "Removable");
-  this -> shortName = getStringProperty(driveIface, "Model");
-  delete driveIface;
-
-  StorageUnit::update();
-}
+#endif // NVMEDRIVE_H

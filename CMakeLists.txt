@@ -1,12 +1,11 @@
+cmake_minimum_required(VERSION 4.0)
+
 project(diskmonitor)
 set(DISKMONITOR_VERSION_MAJOR "0")
 set(DISKMONITOR_VERSION_MINOR "3")
 set(DISKMONITOR_VERSION_PATCH "4")
 set(DISKMONITOR_VERSION "${DISKMONITOR_VERSION_MAJOR}.${DISKMONITOR_VERSION_MINOR}.${DISKMONITOR_VERSION_PATCH}")
 
-
-
-cmake_minimum_required(VERSION 2.8.12)
 set (QT_MIN_VERSION "5.2.0")
 
 # Suppress warning with CMake >= 3.3

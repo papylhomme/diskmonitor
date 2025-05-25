@@ -250,8 +250,9 @@ void MainWindow::storageUnitRemoved(StorageUnit* unit)
 void MainWindow::refreshDetails()
 {
   switch(ui -> stackedWidget -> currentIndex()) {
-    case 1:
-    case 2: static_cast<StorageUnitPanel*>(ui -> stackedWidget -> currentWidget()) -> refresh(); break;
+    case 1: break; // Unknown drive
+    case 2:
+    case 3: static_cast<StorageUnitPanel*>(ui -> stackedWidget -> currentWidget()) -> refresh(); break;
     default: break;
   }
 }

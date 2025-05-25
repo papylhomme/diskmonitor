@@ -18,38 +18,46 @@
  ****************************************************************************/
 
 
-#ifndef DRIVE_H
-#define DRIVE_H
+#ifndef NVMEDRIVE_H
+#define NVMEDRIVE_H
 
-#include "storageunit.h"
-#include "dbus_metatypes.h"
+#include "drive.h"
+
 
 
 /*
- * Represent a Drive node in UDisks2
+ * Represent an NVME Drive node in UDisks2
  */
-class Drive : public StorageUnit
+class NvmeDrive : public Drive
 {
   Q_OBJECT
 
 
 public:
-  explicit Drive(QDBusObjectPath objectPath, QString device);
-  ~Drive();
+  explicit NvmeDrive(QDBusObjectPath objectPath, QString device);
+  ~NvmeDrive();
 
-  bool isRemovable() const;
+  bool isSmartEnabled() const;
+  bool isSmartSupported() const;
+
+  int getSelfTestPercentRemaining() const;
+  const QString& getSelfTestStatus() const;
+  const NvmeSmartAttributes& getSMARTAttributes() const;
 
   virtual void update() override;
-  virtual bool isAtaDrive() const { return false; }
-  virtual bool isNvmeDrive() const { return false; }
-  virtual bool isDrive() const override { return true; }
+  virtual bool isNvmeDrive() const override { return true; }
 
 protected:
-  bool removable = false;
+    bool smartEnabled = false;
+    bool smartSupported = false;
+    int selfTestPercentRemaining = 0;
+
+    QString selfTestStatus;
+    NvmeSmartAttributes attributes;
 
 signals:
 
 public slots:
 };
 
-#endif // DRIVE_H
+#endif // NVMEDRIVE_H

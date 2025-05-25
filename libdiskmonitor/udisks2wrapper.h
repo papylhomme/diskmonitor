@@ -44,6 +44,7 @@
 #define UDISKS2_ATA_IFACE "org.freedesktop.UDisks2.Drive.Ata"
 #define UDISKS2_MDRAID_IFACE "org.freedesktop.UDisks2.MDRaid"
 #define UDISKS2_BLOCK_IFACE "org.freedesktop.UDisks2.Block"
+#define UDISKS2_NVME_IFACE "org.freedesktop.UDisks2.NVMe.Controller"
 
 #define UDISKS2_PATH "/org/freedesktop/UDisks2"
 #define UDISKS2_DRIVES_PATH "/org/freedesktop/UDisks2/drives"
@@ -89,11 +90,13 @@ public:
   QDBusInterface* driveIface(QDBusObjectPath) const;
   QDBusInterface* ataIface(QDBusObjectPath) const;
   QDBusInterface* mdraidIface(QDBusObjectPath) const;
+  QDBusInterface* nvmeIface(QDBusObjectPath) const;
 
 
 private:
   void initialize();
   bool hasATAIface(QDBusObjectPath objectPath) const;
+  bool hasNVMeIface(QDBusObjectPath objectPath) const;
   StorageUnit* createNewUnitFromBlockDevice(const InterfaceList& interfaces) const;
 
   bool initialized = false;

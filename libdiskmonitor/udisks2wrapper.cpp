@@ -23,6 +23,7 @@
 
 #include "drive.h"
 #include "atadrive.h"
+#include "nvmedrive.h"
 #include "mdraid.h"
 
 
@@ -55,6 +56,9 @@ void initQDbusMetaTypes()
 
   qRegisterMetaType<MDRaidMemberList>("MDRaidMemberList");
   qDBusRegisterMetaType<MDRaidMemberList>();
+
+  qRegisterMetaType<NvmeSmartAttributes>("NvmeSmartAttributes");
+  qDBusRegisterMetaType<NvmeSmartAttributes>();
 }
 
 
@@ -62,18 +66,18 @@ void initQDbusMetaTypes()
 /*
  * Marshall the AtaSmartAttribute data into a D-Bus argument
  */
-QDBusArgument &operator<<(QDBusArgument &argument, const AtaSmartAttribute& ataSmartAttribue)
+QDBusArgument &operator<<(QDBusArgument &argument, const AtaSmartAttribute& ataSmartAttribute)
 {
     argument.beginStructure();
-    argument << ataSmartAttribue.id;
-    argument << ataSmartAttribue.name;
-    argument << ataSmartAttribue.flags;
-    argument << ataSmartAttribue.value;
-    argument << ataSmartAttribue.worst;
-    argument << ataSmartAttribue.threshold;
-    argument << ataSmartAttribue.pretty;
-    argument << ataSmartAttribue.pretty_unit;
-    argument << ataSmartAttribue.expansion;
+    argument << ataSmartAttribute.id;
+    argument << ataSmartAttribute.name;
+    argument << ataSmartAttribute.flags;
+    argument << ataSmartAttribute.value;
+    argument << ataSmartAttribute.worst;
+    argument << ataSmartAttribute.threshold;
+    argument << ataSmartAttribute.pretty;
+    argument << ataSmartAttribute.pretty_unit;
+    argument << ataSmartAttribute.expansion;
     argument.endStructure();
 
     return argument;
@@ -84,18 +88,18 @@ QDBusArgument &operator<<(QDBusArgument &argument, const AtaSmartAttribute& ataS
 /*
  * Retrieve the AtaSmartAttribute data from the D-Bus argument
  */
-const QDBusArgument &operator>>(const QDBusArgument &argument, AtaSmartAttribute& ataSmartAttribue)
+const QDBusArgument &operator>>(const QDBusArgument &argument, AtaSmartAttribute& ataSmartAttribute)
 {
     argument.beginStructure();
-    argument >> ataSmartAttribue.id;
-    argument >> ataSmartAttribue.name;
-    argument >> ataSmartAttribue.flags;
-    argument >> ataSmartAttribue.value;
-    argument >> ataSmartAttribue.worst;
-    argument >> ataSmartAttribue.threshold;
-    argument >> ataSmartAttribue.pretty;
-    argument >> ataSmartAttribue.pretty_unit;
-    argument >> ataSmartAttribue.expansion;
+    argument >> ataSmartAttribute.id;
+    argument >> ataSmartAttribute.name;
+    argument >> ataSmartAttribute.flags;
+    argument >> ataSmartAttribute.value;
+    argument >> ataSmartAttribute.worst;
+    argument >> ataSmartAttribute.threshold;
+    argument >> ataSmartAttribute.pretty;
+    argument >> ataSmartAttribute.pretty_unit;
+    argument >> ataSmartAttribute.expansion;
     argument.endStructure();
 
     return argument;
@@ -280,6 +284,18 @@ QDBusInterface*UDisks2Wrapper::mdraidIface(QDBusObjectPath objectPath) const
 
 
 /*
+ * Get a UDISKS2 NVMe interface for the given node
+ *
+ * @param objectPath The DBus path identifying the node
+ */
+QDBusInterface*UDisks2Wrapper::nvmeIface(QDBusObjectPath objectPath) const
+{
+  return new QDBusInterface(UDISKS2_SERVICE, objectPath.path(), UDISKS2_NVME_IFACE, QDBusConnection::systemBus());
+}
+
+
+
+/*
  * Start a scrubbing operation on the given raid array (sync action = 'check')
  *
  * @param mdraid The raid array to test
@@ -443,14 +459,20 @@ StorageUnit* UDisks2Wrapper::createNewUnitFromBlockDevice(const InterfaceList& i
     if(drivePath.path().size() > 1 && !units.contains(drivePath)) {
       QString deviceName = interfaces[UDISKS2_BLOCK_IFACE]["Device"].toString();
       if(hasATAIface(drivePath)) {
+        qDebug() << "Mapped drive with ATA interface " << deviceName;
         return new AtaDrive(drivePath, deviceName);
+      } else if(hasNVMeIface(drivePath)) {
+        qDebug() << "Mapped drive with NVMe interface " << deviceName;
+        return new NvmeDrive(drivePath, deviceName);
       } else {
+        qDebug() << "Mapped drive without ATA interface " << deviceName;
         return new Drive(drivePath, deviceName);
       }
     }
 
     QDBusObjectPath mdraidPath = interfaces[UDISKS2_BLOCK_IFACE]["MDRaid"].value<QDBusObjectPath>();
     if(mdraidPath.path().size() > 1 && !units.contains(mdraidPath)) {
+      qDebug() << "Mapped RAID" << mdraidPath.path();
       return new MDRaid(mdraidPath, interfaces[UDISKS2_BLOCK_IFACE]["Device"].toString());
     }
   }
@@ -469,5 +491,17 @@ bool UDisks2Wrapper::hasATAIface(QDBusObjectPath objectPath) const
   ataIface.property("SmartSupported");
 
   return !ataIface.lastError().isValid();
+}
+
+
+/*
+ * Test the presence of the NVMe interface on the given path
+ */
+bool UDisks2Wrapper::hasNVMeIface(QDBusObjectPath objectPath) const
+{
+  QDBusInterface nvmeIface (UDISKS2_SERVICE, objectPath.path(), UDISKS2_NVME_IFACE, QDBusConnection::systemBus());
+  nvmeIface.property("State");
+
+  return !nvmeIface.lastError().isValid();
 }
 

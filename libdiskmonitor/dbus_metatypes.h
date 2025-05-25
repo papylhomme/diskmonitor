@@ -42,7 +42,7 @@ Q_DECLARE_METATYPE(ManagedObjectList)
 
 
 /*
- * Structure mapping a SMART attribute on UDisks2
+ * Structure mapping an ATA SMART attribute on UDisks2
  */
 struct AtaSmartAttribute {
   quint8 id;
@@ -60,14 +60,22 @@ Q_DECLARE_METATYPE(AtaSmartAttribute)
 
 
 /*
- * List of SMART attribute
+ * List of ATA SMART attribute
  */
 typedef QList<AtaSmartAttribute> AtaSmartAttributesList;
 Q_DECLARE_METATYPE(AtaSmartAttributesList)
 
 
-extern QDBusArgument &operator<<(QDBusArgument &argument, const AtaSmartAttribute& ataSmartAttribue);
-extern const QDBusArgument &operator>>(const QDBusArgument &argument, AtaSmartAttribute& ataSmartAttribue);
+extern QDBusArgument &operator<<(QDBusArgument &argument, const AtaSmartAttribute& ataSmartAttribute);
+extern const QDBusArgument &operator>>(const QDBusArgument &argument, AtaSmartAttribute& ataSmartAttribute);
+
+
+
+/*
+ * Structure mapping a NVMe SMART attributes on UDisks2
+ */
+typedef QVariantMap NvmeSmartAttributes;
+Q_DECLARE_METATYPE(NvmeSmartAttributes)
 
 
 
